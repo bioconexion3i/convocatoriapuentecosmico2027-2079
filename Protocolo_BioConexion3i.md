@@ -119,7 +119,7 @@ Aplicar el Protocolo de Interacción Técnica Pura al contexto específico de Pu
 
 ---
 
-### B.7 Rol del Tlacuilo / Comité
+### B.7 Rol del Humano / Comité
 
 1. Actuar como **filtro epistémico central**:
 
