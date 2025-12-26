@@ -344,6 +344,68 @@
             border-radius: 8px;
         }
 
+        /* Botón de activación de audio */
+        .audio-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(76, 175, 80, 0.2);
+            border: 2px solid #4CAF50;
+            color: #4CAF50;
+            font-size: 1.5em;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .audio-toggle-btn:hover {
+            background: rgba(76, 175, 80, 0.4);
+            transform: scale(1.1);
+        }
+
+        .audio-toggle-btn.active {
+            background: rgba(76, 175, 80, 0.6);
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+        }
+
+        .audio-toggle-btn.muted {
+            color: #ff4444;
+            border-color: #ff4444;
+            background: rgba(255, 68, 68, 0.2);
+        }
+
+        .audio-toggle-btn.muted:hover {
+            background: rgba(255, 68, 68, 0.4);
+        }
+
+        /* Notificación de audio */
+        .audio-notification {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #4CAF50;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .audio-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         @media (max-width: 768px) {
             h1 { font-size: 2em; }
             h2 { font-size: 1.5em; }
@@ -362,10 +424,39 @@
                 padding: 15px;
                 margin: 20px 10px;
             }
+            .audio-toggle-btn {
+                bottom: 10px;
+                left: 10px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.3em;
+            }
+            .audio-notification {
+                bottom: 65px;
+                left: 10px;
+                font-size: 12px;
+                padding: 8px 12px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Audio de fondo -->
+    <audio id="background-audio" preload="auto" loop>
+        <source src="7.83HzSRPulse.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <!-- Botón de activación de audio -->
+    <button id="audio-toggle" class="audio-toggle-btn" aria-label="Activar sonido de fondo">
+        🔇
+    </button>
+
+    <!-- Notificación de audio -->
+    <div id="audio-notification" class="audio-notification">
+        Sonido activado
+    </div>
+
     <nav>
         <div class="nav-container">
             <!-- LOGO REAL - Usa tu archivo logo.png -->
@@ -810,6 +901,7 @@ No nos une una utopía. Nos une un diagnóstico técnico-ético compartido y un 
 
 BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
 
+        // Función para crear estrellas
         function createStars() {
             const starsContainer = document.getElementById('stars');
             const starCount = 150;
@@ -829,6 +921,7 @@ BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
             }
         }
 
+        // Contador para Júpiter
         function updateJupiterCountdown() {
             const jupiterDate = new Date('March 16, 2026 12:00:00 GMT+00:00').getTime();
             const now = new Date().getTime();
@@ -863,11 +956,87 @@ BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
             }
         }
 
+        // Control de audio
+        function initAudioControls() {
+            const audio = document.getElementById('background-audio');
+            const audioToggle = document.getElementById('audio-toggle');
+            const audioNotification = document.getElementById('audio-notification');
+            
+            // Configurar volumen
+            audio.volume = 0.3;
+            
+            // Estado inicial
+            let isPlaying = false;
+            
+            // Función para mostrar notificación
+            function showNotification(message) {
+                audioNotification.textContent = message;
+                audioNotification.classList.add('show');
+                setTimeout(() => {
+                    audioNotification.classList.remove('show');
+                }, 2000);
+            }
+            
+            // Función para alternar audio
+            function toggleAudio() {
+                if (isPlaying) {
+                    audio.pause();
+                    audioToggle.textContent = '🔇';
+                    audioToggle.classList.remove('active');
+                    audioToggle.classList.add('muted');
+                    showNotification('Sonido pausado');
+                } else {
+                    // Intentar reproducir
+                    const playPromise = audio.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            isPlaying = true;
+                            audioToggle.textContent = '🔊';
+                            audioToggle.classList.add('active');
+                            audioToggle.classList.remove('muted');
+                            showNotification('Sonido activado');
+                        }).catch(error => {
+                            console.log("Error al reproducir audio:", error);
+                            audioToggle.textContent = '🔇';
+                            audioToggle.classList.remove('active');
+                            showNotification('Haz clic para activar sonido');
+                        });
+                    }
+                }
+            }
+            
+            // Evento para alternar audio
+            audioToggle.addEventListener('click', toggleAudio);
+            
+            // Actualizar estado cuando el audio se pause automáticamente
+            audio.addEventListener('pause', function() {
+                if (!audio.paused) return;
+                isPlaying = false;
+                audioToggle.textContent = '🔇';
+                audioToggle.classList.remove('active');
+                audioToggle.classList.add('muted');
+            });
+            
+            // Actualizar estado cuando el audio se reproduzca
+            audio.addEventListener('play', function() {
+                isPlaying = true;
+                audioToggle.textContent = '🔊';
+                audioToggle.classList.add('active');
+                audioToggle.classList.remove('muted');
+            });
+            
+            // Intentar cargar el audio
+            audio.load();
+        }
+
+        // Menú móvil
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobileMenu');
             mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
         }
 
+        // Manejo de redimensionamiento
         function handleResize() {
             const desktopMenu = document.querySelector('.desktop-menu');
             const mobileBtn = document.querySelector('.mobile-menu-btn');
@@ -913,8 +1082,7 @@ BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
                 });
         }
 
-        document.getElementById('copyManifestoBtn').addEventListener('click', copyManifestoToClipboard);
-
+        // Manejo del formulario de adhesión
         document.getElementById('form-adhesion').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -946,19 +1114,26 @@ BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
             countElement.textContent = currentCount + 1;
         });
 
+        // Contador de adhesiones automático
         let adhesionCount = 247;
         setInterval(() => {
             adhesionCount += Math.floor(Math.random() * 3);
             document.getElementById('adhesion-count').textContent = adhesionCount;
         }, 30000);
 
+        // Inicialización cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
             updateJupiterCountdown();
             setInterval(updateJupiterCountdown, 1000);
+            initAudioControls();
             handleResize();
             window.addEventListener('resize', handleResize);
             
+            // Botón para copiar manifiesto
+            document.getElementById('copyManifestoBtn').addEventListener('click', copyManifestoToClipboard);
+            
+            // Scroll suave para enlaces internos
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     const targetId = this.getAttribute('href');
