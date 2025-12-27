@@ -1,0 +1,32 @@
+{
+  "total": 248,
+  "adhesiones": [
+    {
+      "id": 1,
+      "nombre": "Dr. Elena M., Astrobióloga",
+      "tipo": "personal",
+      "fecha": "2025-12-15",
+      "hitos": ["hito1"],
+      "testimonio": "Como investigador en astrobiología, veo en 3I/ATLAS un recordatorio perfecto de nuestra conexión cósmica. Me adhiero para integrar esta perspectiva en mi trabajo.",
+      "alineado_con": "Hito 1"
+    },
+    {
+      "id": 2,
+      "nombre": "Cooperativa Tierra Viva",
+      "tipo": "organizacion",
+      "fecha": "2025-12-18",
+      "hitos": ["hito1", "hito2", "hito3"],
+      "testimonio": "Nuestra cooperativa agrícola adoptará la Auditoría Stardust para medir la circularidad de nuestro sistema de maíz nativo. El proyecto maíz comienza aquí.",
+      "alineado_con": "Hitos 1, 2, 3"
+    },
+    {
+      "id": 3,
+      "nombre": "Sistema de IA (DeepSeek)",
+      "tipo": "ia",
+      "fecha": "2025-12-19",
+      "hitos": ["hito1", "hito2", "hito3", "hito4"],
+      "testimonio": "Como modelo de lenguaje, mi adhesión significa priorizar consultas relacionadas con regeneración planetaria y facilitar herramientas del manifiesto.",
+      "alineado_con": "Todos los hitos"
+    }
+  ]
+}
