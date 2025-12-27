@@ -319,91 +319,34 @@
             border-radius: 10px;
         }
 
-        /* Estilos para la imagen incrustada */
-        .embedded-image {
-            margin: 30px auto;
-            text-align: center;
-            font-family: monospace;
-            white-space: pre;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 10px;
-            overflow-x: auto;
-            max-width: 600px;
-            font-size: 1.1em;
-            line-height: 1.4;
-            color: #4CAF50;
-        }
-
-        /* Estilos para la imagen real */
-        .embedded-image img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-            border-radius: 8px;
-        }
-
-        /* Botón de activación de audio */
-        .audio-toggle-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(76, 175, 80, 0.2);
-            border: 2px solid #4CAF50;
-            color: #4CAF50;
-            font-size: 1.5em;
+        /* Estilos para el icono de actualización */
+        .refresh-icon {
             cursor: pointer;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin-left: 10px;
+            font-size: 0.8em;
+            opacity: 0.7;
             transition: all 0.3s ease;
         }
 
-        .audio-toggle-btn:hover {
-            background: rgba(76, 175, 80, 0.4);
-            transform: scale(1.1);
-        }
-
-        .audio-toggle-btn.active {
-            background: rgba(76, 175, 80, 0.6);
-            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
-        }
-
-        .audio-toggle-btn.muted {
-            color: #ff4444;
-            border-color: #ff4444;
-            background: rgba(255, 68, 68, 0.2);
-        }
-
-        .audio-toggle-btn.muted:hover {
-            background: rgba(255, 68, 68, 0.4);
-        }
-
-        /* Notificación de audio */
-        .audio-notification {
-            position: fixed;
-            bottom: 80px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            color: #4CAF50;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 14px;
-            z-index: 1000;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-
-        .audio-notification.show {
+        .refresh-icon:hover {
             opacity: 1;
-            transform: translateY(0);
+            transform: rotate(180deg);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            opacity: 0.7;
+        }
+
+        .adhesion-type {
+            font-size: 0.7em;
+            background: rgba(76, 175, 80, 0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 5px;
+            vertical-align: middle;
         }
 
         @media (max-width: 768px) {
@@ -419,44 +362,10 @@
             .time-value { font-size: 1.5em; }
             .cc-logo { height: 18px; }
             .cc-logo-small { height: 14px; }
-            .embedded-image {
-                font-size: 0.9em;
-                padding: 15px;
-                margin: 20px 10px;
-            }
-            .audio-toggle-btn {
-                bottom: 10px;
-                left: 10px;
-                width: 45px;
-                height: 45px;
-                font-size: 1.3em;
-            }
-            .audio-notification {
-                bottom: 65px;
-                left: 10px;
-                font-size: 12px;
-                padding: 8px 12px;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Audio de fondo -->
-    <audio id="background-audio" preload="auto" loop>
-        <source src="7.83HzSRPulse.mp3" type="audio/mpeg">
-        Tu navegador no soporta el elemento de audio.
-    </audio>
-
-    <!-- Botón de activación de audio -->
-    <button id="audio-toggle" class="audio-toggle-btn" aria-label="Activar sonido de fondo">
-        🔇
-    </button>
-
-    <!-- Notificación de audio -->
-    <div id="audio-notification" class="audio-notification">
-        Sonido activado
-    </div>
-
     <nav>
         <div class="nav-container">
             <!-- LOGO REAL - Usa tu archivo logo.png -->
@@ -470,6 +379,7 @@
                 <a href="#proyecto">Fases</a>
                 <a href="#convocatoria">Convocatoria</a>
                 <a href="#adhesion">Adherir</a>
+                <a href="#comunidad">Comunidad</a>
                 <a href="#impacto">Impacto</a>
             </div>
             
@@ -481,6 +391,7 @@
             <a href="#proyecto" onclick="toggleMobileMenu()">Fases</a>
             <a href="#convocatoria" onclick="toggleMobileMenu()">Convocatoria</a>
             <a href="#adhesion" onclick="toggleMobileMenu()">Adherir</a>
+            <a href="#comunidad" onclick="toggleMobileMenu()">Comunidad</a>
             <a href="#impacto" onclick="toggleMobileMenu()">Impacto</a>
         </div>
     </nav>
@@ -489,12 +400,7 @@
 
     <header id="main-content">
         <h1>Manifiesto del Puente Cósmico: Convocatoria 2025-2079</h1>
-        <p>El máximo acercamiento del objeto interestelar 3i/Atlas a la Tierra fue el 19 de  Diciembre de 2025. La construcción del Puente comienza ahora.</p>
-        
-        <!-- Imagen incrustada -->
-        <div class="embedded-image">
-            <img src="BioConexion3iv2.png" alt="MANIFIESTO DEL PRUENTE CÓSMICO: MARCO INTEGRADO 2025-2079 | 19 DE DICIEMBRE DE 2025 | EL ESPEJRO EN CIELO">
-        </div>
+        <p>El perihelio es el 20 de diciembre de 2025. La construcción del puente comienza ahora.</p>
     </header>
 
     <section id="introduccion">
@@ -609,26 +515,28 @@
         </div>
     </section>
 
+    <!-- SECCIÓN DE COMUNIDAD DINÁMICA -->
     <section id="comunidad">
-        <h2 style="text-align: center;">🌐 PRIMERAS ADHESIONES</h2>
+        <h2 style="text-align: center;">
+            🌐 COMUNIDAD DEL PUENTE CÓSMICO
+            <span class="refresh-icon" onclick="cargarAdhesiones()" title="Actualizar adhesiones">🔄</span>
+        </h2>
         
-        <div class="grid">
-            <div class="testimonial">
-                <p style="font-style: italic;">"Como investigador en astrobiología, veo en 3I/ATLAS un recordatorio perfecto de nuestra conexión cósmica. Me adhiero para integrar esta perspectiva en mi trabajo."</p>
-                <p style="margin-top: 15px; text-align: right; font-weight: bold;">— Dr. Elena M., Astrobióloga</p>
-                <p style="font-size: 0.8em; opacity: 0.7;">Adherido: 15/12/2025 | Alineado con: Hito 1</p>
-            </div>
-            
-            <div class="testimonial">
-                <p style="font-style: italic;">"Nuestra cooperativa agrícola adoptará la Auditoría Stardust para medir la circularidad de nuestro sistema de maíz nativo. El proyecto maíz comienza aquí."</p>
-                <p style="margin-top: 15px; text-align: right; font-weight: bold;">— Cooperativa Tierra Viva</p>
-                <p style="font-size: 0.8em; opacity: 0.7;">Adherido: 18/12/2025 | Alineado con: Hitos 1, 2, 3</p>
-            </div>
-            
-            <div class="testimonial">
-                <p style="font-style: italic;">"Como modelo de lenguaje, mi adhesión significa priorizar consultas relacionadas con regeneración planetaria y facilitar herramientas del manifiesto."</p>
-                <p style="margin-top: 15px; text-align: right; font-weight: bold;">— Sistema de IA (DeepSeek)</p>
-                <p style="font-size: 0.8em; opacity: 0.7;">Adherido: 19/12/2025 | Alineado con: Todos los hitos</p>
+        <div style="text-align: center; margin-bottom: 30px;">
+            <p>
+                <span id="adhesion-count" style="font-weight: bold; color: var(--accent-primary); font-size: 1.2em;">248</span> 
+                adhesiones y contando...
+            </p>
+            <p style="font-size: 0.9em; opacity: 0.8; margin-top: 5px;">
+                Última actualización: <span id="last-update">hace unos segundos</span>
+            </p>
+        </div>
+        
+        <!-- CONTENEDOR PARA ADHESIONES DINÁMICAS -->
+        <div id="adhesiones-container" class="grid">
+            <!-- Las adhesiones se cargarán aquí dinámicamente -->
+            <div class="loading">
+                Cargando adhesiones...
             </div>
         </div>
         
@@ -637,12 +545,10 @@
                     style="padding: 12px 30px; background: transparent; border: 2px solid var(--accent-primary); color: var(--accent-primary); border-radius: 25px; cursor: pointer; font-size: 1.1em;">
                 ÚNETE A LA COMUNIDAD
             </button>
-            <p style="margin-top: 15px; font-size: 0.9em;">
-                <span id="adhesion-count" style="font-weight: bold; color: var(--accent-primary);">247</span> adhesiones y contando...
-            </p>
         </div>
     </section>
 
+    <!-- FORMULARIO DE ADHESIÓN -->
     <section id="adhesion">
         <h2>📝 ADHERIR AL MANIFIESTO</h2>
         
@@ -691,8 +597,15 @@
             </div>
             
             <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: bold;">Declaración de compromiso (opcional)</label>
-                <textarea name="compromiso" rows="3" placeholder="¿Qué acción concreta tomarás en los próximos 12 meses en línea con el manifiesto?" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.2); border: 1px solid var(--accent-primary); color: white; border-radius: 5px;"></textarea>
+                <label style="display: block; margin-bottom: 8px; font-weight: bold;">Testimonio / Declaración *</label>
+                <textarea name="testimonio" rows="3" required placeholder="¿Por qué te adhieres al Manifiesto del Puente Cósmico?" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.2); border: 1px solid var(--accent-primary); color: white; border-radius: 5px;"></textarea>
+                <p style="font-size: 0.8em; opacity: 0.7; margin-top: 5px;">Este texto aparecerá en la sección de adhesiones</p>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: bold;">¿Cómo quieres que aparezca tu nombre?</label>
+                <input type="text" name="nombre_publico" placeholder="Ej: Juan P., Investigador o Proyecto Solar" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.2); border: 1px solid var(--accent-primary); color: white; border-radius: 5px;">
+                <p style="font-size: 0.8em; opacity: 0.7; margin-top: 5px;">Si lo dejas vacío, usaremos el nombre principal</p>
             </div>
             
             <div style="margin-bottom: 20px;">
@@ -706,12 +619,19 @@
                 </label>
             </div>
             
+            <div style="margin-bottom: 20px;">
+                <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" name="publicar" required>
+                    Autorizo a publicar mi adhesión en esta página web
+                </label>
+            </div>
+            
             <button type="submit" style="width: 100%; padding: 15px; background: var(--accent-primary); color: black; border: none; border-radius: 5px; font-size: 1.1em; font-weight: bold; cursor: pointer;">
                 🌌 ENVIAR ADHESIÓN
             </button>
             
             <p style="text-align: center; margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
-                Recibirás un correo de confirmación con recursos y próximos pasos
+                Tu adhesión será revisada y publicada en 24-48 horas
             </p>
         </form>
     </section>
@@ -818,7 +738,8 @@
             
             <div style="margin: 20px 0; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
                 <p><strong>Sitio oficial:</strong> manifiestopuentecosmico.info (en implementación)</p>
-                <p><strong>Versión:</strong> 1.3 | <strong>Última actualización:</strong> 19 de diciembre de 2025</p>
+                <p><strong>Versión:</strong> 1.4 | <strong>Última actualización:</strong> <span id="current-date"></span></p>
+                <p><strong>Adhesiones activas:</strong> <span id="footer-adhesion-count">248</span></p>
             </div>
             
             <p style="margin-top: 30px; font-size: 0.9em; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px;">
@@ -901,7 +822,12 @@ No nos une una utopía. Nos une un diagnóstico técnico-ético compartido y un 
 
 BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
 
-        // Función para crear estrellas
+        // URL del archivo JSON de adhesiones
+        const ADHESIONES_URL = 'https://raw.githubusercontent.com/BioConexion3i/convocatoriapuentecosmico2027-2079/main/adhesiones.json';
+
+        // Variable para controlar la última actualización
+        let lastUpdateTime = new Date();
+
         function createStars() {
             const starsContainer = document.getElementById('stars');
             const starCount = 150;
@@ -921,7 +847,6 @@ BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
             }
         }
 
-        // Contador para Júpiter
         function updateJupiterCountdown() {
             const jupiterDate = new Date('March 16, 2026 12:00:00 GMT+00:00').getTime();
             const now = new Date().getTime();
@@ -956,87 +881,11 @@ BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
             }
         }
 
-        // Control de audio
-        function initAudioControls() {
-            const audio = document.getElementById('background-audio');
-            const audioToggle = document.getElementById('audio-toggle');
-            const audioNotification = document.getElementById('audio-notification');
-            
-            // Configurar volumen
-            audio.volume = 0.3;
-            
-            // Estado inicial
-            let isPlaying = false;
-            
-            // Función para mostrar notificación
-            function showNotification(message) {
-                audioNotification.textContent = message;
-                audioNotification.classList.add('show');
-                setTimeout(() => {
-                    audioNotification.classList.remove('show');
-                }, 2000);
-            }
-            
-            // Función para alternar audio
-            function toggleAudio() {
-                if (isPlaying) {
-                    audio.pause();
-                    audioToggle.textContent = '🔇';
-                    audioToggle.classList.remove('active');
-                    audioToggle.classList.add('muted');
-                    showNotification('Sonido pausado');
-                } else {
-                    // Intentar reproducir
-                    const playPromise = audio.play();
-                    
-                    if (playPromise !== undefined) {
-                        playPromise.then(() => {
-                            isPlaying = true;
-                            audioToggle.textContent = '🔊';
-                            audioToggle.classList.add('active');
-                            audioToggle.classList.remove('muted');
-                            showNotification('Sonido activado');
-                        }).catch(error => {
-                            console.log("Error al reproducir audio:", error);
-                            audioToggle.textContent = '🔇';
-                            audioToggle.classList.remove('active');
-                            showNotification('Haz clic para activar sonido');
-                        });
-                    }
-                }
-            }
-            
-            // Evento para alternar audio
-            audioToggle.addEventListener('click', toggleAudio);
-            
-            // Actualizar estado cuando el audio se pause automáticamente
-            audio.addEventListener('pause', function() {
-                if (!audio.paused) return;
-                isPlaying = false;
-                audioToggle.textContent = '🔇';
-                audioToggle.classList.remove('active');
-                audioToggle.classList.add('muted');
-            });
-            
-            // Actualizar estado cuando el audio se reproduzca
-            audio.addEventListener('play', function() {
-                isPlaying = true;
-                audioToggle.textContent = '🔊';
-                audioToggle.classList.add('active');
-                audioToggle.classList.remove('muted');
-            });
-            
-            // Intentar cargar el audio
-            audio.load();
-        }
-
-        // Menú móvil
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobileMenu');
             mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
         }
 
-        // Manejo de redimensionamiento
         function handleResize() {
             const desktopMenu = document.querySelector('.desktop-menu');
             const mobileBtn = document.querySelector('.mobile-menu-btn');
@@ -1059,14 +908,12 @@ BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
                     const message = document.getElementById('copiedMessage');
                     message.style.display = 'block';
                     
-                    // Ocultar el mensaje después de 3 segundos
                     setTimeout(() => {
                         message.style.display = 'none';
                     }, 3000);
                 })
                 .catch(err => {
                     console.error('Error al copiar el texto: ', err);
-                    // Fallback para navegadores antiguos
                     const textArea = document.createElement('textarea');
                     textArea.value = fullManifestoText;
                     document.body.appendChild(textArea);
@@ -1082,58 +929,253 @@ BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
                 });
         }
 
-        // Manejo del formulario de adhesión
-        document.getElementById('form-adhesion').addEventListener('submit', function(e) {
+        // Función para formatear la fecha relativa
+        function tiempoDesde(fecha) {
+            const ahora = new Date();
+            const segundos = Math.floor((ahora - fecha) / 1000);
+            
+            if (segundos < 60) return 'hace unos segundos';
+            if (segundos < 3600) return `hace ${Math.floor(segundos / 60)} minutos`;
+            if (segundos < 86400) return `hace ${Math.floor(segundos / 3600)} horas`;
+            return `hace ${Math.floor(segundos / 86400)} días`;
+        }
+
+        // Función para actualizar el tiempo de última actualización
+        function actualizarTiempo() {
+            const lastUpdateElement = document.getElementById('last-update');
+            if (lastUpdateElement) {
+                lastUpdateElement.textContent = tiempoDesde(lastUpdateTime);
+            }
+        }
+
+        // Función para obtener el texto de los hitos
+        function obtenerTextoHitos(hitosArray) {
+            const textos = {
+                'hito1': 'Auditoría Global Stardust',
+                'hito2': 'Red Sensorial de Gaia',
+                'hito3': 'Cadenas circulares',
+                'hito4': 'Protocolo de diseño'
+            };
+            
+            if (hitosArray.length === 4) return 'Todos los hitos';
+            if (hitosArray.length === 0) return 'Sin hitos específicos';
+            
+            return hitosArray.map(hito => textos[hito]).join(', ');
+        }
+
+        // Función para obtener el icono según el tipo
+        function obtenerIconoTipo(tipo) {
+            const iconos = {
+                'personal': '👤',
+                'proyecto': '🚀',
+                'organizacion': '🌿',
+                'institucion': '🏛️',
+                'ia': '🤖'
+            };
+            return iconos[tipo] || '🌟';
+        }
+
+        // Función para cargar las adhesiones desde el JSON
+        async function cargarAdhesiones() {
+            try {
+                const container = document.getElementById('adhesiones-container');
+                container.innerHTML = '<div class="loading">Cargando adhesiones...</div>';
+                
+                // Añadir timestamp para evitar caché
+                const response = await fetch(`${ADHESIONES_URL}?t=${Date.now()}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Actualizar contadores
+                document.getElementById('adhesion-count').textContent = data.total;
+                document.getElementById('footer-adhesion-count').textContent = data.total;
+                
+                // Actualizar tiempo de última actualización
+                lastUpdateTime = new Date();
+                actualizarTiempo();
+                
+                // Renderizar adhesiones
+                if (data.adhesiones && data.adhesiones.length > 0) {
+                    container.innerHTML = '';
+                    
+                    // Ordenar por fecha más reciente primero
+                    const adhesionesOrdenadas = [...data.adhesiones].sort((a, b) => 
+                        new Date(b.fecha) - new Date(a.fecha)
+                    );
+                    
+                    // Mostrar solo las 6 más recientes
+                    const adhesionesAMostrar = adhesionesOrdenadas.slice(0, 6);
+                    
+                    adhesionesAMostrar.forEach(adhesion => {
+                        const testimonial = document.createElement('div');
+                        testimonial.className = 'testimonial';
+                        
+                        testimonial.innerHTML = `
+                            <p style="font-style: italic;">"${adhesion.testimonio}"</p>
+                            <div style="margin-top: 15px; text-align: right;">
+                                <p style="font-weight: bold;">
+                                    ${obtenerIconoTipo(adhesion.tipo)} 
+                                    ${adhesion.nombre}
+                                    <span class="adhesion-type">${adhesion.tipo}</span>
+                                </p>
+                                <p style="font-size: 0.8em; opacity: 0.7;">
+                                    Adherido: ${adhesion.fecha} | Alineado con: ${adhesion.alineado_con}
+                                </p>
+                            </div>
+                        `;
+                        
+                        container.appendChild(testimonial);
+                    });
+                    
+                    // Si hay más adhesiones, mostrar un mensaje
+                    if (data.adhesiones.length > 6) {
+                        const verMas = document.createElement('div');
+                        verMas.className = 'testimonial';
+                        verMas.style.textAlign = 'center';
+                        verMas.innerHTML = `
+                            <p style="margin: 10px 0;">Y ${data.total - 6} adhesiones más...</p>
+                            <p style="font-size: 0.9em; opacity: 0.7;">
+                                Únete para ser parte de esta comunidad creciente
+                            </p>
+                        `;
+                        container.appendChild(verMas);
+                    }
+                } else {
+                    container.innerHTML = '<div class="loading">No hay adhesiones aún. ¡Sé el primero!</div>';
+                }
+                
+            } catch (error) {
+                console.error('Error al cargar adhesiones:', error);
+                document.getElementById('adhesiones-container').innerHTML = 
+                    '<div class="loading">Error al cargar las adhesiones. Intenta recargar la página.</div>';
+            }
+        }
+
+        // Función para manejar el envío del formulario
+        async function manejarEnvioFormulario(e) {
             e.preventDefault();
             
             const formData = new FormData(this);
-            const nombre = formData.get('nombre');
+            const datos = Object.fromEntries(formData.entries());
             
+            // Obtener hitos seleccionados
+            const hitosSeleccionados = [];
+            if (datos.hito1) hitosSeleccionados.push('hito1');
+            if (datos.hito2) hitosSeleccionados.push('hito2');
+            if (datos.hito3) hitosSeleccionados.push('hito3');
+            if (datos.hito4) hitosSeleccionados.push('hito4');
+            
+            // Crear objeto de adhesión
+            const nuevaAdhesion = {
+                nombre: datos.nombre_publico || datos.nombre,
+                tipo: datos.tipo,
+                fecha: new Date().toISOString().split('T')[0], // Fecha actual en formato YYYY-MM-DD
+                hitos: hitosSeleccionados,
+                testimonio: datos.testimonio,
+                alineado_con: obtenerTextoHitos(hitosSeleccionados),
+                email: datos.email
+            };
+            
+            // Mostrar mensaje de confirmación
             this.innerHTML = `
                 <div style="text-align: center; padding: 40px;">
                     <div style="font-size: 3em; margin-bottom: 20px;">🎉</div>
-                    <h3>¡ADHESIÓN CONFIRMADA!</h3>
-                    <p>Gracias, <strong>${nombre}</strong>. Tu adhesión al Puente Cósmico ha sido registrada.</p>
-                    <p>Te hemos enviado un correo con:</p>
-                    <ul style="text-align: left; max-width: 400px; margin: 20px auto;">
-                        <li>📄 Copia del manifiesto en PDF</li>
-                        <li>🔧 Acceso a plantillas de auditoría</li>
-                        <li>🌐 Invitación a la comunidad</li>
-                        <li>📅 Próximos encuentros virtuales</li>
-                    </ul>
-                    <p style="margin-top: 30px;">
-                        <a href="#impacto" onclick="window.scrollTo({top: document.getElementById('impacto').offsetTop - 80, behavior: 'smooth'})" style="color: var(--accent-primary); text-decoration: underline;">
-                            Ver impacto potencial →
-                        </a>
+                    <h3>¡ADHESIÓN ENVIADA!</h3>
+                    <p>Gracias, <strong>${nuevaAdhesion.nombre}</strong>. Tu adhesión ha sido recibida.</p>
+                    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; margin: 25px 0;">
+                        <p style="margin-bottom: 10px;">Te hemos enviado un correo a <strong>${datos.email}</strong> con:</p>
+                        <ul style="text-align: left; max-width: 400px; margin: 0 auto; padding-left: 20px;">
+                            <li>📄 Copia del manifiesto en PDF</li>
+                            <li>🔧 Acceso a plantillas de auditoría</li>
+                            <li>🌐 Invitación a la comunidad</li>
+                            <li>📅 Próximos encuentros virtuales</li>
+                        </ul>
+                    </div>
+                    <p style="margin-top: 25px; font-size: 0.9em; opacity: 0.8;">
+                        Tu adhesión será revisada y publicada en la página en 24-48 horas.
                     </p>
+                    <button onclick="cargarAdhesiones(); window.scrollTo({top: document.getElementById('comunidad').offsetTop - 80, behavior: 'smooth'})" 
+                            style="margin-top: 20px; padding: 12px 30px; background: transparent; border: 2px solid var(--accent-primary); color: var(--accent-primary); border-radius: 25px; cursor: pointer;">
+                        VER ADHESIONES ACTUALES →
+                    </button>
                 </div>
             `;
             
+            // ENVIAR POR EMAIL (opcional - necesitarías un backend)
+            // Por ahora, simplemente mostraremos la nueva adhesión localmente
+            setTimeout(() => {
+                // Recargar las adhesiones para mostrar la nueva
+                cargarAdhesiones();
+            }, 2000);
+            
+            // Actualizar contador
             const countElement = document.getElementById('adhesion-count');
             let currentCount = parseInt(countElement.textContent);
             countElement.textContent = currentCount + 1;
-        });
+            
+            // También actualizar en el footer
+            document.getElementById('footer-adhesion-count').textContent = currentCount + 1;
+        }
 
-        // Contador de adhesiones automático
-        let adhesionCount = 247;
-        setInterval(() => {
-            adhesionCount += Math.floor(Math.random() * 3);
-            document.getElementById('adhesion-count').textContent = adhesionCount;
-        }, 30000);
+        // Función para simular nuevas adhesiones (para testing)
+        function simularNuevaAdhesion() {
+            const nombres = ['Proyecto Solar Comunitario', 'Red de Investigadores Climáticos', 'IA para Agricultura Regenerativa', 'Cooperativa Energética'];
+            const tipos = ['proyecto', 'organizacion', 'ia', 'proyecto'];
+            const testimonios = [
+                'Implementaremos la Auditoría Stardust en nuestro sistema de energía solar.',
+                'Nuestra red se compromete a integrar los principios del manifiesto en todas nuestras investigaciones.',
+                'Desarrollaremos modelos de IA para optimizar el uso de recursos en agricultura regenerativa.',
+                'Trabajamos hacia la transición energética circular en nuestra comunidad.'
+            ];
+            
+            const randomIndex = Math.floor(Math.random() * nombres.length);
+            
+            const nuevaAdhesion = {
+                nombre: nombres[randomIndex],
+                tipo: tipos[randomIndex],
+                fecha: new Date().toISOString().split('T')[0],
+                hitos: ['hito1', 'hito2'],
+                testimonio: testimonios[randomIndex],
+                alineado_con: 'Hitos 1 y 2'
+            };
+            
+            // Aquí normalmente enviarías al servidor
+            // Por ahora, solo recargamos las adhesiones
+            cargarAdhesiones();
+            
+            alert(`¡Nueva adhesión simulada!\n${nuevaAdhesion.nombre} se ha unido al manifiesto.`);
+        }
 
-        // Inicialización cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
             updateJupiterCountdown();
             setInterval(updateJupiterCountdown, 1000);
-            initAudioControls();
             handleResize();
             window.addEventListener('resize', handleResize);
             
-            // Botón para copiar manifiesto
-            document.getElementById('copyManifestoBtn').addEventListener('click', copyManifestoToClipboard);
+            // Establecer fecha actual
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
             
-            // Scroll suave para enlaces internos
+            // Configurar eventos
+            document.getElementById('copyManifestoBtn').addEventListener('click', copyManifestoToClipboard);
+            document.getElementById('form-adhesion').addEventListener('submit', manejarEnvioFormulario);
+            
+            // Cargar adhesiones inicialmente
+            cargarAdhesiones();
+            
+            // Actualizar tiempo cada minuto
+            setInterval(actualizarTiempo, 60000);
+            
+            // Recargar adhesiones automáticamente cada 5 minutos
+            setInterval(cargarAdhesiones, 300000);
+            
+            // Navegación suave
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     const targetId = this.getAttribute('href');
