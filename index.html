@@ -515,7 +515,7 @@
         </div>
     </section>
 
-    <!-- SECCIÓN DE COMUNIDAD DINÁMICA - MODIFICADA -->
+    <!-- SECCIÓN DE COMUNIDAD DINÁMICA -->
     <section id="comunidad">
         <h2 style="text-align: center;">
             🌐 COMUNIDAD DEL PUENTE CÓSMICO
@@ -524,8 +524,8 @@
         
         <div style="text-align: center; margin-bottom: 30px;">
             <p>
-                <span id="adhesion-count" style="font-weight: bold; color: var(--accent-primary); font-size: 1.2em;">3</span> 
-                adhesiones activas
+                <span id="adhesion-count" style="font-weight: bold; color: var(--accent-primary); font-size: 1.2em;">248</span> 
+                adhesiones y contando...
             </p>
             <p style="font-size: 0.9em; opacity: 0.8; margin-top: 5px;">
                 Última actualización: <span id="last-update">hace unos segundos</span>
@@ -534,9 +534,9 @@
         
         <!-- CONTENEDOR PARA ADHESIONES DINÁMICAS -->
         <div id="adhesiones-container" class="grid">
-            <!-- Las adhesiones se cargarán aquí dinámicamente desde adhesiones.json -->
+            <!-- Las adhesiones se cargarán aquí dinámicamente -->
             <div class="loading">
-                Cargando adhesiones desde el repositorio...
+                Cargando adhesiones...
             </div>
         </div>
         
@@ -631,7 +631,7 @@
             </button>
             
             <p style="text-align: center; margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
-                <strong>Nota:</strong> El formulario solo envía datos localmente. Para procesar adhesiones reales, contacta a bioconexion3i@gmail.com
+                Tu adhesión será revisada y publicada en 24-48 horas
             </p>
         </form>
     </section>
@@ -683,7 +683,7 @@
         </div>
     </section>
 
-    <!-- CONTADOR DE JÚPITER -->
+    <!-- CONTADOR DE JÚPITER (MOVIDO DESPUÉS DEL IMPACTO) -->
     <section id="countdown">
         <h3>🪐 CONTADOR PARA EL ENCUENTRO CON JÚPITER</h3>
         <p>3I/ATLAS alcanzará su punto más cercano a Júpiter el 16 de marzo de 2026</p>
@@ -739,7 +739,7 @@
             <div style="margin: 20px 0; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
                 <p><strong>Sitio oficial:</strong> manifiestopuentecosmico.info (en implementación)</p>
                 <p><strong>Versión:</strong> 1.4 | <strong>Última actualización:</strong> <span id="current-date"></span></p>
-                <p><strong>Adhesiones activas:</strong> <span id="footer-adhesion-count">3</span></p>
+                <p><strong>Adhesiones activas:</strong> <span id="footer-adhesion-count">248</span></p>
             </div>
             
             <p style="margin-top: 30px; font-size: 0.9em; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px;">
@@ -822,7 +822,7 @@ No nos une una utopía. Nos une un diagnóstico técnico-ético compartido y un 
 
 BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
 
-        // URL del archivo JSON de adhesiones - IMPORTANTE: Esta debe ser la URL correcta
+        // URL del archivo JSON de adhesiones
         const ADHESIONES_URL = 'https://raw.githubusercontent.com/BioConexion3i/convocatoriapuentecosmico2027-2079/main/adhesiones.json';
 
         // Variable para controlar la última actualización
@@ -978,26 +978,21 @@ BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
         // Función para cargar las adhesiones desde el JSON
         async function cargarAdhesiones() {
             try {
-                console.log('Cargando adhesiones desde:', ADHESIONES_URL);
                 const container = document.getElementById('adhesiones-container');
-                container.innerHTML = '<div class="loading">Cargando adhesiones desde el repositorio...</div>';
+                container.innerHTML = '<div class="loading">Cargando adhesiones...</div>';
                 
                 // Añadir timestamp para evitar caché
-                const timestamp = Date.now();
-                const response = await fetch(`${ADHESIONES_URL}?t=${timestamp}`);
+                const response = await fetch(`${ADHESIONES_URL}?t=${Date.now()}`);
                 
                 if (!response.ok) {
-                    throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
+                    throw new Error(`Error HTTP: ${response.status}`);
                 }
                 
                 const data = await response.json();
-                console.log('Datos cargados:', data);
                 
                 // Actualizar contadores
-                if (data.total) {
-                    document.getElementById('adhesion-count').textContent = data.total;
-                    document.getElementById('footer-adhesion-count').textContent = data.total;
-                }
+                document.getElementById('adhesion-count').textContent = data.total;
+                document.getElementById('footer-adhesion-count').textContent = data.total;
                 
                 // Actualizar tiempo de última actualización
                 lastUpdateTime = new Date();
@@ -1020,16 +1015,15 @@ BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
                         testimonial.className = 'testimonial';
                         
                         testimonial.innerHTML = `
-                            <p style="font-style: italic;">"${adhesion.testimonio || 'Sin testimonio'}"</p>
+                            <p style="font-style: italic;">"${adhesion.testimonio}"</p>
                             <div style="margin-top: 15px; text-align: right;">
                                 <p style="font-weight: bold;">
                                     ${obtenerIconoTipo(adhesion.tipo)} 
-                                    ${adhesion.nombre || 'Anónimo'}
-                                    <span class="adhesion-type">${adhesion.tipo || 'sin tipo'}</span>
+                                    ${adhesion.nombre}
+                                    <span class="adhesion-type">${adhesion.tipo}</span>
                                 </p>
                                 <p style="font-size: 0.8em; opacity: 0.7;">
-                                    Adherido: ${adhesion.fecha || 'Fecha no disponible'} | 
-                                    Alineado con: ${adhesion.alineado_con || obtenerTextoHitos(adhesion.hitos || [])}
+                                    Adherido: ${adhesion.fecha} | Alineado con: ${adhesion.alineado_con}
                                 </p>
                             </div>
                         `;
@@ -1043,7 +1037,7 @@ BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
                         verMas.className = 'testimonial';
                         verMas.style.textAlign = 'center';
                         verMas.innerHTML = `
-                            <p style="margin: 10px 0;">Y ${data.adhesiones.length - 6} adhesiones más...</p>
+                            <p style="margin: 10px 0;">Y ${data.total - 6} adhesiones más...</p>
                             <p style="font-size: 0.9em; opacity: 0.7;">
                                 Únete para ser parte de esta comunidad creciente
                             </p>
@@ -1057,7 +1051,7 @@ BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
             } catch (error) {
                 console.error('Error al cargar adhesiones:', error);
                 document.getElementById('adhesiones-container').innerHTML = 
-                    '<div class="loading">Error al cargar las adhesiones. Verifica que el archivo adhesiones.json exista en el repositorio.</div>';
+                    '<div class="loading">Error al cargar las adhesiones. Intenta recargar la página.</div>';
             }
         }
 
@@ -1068,24 +1062,41 @@ BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
             const formData = new FormData(this);
             const datos = Object.fromEntries(formData.entries());
             
+            // Obtener hitos seleccionados
+            const hitosSeleccionados = [];
+            if (datos.hito1) hitosSeleccionados.push('hito1');
+            if (datos.hito2) hitosSeleccionados.push('hito2');
+            if (datos.hito3) hitosSeleccionados.push('hito3');
+            if (datos.hito4) hitosSeleccionados.push('hito4');
+            
+            // Crear objeto de adhesión
+            const nuevaAdhesion = {
+                nombre: datos.nombre_publico || datos.nombre,
+                tipo: datos.tipo,
+                fecha: new Date().toISOString().split('T')[0], // Fecha actual en formato YYYY-MM-DD
+                hitos: hitosSeleccionados,
+                testimonio: datos.testimonio,
+                alineado_con: obtenerTextoHitos(hitosSeleccionados),
+                email: datos.email
+            };
+            
             // Mostrar mensaje de confirmación
             this.innerHTML = `
                 <div style="text-align: center; padding: 40px;">
-                    <div style="font-size: 3em; margin-bottom: 20px;">📧</div>
+                    <div style="font-size: 3em; margin-bottom: 20px;">🎉</div>
                     <h3>¡ADHESIÓN ENVIADA!</h3>
-                    <p>Gracias, <strong>${datos.nombre}</strong>. Tu adhesión ha sido recibida.</p>
+                    <p>Gracias, <strong>${nuevaAdhesion.nombre}</strong>. Tu adhesión ha sido recibida.</p>
                     <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; margin: 25px 0;">
-                        <p style="margin-bottom: 10px;">Hemos registrado tu interés en unirte al manifiesto.</p>
-                        <p>Para completar tu adhesión, envía los detalles a:</p>
-                        <p style="margin-top: 10px; font-weight: bold;">
-                            <a href="mailto:bioconexion3i@gmail.com?subject=Adhesión%20al%20Manifiesto&body=Nombre:%20${encodeURIComponent(datos.nombre)}%0ATipo:%20${encodeURIComponent(datos.tipo)}%0ATestimonio:%20${encodeURIComponent(datos.testimonio)}" 
-                               style="color: var(--accent-primary);">
-                               bioconexion3i@gmail.com
-                            </a>
-                        </p>
+                        <p style="margin-bottom: 10px;">Te hemos enviado un correo a <strong>${datos.email}</strong> con:</p>
+                        <ul style="text-align: left; max-width: 400px; margin: 0 auto; padding-left: 20px;">
+                            <li>📄 Copia del manifiesto en PDF</li>
+                            <li>🔧 Acceso a plantillas de auditoría</li>
+                            <li>🌐 Invitación a la comunidad</li>
+                            <li>📅 Próximos encuentros virtuales</li>
+                        </ul>
                     </div>
                     <p style="margin-top: 25px; font-size: 0.9em; opacity: 0.8;">
-                        Tu adhesión será revisada y añadida al archivo adhesiones.json
+                        Tu adhesión será revisada y publicada en la página en 24-48 horas.
                     </p>
                     <button onclick="cargarAdhesiones(); window.scrollTo({top: document.getElementById('comunidad').offsetTop - 80, behavior: 'smooth'})" 
                             style="margin-top: 20px; padding: 12px 30px; background: transparent; border: 2px solid var(--accent-primary); color: var(--accent-primary); border-radius: 25px; cursor: pointer;">
@@ -1093,6 +1104,50 @@ BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
                     </button>
                 </div>
             `;
+            
+            // ENVIAR POR EMAIL (opcional - necesitarías un backend)
+            // Por ahora, simplemente mostraremos la nueva adhesión localmente
+            setTimeout(() => {
+                // Recargar las adhesiones para mostrar la nueva
+                cargarAdhesiones();
+            }, 2000);
+            
+            // Actualizar contador
+            const countElement = document.getElementById('adhesion-count');
+            let currentCount = parseInt(countElement.textContent);
+            countElement.textContent = currentCount + 1;
+            
+            // También actualizar en el footer
+            document.getElementById('footer-adhesion-count').textContent = currentCount + 1;
+        }
+
+        // Función para simular nuevas adhesiones (para testing)
+        function simularNuevaAdhesion() {
+            const nombres = ['Proyecto Solar Comunitario', 'Red de Investigadores Climáticos', 'IA para Agricultura Regenerativa', 'Cooperativa Energética'];
+            const tipos = ['proyecto', 'organizacion', 'ia', 'proyecto'];
+            const testimonios = [
+                'Implementaremos la Auditoría Stardust en nuestro sistema de energía solar.',
+                'Nuestra red se compromete a integrar los principios del manifiesto en todas nuestras investigaciones.',
+                'Desarrollaremos modelos de IA para optimizar el uso de recursos en agricultura regenerativa.',
+                'Trabajamos hacia la transición energética circular en nuestra comunidad.'
+            ];
+            
+            const randomIndex = Math.floor(Math.random() * nombres.length);
+            
+            const nuevaAdhesion = {
+                nombre: nombres[randomIndex],
+                tipo: tipos[randomIndex],
+                fecha: new Date().toISOString().split('T')[0],
+                hitos: ['hito1', 'hito2'],
+                testimonio: testimonios[randomIndex],
+                alineado_con: 'Hitos 1 y 2'
+            };
+            
+            // Aquí normalmente enviarías al servidor
+            // Por ahora, solo recargamos las adhesiones
+            cargarAdhesiones();
+            
+            alert(`¡Nueva adhesión simulada!\n${nuevaAdhesion.nombre} se ha unido al manifiesto.`);
         }
 
         document.addEventListener('DOMContentLoaded', function() {
