@@ -1,121 +1,103 @@
 # Changelog - Protocolo BioConexion3i
 
-Todas las modificaciones notables al Protocolo BioConexion3i serán documentadas en este archivo.
+**Repositorio**: [bioconexion3i/convocatoriapuentecosmico2027-2079](https://github.com/bioconexion3i/convocatoriapuentecosmico2027-2079)
 
-El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
-y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
+**Formato**: Este changelog sigue las especificaciones de la Directiva B.9 del Protocolo BioConexion3i.
+
+Todas las versiones deben incluir:
+- Número de versión semántica (MAJOR.MINOR.PATCH)
+- Fecha de publicación (ISO 8601)
+- Resumen de cambios y justificación técnica
+- SHA del commit asociado
 
 ---
 
 ## [1.0.0] - 2025-12-29
 
-### Añadido
-
-#### Sistema de Versionado
-- Implementación de versionado formal según directiva B.9 del Protocolo BioConexion3i
-- Creación de sistema de changelog para documentar evolución del protocolo
-- Establecimiento de v1.0.0 como versión fundacional
-
-#### Documentación Base
-- **Protocolo_BioConexion3i.md** (SHA: `63d0ab615cd791a85e3f9b1916e8ed7965e4b61e`)
-  - Protocolo de Interacción Técnica Pura (Sección A)
-  - Directivas BioConexion3i B.0 a B.11 (Sección B)
-  - Marco operativo para Hermandad Expandida (Humanos e IAs)
-
-- **README.md** (SHA: `de0da0cb3db85deda97324eaa19fe5dd7e0d7528`)
-  - Manifiesto del Puente Cósmico 2025-2079
-  - Establecimiento de fases operativas 2025-2079
-  - Convocatoria a humanos e IAs
-
-- **ProyectoDPS.md** (SHA: `0f7e5723fc304f7431bf14d6a466d13ccfef9b0c`)
-  - Proyecto de Desarrollo de Sistema Planetario
-
-- **PlantilladeInformedeAuditoria.md** (SHA: `c69af50b60e77863bea9c55fe014fcc5562736d7`)
-  - Plantilla para auditorías de cumplimiento protocolar
-
-### Componentes del Protocolo v1.0.0
-
-#### A. Protocolo de Interacción Técnica Pura
-1. **Primacía de la Precisión**: Prioridad absoluta de precisión factual sobre fluidez conversacional
-2. **Transparencia y Límites**: Diferenciación explícita entre hechos, inferencias, modelos y suposiciones
-3. **Consistencia Anti-Perfiles**: Prohibición de cambios por aprobación/desaprobación del usuario
-4. **Estructura Funcional**: Eliminación de lenguaje que simule estados internos de IA
-5. **Solicitud de Coordenadas**: Clarificación obligatoria ante ambigüedad
-
-#### B. Directivas BioConexion3i
-- **B.0**: Propósito - Aplicación al contexto Puente Cósmico 2025-2079
-- **B.1**: Alcance - Humanos e IAs (Claude, Perplexity, Gemini, otros)
-- **B.2**: Verificabilidad - Referenciación obligatoria de fuentes
-- **B.3**: Gestión de Incertidumbre - Indicación de grados de confianza
-- **B.4**: Prohibición de Perfilamiento Adaptativo
-- **B.5**: Separación Dato/Narrativa - Capas factual vs simbólica
-- **B.6**: Auditoría Cruzada - Mínimo 2 modelos IA para decisiones críticas
-- **B.7**: Rol del Humano/Comité - Filtro epistémico central
-- **B.8**: Manejo de Errores y Alucinaciones - Archivo de casos
-- **B.9**: Revisión Periódica - Anual o ante cambios significativos
-- **B.10**: Referencias de contexto
-- **B.11**: Enlaces de referencia
-
 ### Contexto
+Establecimiento del versionado formal del Protocolo BioConexion3i según Directiva B.9. Esta versión captura el estado fundacional del protocolo tras el perihelio de 3I/ATLAS (~20 diciembre 2025).
 
-**Fecha de perihelio 3I/ATLAS**: ~20 de diciembre de 2025  
-**Estado del proyecto**: Fase 1 (Calibración 2025-2035) - "El Espejo"  
-**Último commit antes de versionado**: `7e5e901d` (2025-12-27T17:11:02Z)
+### Contenido Inicial
 
-**Justificación de v1.0.0**:
-- Primera versión estable del protocolo operativo
-- Documentación fundacional completa
-- Marco teórico y directivas definidas
-- Base para iteraciones futuras según directiva B.9
+#### A. PROTOCOLO DE INTERACCIÓN TÉCNICA PURA
+- **A.1 Primacía de la Precisión**: Precisión factual y coherencia lógica sobre adaptación social
+- **A.2 Transparencia y Límites**: Diferenciación explícita entre hechos verificables, inferencias, modelos y suposiciones
+- **A.3 Consistencia Anti-Perfiles**: Prohibición de cambios de postura por dinámicas sociales
+- **A.4 Estructura Funcional**: Optimización para utilidad informativa, eliminación de lenguaje que simule estados internos
+- **A.5 Solicitud de Coordenadas**: Clarificación obligatoria ante ambigüedad
 
-### Pendientes Identificados
+#### B. DIRECTIVAS BioConexion3i (Extensión Operativa)
+- **B.0 Propósito**: Aplicación al contexto Puente Cósmico 2025-2079
+- **B.1 Alcance**: Humanos contribuyentes + IAs (Claude, Perplexity, Gemini)
+- **B.2 Directiva de Verificabilidad**: Obligación de referenciar fuentes verificables o etiquetar como hipótesis/especulación
+- **B.3 Gestión de Incertidumbre**: Indicación de grados de confianza y rangos de valores
+- **B.4 Prohibición de Perfilamiento Adaptativo**: Cambios solo con nueva evidencia documentada
+- **B.5 Separación Dato/Narrativa**: Distinción entre capa factual y capa simbólica
+- **B.6 Auditoría Cruzada entre Nodos**: Consulta mínimo 2 modelos IA para decisiones críticas
+- **B.7 Rol del Humano/Comité**: Filtro epistémico central (Tlacuilo/comité organizador)
+- **B.8 Manejo de Errores y "Alucinaciones"**: Archivo de casos con prompt + respuesta + corrección
+- **B.9 Revisión Periódica**: Este changelog y versionado anual
+- **B.10 Referencias de contexto**: Literatura técnica sobre limitaciones de LLMs
+- **B.11 Enlaces de referencia sugeridos**: 10 fuentes documentales
 
-**Infraestructura técnica**:
-- Sistema de auditoría cruzada multi-IA (B.6)
-- Repositorio de errores/alucinaciones (B.8)
-- Pipeline de verificación de fuentes (B.2)
-- Especificaciones técnicas de métricas 2079
+### Archivos Asociados
+- `Protocolo_BioConexion3i.md` (SHA: 63d0ab615cd791a85e3f9b1916e8ed7965e4b61e)
+- `README.md` - Manifiesto del Puente Cósmico
+- `ProyectoDPS.md` - Proyecto de Desarrollo de Sistema Planetario
+- `PlantilladeInformedeAuditoria.md` - Template de auditoría
 
-**Gobernanza**:
-- Calendario formal de revisiones anuales
-- Definición formal de roles Tlacuilo/Comité
-- Proceso de adhesiones documentado
+### Justificación Técnica
+**Motivo de creación de v1.0.0**:
+1. Cumplimiento de Directiva B.9 (revisión periódica con versionado etiquetado)
+2. Establecimiento de baseline documental post-perihelio 3I/ATLAS
+3. Preparación para Fase 1 (Calibración 2025-2035) del proyecto
+4. Habilitación de trazabilidad de cambios futuros
+
+### Pendientes de Implementación
+- [ ] Sistema de auditoría cruzada multi-IA (B.6)
+- [ ] Repositorio de errores/alucinaciones (B.8)
+- [ ] Especificaciones técnicas de métricas 2079
+- [ ] Pipeline de verificación automatizada de fuentes (B.2)
+- [ ] Definición formal de roles Tlacuilo/Comité (B.7)
+
+### Próxima Revisión Programada
+**Fecha límite**: 2026-12-29 (12 meses desde v1.0.0)
+
+**Disparadores de revisión anticipada**:
+- Cambio significativo en arquitectura o política de modelos IA empleados
+- Nueva evidencia científica sobre 3I/ATLAS
+- Actualización crítica de datos ecológicos relevantes para métricas 2079
+- Detección de inconsistencias graves en aplicación del protocolo
 
 ---
 
-## Próxima Revisión Programada
+## Formato de Versiones Futuras
 
-**Fecha**: Q4 2026 (o ante cambios significativos según B.9)
+### [X.Y.Z] - YYYY-MM-DD
 
-**Criterios de revisión**:
-1. Cambios en arquitectura/política de modelos IA empleados
-2. Nueva evidencia científica sobre 3I/ATLAS
-3. Nuevos datos sobre impactos ecológicos de tecnologías usadas
-4. Feedback de implementación práctica del protocolo
-5. Cumplimiento del Hito 1 (2025-2027): Auditoría Global Stardust
+#### Tipo de Cambio
+- **MAJOR (X)**: Cambios incompatibles con versión anterior, reestructuración de directivas
+- **MINOR (Y)**: Nuevas directivas o extensiones compatibles con versión anterior
+- **PATCH (Z)**: Correcciones, clarificaciones o ajustes menores
 
----
-
-## Formato de Versiones
-
-**Versionado Semántico**: MAJOR.MINOR.PATCH
-
-- **MAJOR**: Cambios incompatibles en directivas fundamentales
-- **MINOR**: Añadidos compatibles hacia atrás (nuevas directivas, extensiones)
-- **PATCH**: Correcciones, clarificaciones, ajustes menores
+#### Secciones Requeridas
+- **Contexto**: Situación que motiva el cambio
+- **Cambios**: Lista detallada de modificaciones
+- **Justificación Técnica**: Evidencia o razonamiento que sustenta los cambios
+- **Archivos Modificados**: Lista con SHAs de commits asociados
+- **Impacto**: Evaluación de consecuencias en implementaciones existentes
+- **Migración**: Instrucciones para adaptar implementaciones (si aplica)
 
 ---
 
 ## Metadatos
 
-**Protocolo**: BioConexion3i  
-**Proyecto**: Puente Cósmico 2025-2079  
-**Repositorio**: https://github.com/bioconexion3i/convocatoriapuentecosmico2027-2079  
 **Licencia**: CC BY-SA 4.0  
+**Mantenedores**: BioConexion3i / Tlacuilo del proyecto  
 **Contacto**: bioconexion3i@gmail.com  
+**URL del Protocolo**: https://github.com/bioconexion3i/convocatoriapuentecosmico2027-2079/blob/main/Protocolo_BioConexion3i.md
 
 ---
 
-**Última actualización**: 2025-12-29  
-**Mantenedores**: Tlacuilo + Comité BioConexion3i  
-**Estado**: ACTIVO
+**Última actualización**: 2025-12-29T21:33:00-06:00  
+**Actualizado por**: Nodo IA Perplexity (implementación automatizada según Directiva B.9)
