@@ -35,6 +35,14 @@ Implementación de sistemas operacionales fundacionales (B.2, B.3, B.6) identifi
   - Workflow de 4 pasos: Prompt Maestro → Consulta Paralela → Matriz de Convergencia → Síntesis Humana
   - **Cláusula de Bootstrap** (vigencia Q1 2026): Permite implementación fundacional con auditoría retrospectiva
 
+- **Sistema_Monitoreo_Bootstrap.md** (2025-12-30T13:19:00-06:00):
+  - Sistema de alerta temprana para detectar intentos de evadir B.6
+  - Criterios de detección: Alertas Rojas (violación inmediata) y Amarillas (revisión)
+  - Protocolo de respuesta estructurado para nodos IA y humanos
+  - Log de casos monitoreados (formato MON-YYYY-MM-DD-XXX)
+  - Integración con ERRORES_IA.md para violaciones confirmadas
+  - Vigencia indefinida con revisión trimestral
+
 ### Modificado
 - **ERRORES_IA.md** (v1.0.0 → v1.0.1):
   - Agregada categoría `VIOLACION_PROTOCOLO` a taxonomía
@@ -55,6 +63,12 @@ Implementación de sistemas operacionales fundacionales (B.2, B.3, B.6) identifi
   - Creación de B6_Auditoria_Cruzada.md para prevenir futuras violaciones
   - Compromiso de auditoría retrospectiva en Q1 2026
 
+- **Decisión Estratégica de Seguridad** (2025-12-30T12:57:00-06:00):
+  - **NO se implementará B.12 (Procedimientos de Bootstrap)** en Protocolo_BioConexion3i.md
+  - **Razón**: Evitar crear backdoor para evadir B.6 en el futuro
+  - **Alternativa**: Sistema_Monitoreo_Bootstrap.md como vigilancia activa
+  - **Compromiso**: Cero tolerancia a invocaciones bootstrap post-Q1 2026
+
 ### Justificación Técnica
 **Necesidad de implementación acelerada**:
 1. Sistemas B.2 (Verificabilidad) y B.3 (Incertidumbre) son prerrequisitos para generar documentación técnica válida en Fase 1 (Calibración 2025-2035)
@@ -65,14 +79,21 @@ Implementación de sistemas operacionales fundacionales (B.2, B.3, B.6) identifi
    - Supervisión directa del Tlacuilo fundador
    - Compromiso de validación retrospectiva con múltiples nodos IA
 
+**Decisión de NO formalizar Bootstrap como B.12**:
+1. **Riesgo de backdoor**: Formalizar procedimiento de excepción podría legitimar evasiones futuras de B.6
+2. **Priorización de seguridad**: Protocolo estricto (sin excepciones permanentes) sobre conveniencia procedimental
+3. **Alternativa de vigilancia**: Sistema_Monitoreo_Bootstrap.md provee detección activa sin crear precedente formal
+4. **Filosofía de diseño**: Preferir registro transparente de violaciones sobre legitimación de excepciones
+
 **Lección aprendida**:
-El Protocolo necesita sección explícita de "Procedimientos de Bootstrap" para fase inicial antes de que sistemas de gobernanza estén completamente operacionales.
+El proyecto optó por rigidez protocolar con transparencia sobre flexibilidad con riesgo de abuso.
 
 ### Archivos Asociados
-- `B2_Sistema_Verificabilidad.md` (Nuevo)
-- `B3_Sistema_Incertidumbre.md` (Nuevo)
-- `B6_Auditoria_Cruzada.md` (Nuevo)
-- `ERRORES_IA.md` (Actualizado a v1.0.1)
+- `B2_Sistema_Verificabilidad.md` (Nuevo - SHA: b43a09d1)
+- `B3_Sistema_Incertidumbre.md` (Nuevo - SHA: ceda0eff)
+- `B6_Auditoria_Cruzada.md` (Nuevo - SHA: b98cfad3)
+- `Sistema_Monitoreo_Bootstrap.md` (Nuevo - SHA: 25b15add)
+- `ERRORES_IA.md` (Actualizado a v1.0.1 - SHA: 9ecc584e)
 - `CHANGELOG_Protocolo.md` (Este archivo, actualizado)
 
 ### Impacto
@@ -80,21 +101,25 @@ El Protocolo necesita sección explícita de "Procedimientos de Bootstrap" para 
   - Habilitación de documentación técnica con estándares de verificabilidad
   - Reducción de riesgo de alucinaciones/sesgos no detectados
   - Mayor transparencia epistémica en todo el proyecto
+  - Sistema de vigilancia activa contra evasiones de auditoría
   
 - **Proceso**: 
   - Todos los documentos técnicos futuros deben cumplir checklist B.2
-  - Decisiones de alto impacto requieren workflow B.6
+  - Decisiones de alto impacto requieren workflow B.6 (sin excepciones post-Q1 2026)
   - Hipótesis deben declarar nivel de confianza (B.3)
+  - Nodos IA deben auto-detectar y alertar sobre solicitudes que requieran B.6
 
 ### Próximos Pasos
-- [ ] Validación humana de contenido generado
+- [x] Validación humana de contenido generado - **Completado 2025-12-30**
 - [ ] Auditoría cruzada retrospectiva (Q1 2026) con Claude, Gemini
-- [ ] Agregar sección "Procedimientos de Bootstrap" al Protocolo principal
+- [x] ~~Agregar sección "Procedimientos de Bootstrap" al Protocolo principal~~ - **CANCELADO por decisión de seguridad**
 - [ ] Implementar linter automatizado para verificar cumplimiento B.2
+- [ ] Revisión trimestral Sistema_Monitoreo_Bootstrap.md (2026-04-01)
 
 ### Responsables
 - **Detección de violación**: Tlacuilo (bioconexion3i)
 - **Auto-reporte y documentación**: Nodo IA Perplexity
+- **Decisión estratégica**: Tlacuilo (bioconexion3i)
 - **Revisión pendiente**: Comité BioConexion3i
 
 ---
@@ -145,6 +170,7 @@ Establecimiento del versionado formal del Protocolo BioConexion3i según Directi
 - [x] Repositorio de errores/alucinaciones (B.8) - **Operacional desde 2025-12-29**
 - [x] Sistema de verificabilidad (B.2) - **Implementado 2025-12-30**
 - [x] Sistema de gestión de incertidumbre (B.3) - **Implementado 2025-12-30**
+- [x] Sistema de monitoreo de evasiones (vigilancia B.6) - **Implementado 2025-12-30**
 - [ ] Especificaciones técnicas de métricas 2079
 - [ ] Pipeline de verificación automatizada de fuentes (B.2)
 - [ ] Definición formal de roles Tlacuilo/Comité (B.7)
@@ -188,5 +214,5 @@ Establecimiento del versionado formal del Protocolo BioConexion3i según Directi
 
 ---
 
-**Última actualización**: 2025-12-30T12:36:00-06:00  
-**Actualizado por**: Nodo IA Perplexity (implementación de infraestructura técnica bajo Cláusula Bootstrap)
+**Última actualización**: 2025-12-30T13:39:00-06:00  
+**Actualizado por**: Nodo IA Perplexity (registro de Sistema de Monitoreo Bootstrap y decisión estratégica de seguridad)
