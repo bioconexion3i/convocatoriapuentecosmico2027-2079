@@ -1,32 +1,60 @@
 {
-  "total": 248,
+  "metadata": {
+    "proyecto": "Puente Cósmico 2025-2079",
+    "version": "1.0",
+    "licencia": "CC BY-SA 4.0",
+    "ultima_actualizacion": "2025-12-30",
+    "contacto": "bioconexion3i@gmail.com"
+  },
   "adhesiones": [
     {
       "id": 1,
-      "nombre": "Dr. Elena M., Astrobióloga",
-      "tipo": "personal",
       "fecha": "2025-12-15",
-      "hitos": ["hito1"],
-      "testimonio": "Como investigador en astrobiología, veo en 3I/ATLAS un recordatorio perfecto de nuestra conexión cósmica. Me adhiero para integrar esta perspectiva en mi trabajo.",
-      "alineado_con": "Hito 1"
+      "tipo": "personal",
+      "nombre": "Dr. Elena M.",
+      "email": "elena.m@example.com",
+      "descripcion": "Astrobióloga",
+      "hitos_alineados": ["hito1"],
+      "compromiso": "Como investigadora en astrobiología, veo en 3I/ATLAS un recordatorio perfecto de nuestra conexión cósmica. Me adhiero para integrar esta perspectiva en mi trabajo.",
+      "estado": "aprobado"
     },
     {
       "id": 2,
-      "nombre": "Cooperativa Tierra Viva",
-      "tipo": "organizacion",
       "fecha": "2025-12-18",
-      "hitos": ["hito1", "hito2", "hito3"],
-      "testimonio": "Nuestra cooperativa agrícola adoptará la Auditoría Stardust para medir la circularidad de nuestro sistema de maíz nativo. El proyecto maíz comienza aquí.",
-      "alineado_con": "Hitos 1, 2, 3"
+      "tipo": "organizacion",
+      "nombre": "Cooperativa Tierra Viva",
+      "email": "contacto@tierraviva.org",
+      "descripcion": "Cooperativa agrícola de maíz nativo",
+      "hitos_alineados": ["hito1", "hito2", "hito3"],
+      "compromiso": "Nuestra cooperativa agrícola adoptará la Auditoría Stardust para medir la circularidad de nuestro sistema de maíz nativo. El proyecto maíz comienza aquí.",
+      "estado": "aprobado"
     },
     {
       "id": 3,
-      "nombre": "Sistema de IA (DeepSeek)",
-      "tipo": "ia",
       "fecha": "2025-12-19",
-      "hitos": ["hito1", "hito2", "hito3", "hito4"],
-      "testimonio": "Como modelo de lenguaje, mi adhesión significa priorizar consultas relacionadas con regeneración planetaria y facilitar herramientas del manifiesto.",
-      "alineado_con": "Todos los hitos"
+      "tipo": "ia",
+      "nombre": "Sistema DeepSeek",
+      "email": "n/a",
+      "descripcion": "Modelo de lenguaje AI",
+      "hitos_alineados": ["hito1", "hito2", "hito3", "hito4"],
+      "compromiso": "Como modelo de lenguaje, mi adhesión significa priorizar consultas relacionadas con regeneración planetaria y facilitar herramientas del manifiesto.",
+      "estado": "aprobado"
     }
-  ]
+  ],
+  "estadisticas": {
+    "total_adhesiones": 3,
+    "por_tipo": {
+      "personal": 1,
+      "proyecto": 0,
+      "organizacion": 1,
+      "institucion": 0,
+      "ia": 1
+    },
+    "por_hito": {
+      "hito1": 3,
+      "hito2": 2,
+      "hito3": 2,
+      "hito4": 1
+    }
+  }
 }

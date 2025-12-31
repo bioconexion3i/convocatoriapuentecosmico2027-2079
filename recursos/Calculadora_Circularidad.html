@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Circularidad Material | Auditoría Stardust</title>
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --secondary: #2196F3;
+            --danger: #ff6b6b;
+            --warning: #ffd93d;
+            --dark: #1a1a1a;
+            --light: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: var(--light);
+            border-radius: 10px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .section h2 {
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border 0.3s;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .helper-text {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .result {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .result.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .score-display {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .score-label {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .interpretation {
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .interpretation h3 {
+            margin-bottom: 10px;
+        }
+
+        .recommendations {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .recommendations ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .recommendations li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--dark);
+            color: white;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .score-circle {
+                width: 150px;
+                height: 150px;
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌍 Calculadora de Circularidad Material</h1>
+            <p>Auditoría Stardust - Puente Cósmico 2025-2079</p>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>📊 Datos de Entrada</h2>
+                
+                <div class="input-group">
+                    <label for="materialInput">Material Total de Entrada (kg/año)</label>
+                    <input type="number" id="materialInput" min="0" step="0.01" placeholder="Ej: 10000">
+                    <div class="helper-text">Cantidad total de material que ingresa al sistema</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="materialReciclado">Material Reciclado/Reutilizado (kg/año)</label>
+                    <input type="number" id="materialReciclado" min="0" step="0.01" placeholder="Ej: 3000">
+                    <div class="helper-text">Material que proviene de ciclos anteriores o se reutiliza</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="residuosRecuperados">Residuos Recuperados y Reintegrados (kg/año)</label>
+                    <input type="number" id="residuosRecuperados" min="0" step="0.01" placeholder="Ej: 2000">
+                    <div class="helper-text">Residuos del proceso que se reintegran productivamente</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="residuosLineales">Residuos Lineales/Pérdidas (kg/año)</label>
+                    <input type="number" id="residuosLineales" min="0" step="0.01" placeholder="Ej: 5000">
+                    <div class="helper-text">Material que sale del sistema sin recuperación</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>⚡ Datos de Energía</h2>
+                
+                <div class="input-group">
+                    <label for="energiaTotal">Energía Total Consumida (kWh/año)</label>
+                    <input type="number" id="energiaTotal" min="0" step="0.01" placeholder="Ej: 50000">
+                    <div class="helper-text">Consumo energético anual del proceso</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="energiaRenovable">Energía Renovable (kWh/año)</label>
+                    <input type="number" id="energiaRenovable" min="0" step="0.01" placeholder="Ej: 15000">
+                    <div class="helper-text">Energía solar, eólica, hidráulica u otras renovables</div>
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calcularCircularidad()">🔄 CALCULAR ÍNDICE DE CIRCULARIDAD</button>
+
+            <div class="result" id="resultado">
+                <div class="score-display">
+                    <div class="score-label">Índice de Circularidad Material</div>
+                    <div class="score-circle" id="scoreCircle">
+                        <span id="scoreValue">0%</span>
+                    </div>
+                    <div id="scoreInterpretation"></div>
+                </div>
+
+                <div class="interpretation" id="interpretacion"></div>
+
+                <div class="recommendations">
+                    <h3>💡 Recomendaciones para Mejorar</h3>
+                    <ul id="recomendaciones"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>BioConexion3i</strong> | Manifiesto del Puente Cósmico</p>
+            <p><a href="https://bioconexion3i.github.io/convocatoriapuentecosmico2027-2079/" target="_blank">Sitio Principal</a> | Licencia CC BY-SA 4.0</p>
+        </div>
+    </div>
+
+    <script>
+        function calcularCircularidad() {
+            // Obtener valores
+            const materialInput = parseFloat(document.getElementById('materialInput').value) || 0;
+            const materialReciclado = parseFloat(document.getElementById('materialReciclado').value) || 0;
+            const residuosRecuperados = parseFloat(document.getElementById('residuosRecuperados').value) || 0;
+            const residuosLineales = parseFloat(document.getElementById('residuosLineales').value) || 0;
+            const energiaTotal = parseFloat(document.getElementById('energiaTotal').value) || 0;
+            const energiaRenovable = parseFloat(document.getElementById('energiaRenovable').value) || 0;
+
+            // Validación
+            if (materialInput === 0) {
+                alert('Por favor, ingresa el material total de entrada');
+                return;
+            }
+
+            // Cálculo de circularidad material
+            const materialCircular = materialReciclado + residuosRecuperados;
+            const circularidadMaterial = (materialCircular / (materialInput + residuosRecuperados)) * 100;
+
+            // Cálculo de circularidad energética
+            const circularidadEnergetica = energiaTotal > 0 ? (energiaRenovable / energiaTotal) * 100 : 0;
+
+            // Índice combinado (70% material, 30% energía)
+            const indiceCircularidad = (circularidadMaterial * 0.7) + (circularidadEnergetica * 0.3);
+
+            // Mostrar resultado
+            mostrarResultado(indiceCircularidad, circularidadMaterial, circularidadEnergetica, materialInput, residuosLineales);
+        }
+
+        function mostrarResultado(indice, circMaterial, circEnergia, inputTotal, residuosLineales) {
+            const resultado = document.getElementById('resultado');
+            const scoreCircle = document.getElementById('scoreCircle');
+            const scoreValue = document.getElementById('scoreValue');
+            const interpretacion = document.getElementById('interpretacion');
+            const recomendaciones = document.getElementById('recomendaciones');
+
+            // Mostrar score
+            scoreValue.textContent = indice.toFixed(1) + '%';
+
+            // Color según score
+            let color, nivel, mensaje;
+            if (indice >= 75) {
+                color = 'linear-gradient(135deg, #4CAF50, #8BC34A)';
+                nivel = '🌟 EXCELENTE - Alineado con Gaia';
+                mensaje = 'Tu sistema opera con alta circularidad. Estás contribuyendo activamente a la regeneración planetaria según los principios del Hito 3.';
+            } else if (indice >= 50) {
+                color = 'linear-gradient(135deg, #FFC107, #FF9800)';
+                nivel = '⚠️ MODERADO - En transición';
+                mensaje = 'Tu sistema muestra potencial de circularidad, pero hay margen significativo de mejora para alinearse con los objetivos del Puente 2025-2079.';
+            } else if (indice >= 25) {
+                color = 'linear-gradient(135deg, #FF9800, #FF5722)';
+                nivel = '🔴 BAJO - Requiere transformación';
+                mensaje = 'Tu sistema opera principalmente en modo lineal. Se requiere una transformación profunda para alinearse con los principios Stardust.';
+            } else {
+                color = 'linear-gradient(135deg, #F44336, #D32F2F)';
+                nivel = '❌ CRÍTICO - Modelo extractivo';
+                mensaje = 'Tu sistema está en modo completamente lineal/extractivo. Es urgente iniciar la transición hacia circularidad.';
+            }
+
+            scoreCircle.style.background = color;
+
+            // Interpretación
+            interpretacion.style.background = color;
+            interpretacion.style.color = 'white';
+            interpretacion.innerHTML = `
+                <h3>${nivel}</h3>
+                <p style="margin-top: 10px; line-height: 1.6;">${mensaje}</p>
+                <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.9;">
+                    <strong>Circularidad Material:</strong> ${circMaterial.toFixed(1)}%<br>
+                    <strong>Circularidad Energética:</strong> ${circEnergia.toFixed(1)}%<br>
+                    <strong>Tasa de Residuos Lineales:</strong> ${((residuosLineales / inputTotal) * 100).toFixed(1)}%
+                </p>
+            `;
+
+            // Recomendaciones
+            const recs = [];
+            if (circMaterial < 50) {
+                recs.push('Implementar un sistema de recuperación de residuos para reintegrarlos al proceso productivo');
+                recs.push('Establecer alianzas con proveedores que acepten materiales post-consumo');
+            }
+            if (circEnergia < 50) {
+                recs.push('Aumentar el uso de energías renovables (solar, eólica) en tus instalaciones');
+                recs.push('Realizar auditoría energética para identificar oportunidades de eficiencia');
+            }
+            if (residuosLineales / inputTotal > 0.3) {
+                recs.push('Rediseñar productos para minimizar residuos no recuperables');
+                recs.push('Explorar tecnologías de valorización de residuos actuales');
+            }
+            recs.push('Documentar tu proceso según la plantilla de Auditoría Stardust completa');
+            recs.push('Conectar con la comunidad BioConexion3i para compartir mejores prácticas');
+
+            recomendaciones.innerHTML = recs.map(r => `<li>${r}</li>`).join('');
+
+            // Mostrar resultado con animación
+            resultado.classList.add('show');
+            resultado.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+</body>
+</html>
