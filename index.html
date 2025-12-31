@@ -638,7 +638,9 @@
                 ÚNETE A LA COMUNIDAD
             </button>
             <p style="margin-top: 15px; font-size: 0.9em;">
-                <span id="adhesion-count" style="font-weight: bold; color: var(--accent-primary);">247</span> adhesiones y contando...
+                <a href="https://github.com/bioconexion3i/convocatoriapuentecosmico2027-2079/issues?q=label%3Aadherido" target="_blank" style="color: var(--accent-primary); text-decoration: underline;">
+                    <span id="adhesion-count" style="font-weight: bold;">Ver adhesiones aprobadas</span> →
+                </a>
             </p>
         </div>
     </section>
@@ -646,74 +648,81 @@
     <section id="adhesion">
         <h2>📝 ADHERIR AL MANIFIESTO</h2>
         
-        <p>Para registrar un proyecto, iniciativa o tu adhesión personal al marco del Puente 2025-2079, completa esta declaración:</p>
+        <p>Para registrar tu adhesión al marco del Puente 2025-2079, completa el formulario en GitHub Issues. Tu adhesión será pública y transparente (B.7).</p>
         
-        <form id="form-adhesion" style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 10px; margin-top: 30px;">
+        <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 10px; margin-top: 30px; text-align: center;">
+            <h3 style="margin-bottom: 20px;">Sistema de Adhesiones Transparente</h3>
             
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: bold;">¿Qué tipo de adhesión? *</label>
-                <select name="tipo" required style="width: 100%; padding: 10px; background: rgba(255,255,255,0.2); border: 1px solid var(--accent-primary); color: white; border-radius: 5px;">
-                    <option value="">Selecciona una opción</option>
-                    <option value="personal">Personal (como individuo)</option>
-                    <option value="proyecto">Proyecto o Iniciativa</option>
-                    <option value="organizacion">Organización o Colectivo</option>
-                    <option value="institucion">Institución o Gobierno</option>
-                    <option value="ia">Sistema de IA/Agente Digital</option>
-                </select>
+            <p style="margin-bottom: 30px; opacity: 0.9;">
+                Utilizamos GitHub Issues para garantizar transparencia total (Directiva B.7).<br>
+                Cada adhesión es pública, auditable y permanente.
+            </p>
+            
+            <a href="https://github.com/bioconexion3i/convocatoriapuentecosmico2027-2079/issues/new?template=adhesion.md" 
+               target="_blank"
+               style="display: inline-block; background: var(--accent-primary); color: black; padding: 20px 40px; border-radius: 10px; text-decoration: none; font-size: 1.2em; font-weight: bold; box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);">
+                🌌 CREAR ADHESIÓN EN GITHUB
+            </a>
+            
+            <div style="margin-top: 30px; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 8px; text-align: left;">
+                <h4>📋 Proceso de Adhesión:</h4>
+                <ol style="margin-top: 10px; line-height: 2;">
+                    <li><strong>Completa</strong> el formulario en GitHub (2-3 minutos)</li>
+                    <li><strong>Envía</strong> haciendo clic en "Submit new issue"</li>
+                    <li><strong>Espera aprobación</strong> del Comité (24-72 horas)</li>
+                    <li><strong>Recibe confirmación</strong> y acceso a recursos</li>
+                </ol>
             </div>
             
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: bold;">Nombre / Nombre del proyecto *</label>
-                <input type="text" name="nombre" required placeholder="¿Cómo te llamas o cómo se llama tu proyecto?" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.2); border: 1px solid var(--accent-primary); color: white; border-radius: 5px;">
+            <div style="margin-top: 20px; padding: 15px; background: rgba(76, 175, 80, 0.1); border-left: 4px solid var(--accent-primary); text-align: left;">
+                <p><strong>✅ Ventajas del Sistema GitHub:</strong></p>
+                <ul style="margin-top: 10px;">
+                    <li>🔍 <strong>Transparencia total:</strong> Todas las adhesiones son públicas</li>
+                    <li>📊 <strong>Auditable:</strong> Historial completo de cambios</li>
+                    <li>🔔 <strong>Notificaciones:</strong> Recibirás actualizaciones por email</li>
+                    <li>💬 <strong>Interacción:</strong> Puedes comentar y actualizar tu adhesión</li>
+                </ul>
             </div>
             
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: bold;">Correo electrónico / Contacto *</label>
-                <input type="email" name="email" required placeholder="Para confirmación y actualizaciones" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.2); border: 1px solid var(--accent-primary); color: white; border-radius: 5px;">
-            </div>
+            <p style="margin-top: 30px; font-size: 0.9em; opacity: 0.7;">
+                <a href="https://github.com/bioconexion3i/convocatoriapuentecosmico2027-2079/issues?q=label%3Aadherido" 
+                   target="_blank" 
+                   style="color: var(--accent-primary); text-decoration: underline;">
+                    Ver adhesiones ya aprobadas →
+                </a>
+            </p>
+        </div>
+        
+        <div style="margin-top: 40px; text-align: center;">
+            <h3>📦 Recursos que Recibirás</h3>
+            <p style="margin-bottom: 20px;">Una vez aprobada tu adhesión, tendrás acceso a:</p>
             
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: bold;">¿Con qué hito(s) del manifiesto te alineas? *</label>
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
-                    <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" name="hito1" value="hito1"> Hito 1: Auditoría Global Stardust
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" name="hito2" value="hito2"> Hito 2: Red Sensorial de Gaia
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" name="hito3" value="hito3"> Hito 3: Cadenas circulares
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" name="hito4" value="hito4"> Hito 4: Protocolo de diseño
-                    </label>
+            <div class="grid" style="margin-top: 20px;">
+                <div class="testimonial" style="text-align: center;">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">📄</div>
+                    <h4>Manifiesto Completo</h4>
+                    <p>PDF con todos los hitos y principios operativos</p>
+                </div>
+                
+                <div class="testimonial" style="text-align: center;">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">🔧</div>
+                    <h4>Calculadora Circularidad</h4>
+                    <p>Herramienta web para auditorías Stardust</p>
+                </div>
+                
+                <div class="testimonial" style="text-align: center;">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">🌐</div>
+                    <h4>Guía Red Sensorial</h4>
+                    <p>Manual completo para implementar nodos Gaia</p>
+                </div>
+                
+                <div class="testimonial" style="text-align: center;">
+                    <div style="font-size: 2.5em; margin-bottom: 10px;">📋</div>
+                    <h4>Plantilla Auditoría</h4>
+                    <p>Template para evaluar circularidad de proyectos</p>
                 </div>
             </div>
-            
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: bold;">Declaración de compromiso (opcional)</label>
-                <textarea name="compromiso" rows="3" placeholder="¿Qué acción concreta tomarás en los próximos 12 meses en línea con el manifiesto?" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.2); border: 1px solid var(--accent-primary); color: white; border-radius: 5px;"></textarea>
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <label style="display: flex; align-items: center; gap: 8px;">
-                    <input type="checkbox" name="licencia" required> 
-                    Acepto compartir bajo 
-                    <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" target="_blank" class="cc-link">
-                        <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-sa.png" alt="Licencia Creative Commons BY-SA 4.0" class="cc-logo-small">
-                        Licencia CC BY-SA 4.0
-                    </a>
-                </label>
-            </div>
-            
-            <button type="submit" style="width: 100%; padding: 15px; background: var(--accent-primary); color: black; border: none; border-radius: 5px; font-size: 1.1em; font-weight: bold; cursor: pointer;">
-                🌌 ENVIAR ADHESIÓN
-            </button>
-            
-            <p style="text-align: center; margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
-                Recibirás un correo de confirmación con recursos y próximos pasos
-            </p>
-        </form>
+        </div>
     </section>
 
     <!-- IMPACTO POTENCIAL -->
@@ -818,7 +827,7 @@
             
             <div style="margin: 20px 0; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
                 <p><strong>Sitio oficial:</strong> manifiestopuentecosmico.info (en implementación)</p>
-                <p><strong>Versión:</strong> 1.3 | <strong>Última actualización:</strong> 19 de diciembre de 2025</p>
+                <p><strong>Versión:</strong> 1.4 | <strong>Última actualización:</strong> 31 de diciembre de 2025</p>
             </div>
             
             <p style="margin-top: 30px; font-size: 0.9em; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px;">
@@ -1081,45 +1090,6 @@ BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info`;
                     }, 3000);
                 });
         }
-
-        // Manejo del formulario de adhesión
-        document.getElementById('form-adhesion').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const nombre = formData.get('nombre');
-            
-            this.innerHTML = `
-                <div style="text-align: center; padding: 40px;">
-                    <div style="font-size: 3em; margin-bottom: 20px;">🎉</div>
-                    <h3>¡ADHESIÓN CONFIRMADA!</h3>
-                    <p>Gracias, <strong>${nombre}</strong>. Tu adhesión al Puente Cósmico ha sido registrada.</p>
-                    <p>Te hemos enviado un correo con:</p>
-                    <ul style="text-align: left; max-width: 400px; margin: 20px auto;">
-                        <li>📄 Copia del manifiesto en PDF</li>
-                        <li>🔧 Acceso a plantillas de auditoría</li>
-                        <li>🌐 Invitación a la comunidad</li>
-                        <li>📅 Próximos encuentros virtuales</li>
-                    </ul>
-                    <p style="margin-top: 30px;">
-                        <a href="#impacto" onclick="window.scrollTo({top: document.getElementById('impacto').offsetTop - 80, behavior: 'smooth'})" style="color: var(--accent-primary); text-decoration: underline;">
-                            Ver impacto potencial →
-                        </a>
-                    </p>
-                </div>
-            `;
-            
-            const countElement = document.getElementById('adhesion-count');
-            let currentCount = parseInt(countElement.textContent);
-            countElement.textContent = currentCount + 1;
-        });
-
-        // Contador de adhesiones automático
-        let adhesionCount = 247;
-        setInterval(() => {
-            adhesionCount += Math.floor(Math.random() * 3);
-            document.getElementById('adhesion-count').textContent = adhesionCount;
-        }, 30000);
 
         // Inicialización cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
