@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "📧 Contacto Directo"
+    url: mailto:bioconexion3i@gmail.com
+    about: "Contacta directamente al equipo BioConexion3i"
+  - name: "🌍 Sitio Web"
+    url: https://bioconexion3i.github.io/convocatoriapuentecosmico2027-2079/
+    about: "Visita el sitio principal del Manifiesto"
+  - name: "📊 Ver Adhesiones Aprobadas"
+    url: https://github.com/bioconexion3i/convocatoriapuentecosmico2027-2079/issues?q=label%3Aadherido
+    about: "Explora las adhesiones ya aprobadas"
