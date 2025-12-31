@@ -1,9 +1,10 @@
-# Protocolo BioConexion3i v1.0.0
+# Protocolo BioConexion3i v1.1.0
 
-**Versión**: 1.0.0  
-**Fecha**: 2025-12-29  
-**Estado**: ACTIVO  
+**Versión**: 1.1.0  
+**Fecha**: 2025-12-30  
+**Estado**: EXPERIMENTAL (Rama v1.1-experimental)  
 **Changelog**: [CHANGELOG_Protocolo.md](./CHANGELOG_Protocolo.md)  
+**Tipo**: MINOR (extensiones compatibles v1.0.0)
 
 ---
 
@@ -75,6 +76,10 @@ Aplicar el Protocolo de Interacción Técnica Pura al contexto específico de Pu
 2. Si no existe fuente verificable en tiempo razonable, la afirmación debe etiquetarse explícitamente como:
    - **Hipótesis**: basada en extrapolación razonada de datos existentes.
    - **Especulación**: planteamiento sin soporte suficiente, usado solo como exploración.
+3. **NIVELES DE PRIORIDAD DE VERIFICACIÓN**:
+   - **Nivel 1 (Crítico)**: Afirmaciones que son premisa fundamental para una decisión de alto impacto (ver B.6.2). Requiere doble verificación o fuente primaria.
+   - **Nivel 2 (Estructural)**: Datos clave que sostienen un análisis o recomendación. Requiere cita explícita.
+   - **Nivel 3 (Contextual)**: Información de apoyo o anácdota. Debe marcarse claramente como tal y no usarse como evidencia primaria.
 
 ---
 
@@ -84,6 +89,7 @@ Aplicar el Protocolo de Interacción Técnica Pura al contexto específico de Pu
 2. En estos casos, los nodos (humanos e IAs) deben:
    - Indicar el grado de confianza (bajo / medio / alto).
    - Ofrecer rangos, escenarios o alternativas, no solo un valor puntual.
+3. **PRINCIPIO DE LA ACCIÓN REVERSIBLE**: Para decisiones bajo alta incertidumbre, se priorizarán las opciones de diseño o política que sean más fácilmente reversibles o ajustables ante nueva evidencia, incluso si su eficiencia teórica inicial es menor.
 
 ---
 
@@ -110,17 +116,26 @@ Aplicar el Protocolo de Interacción Técnica Pura al contexto específico de Pu
      - Cosmologías culturales, metáforas, arquetipos, relatos rituales, marcos de sentido.
 
 2. El lenguaje poético, mítico o litúrgico no puede usarse para cubrir vacíos de dato; debe marcarse explícitamente como narrativa y no como descripción empírica.
+3. **FORMATO DE MARCADO SUGERIDO**: Para mayor claridad, se sugiere el uso de prefijos entre corchetes al inicio de párrafos o secciones: `[HECHO]`, `[INFERENCIA]`, `[NARRATIVA]`. El Comité (B.7) definirá el estándar final.
 
 ---
 
 ### B.6 Auditoría Cruzada entre Nodos
 
-1. Para decisiones de alto impacto dentro del proyecto (lineamientos estratégicos, definición de métricas de Alineación Gaia, evaluaciones de proyectos), se requiere:
+1. Para decisiones de alto impacto dentro del proyecto, se requiere:
 
    - Consultar al menos dos modelos IA de forma independiente.
    - Comparar explícitamente puntos de convergencia y divergencia entre sus salidas.
 
-2. La decisión final debe:
+2. **DEFINICIÓN OPERATIVA DE "ALTO IMPACTO"**: Se activa la auditoría cruzada obligatoria cuando una decisión:
+   - **a)** Compromete recursos (tiempo, materiales, financieros) por encima de un umbral definido por el Comité.
+   - **b)** Afecta el alcance, la cronología o los objetivos fundamentales del proyecto Puente Cósmico.
+   - **c)** Define o cambia una métrica de evaluación de "Alineación Gaia" u otro concepto central del proyecto.
+   - **d)** Implica un riesgo ético, de seguridad o legal identificado.
+
+3. **MATRIZ DE SENSIBILIDAD**: El reporte de auditoría debe incluir un análisis de cómo cambian las conclusiones bajo distintos supuestos o escenarios de datos conflictivos.
+
+4. La decisión final debe:
 
    - Ser tomada por humanos responsables (Tlacuilo y/o comité organizador).
    - Quedar registrada en el repositorio correspondiente, con referencia a las respuestas de los modelos y a las fuentes utilizadas.
@@ -136,8 +151,10 @@ Aplicar el Protocolo de Interacción Técnica Pura al contexto específico de Pu
 
 2. Mantener este protocolo:
 
-   - Versionarlo mediante etiquetas (`v1.0`, `v2.0`, …) en el repositorio.
+   - Versionarlo mediante etiquetas (`v1.0`, `v1.1`, …) en el repositorio.
    - Registrar cambios y motivos en un changelog asociado (`CHANGELOG_Protocolo.md`).
+
+3. **DISEÑADOR DE PROTOCOLOS DE INTERACCIÓN**: El Comité es responsable de diseñar y refinar los "rituales" o procedimientos específicos que implementan estas directivas (ej.: formato de reportes, checklist para revisiones, plantillas para solicitud de coordenadas).
 
 ---
 
@@ -162,6 +179,8 @@ Aplicar el Protocolo de Interacción Técnica Pura al contexto específico de Pu
 
   - La arquitectura o política de uso de los modelos IA empleados.
   - El estado de la evidencia científica relevante para Puente Cósmico (por ejemplo, nueva información sobre 3I/ATLAS o sobre impactos ecológicos de tecnologías usadas).
+
+- **GATILLOS ADICIONALES PARA REVISIÓN**: El protocolo también se revisará tras acumular 5 casos documentados de "alucinaciones" graves (B.8) o si una auditoría cruzada (B.6) revela una inconsistencia fundamental en la aplicación de las directivas.
 
 - Cada revisión debe generar:
   - Una nueva versión etiquetada.
@@ -209,10 +228,13 @@ Aplicar el Protocolo de Interacción Técnica Pura al contexto específico de Pu
 
 ## Metadatos de Versión
 
-**Versión**: 1.0.0  
-**Fecha de publicación**: 2025-12-29  
-**SHA del documento**: 63d0ab615cd791a85e3f9b1916e8ed7965e4b61e (versión original)  
-**Próxima revisión programada**: Q4 2026  
+**Versión**: 1.1.0  
+**Fecha de publicación**: 2025-12-30  
+**SHA del documento**: (generado por GitHub tras commit)  
+**Cambios desde v1.0.0**: 7 extensiones operativas (B.2.3, B.3.3, B.5.3, B.6.2-3, B.7.3, B.9)  
+**Tipo de actualización**: MINOR (extensiones compatibles)  
+**Próxima revisión programada**: Q4 2026 o según gatillos B.9  
+**Estado**: EXPERIMENTAL (rama v1.1-experimental)  
 **Licencia**: CC BY-SA 4.0  
 **Mantenedores**: Tlacuilo + Comité BioConexion3i  
 **Contacto**: bioconexion3i@gmail.com
