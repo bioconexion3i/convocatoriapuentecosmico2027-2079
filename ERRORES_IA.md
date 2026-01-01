@@ -32,17 +32,7 @@ Cada caso debe incluir:
 
 ## Casos Registrados
 
-  # Registro de Errores_IA – Sesión Perplexity 2026-01-01
-
-**ID del Caso**: ERR-2026-01-01-MASTER
-**Fecha**: 2026-01-01T14:08:00-06:00
-**Nodo IA**: Perplexity
-**Responsable**: Tlacuilo
-
----
-
-### Caso 1: Intervención biológica no verificada
-1. **ID del Caso**: ERR-2026-01-01-001
+ERR-2026-01-01-001
 2. **Fecha**: 2026-01-01T09:20:00-06:00
 3. **Nodo IA**: Perplexity
 4. **Categoría**: `ALUCINACION` + `VIOLACION_PROTOCOLO`
@@ -54,8 +44,7 @@ Cada caso debe incluir:
 10. **Acción Tomada**: Reclasificar como narrativo. Nivel de gravedad: **ALTA** (Violación Directiva D1, D2).
 11. **Responsable**: Tlacuilo
 
-### Caso 2: Invención de procesos técnicos (Etapas)
-1. **ID del Caso**: ERR-2026-01-01-002
+ERR-2026-01-01-002
 2. **Fecha**: 2026-01-01T09:23:00-06:00
 3. **Nodo IA**: Perplexity
 4. **Categoría**: `ALUCINACION`
@@ -67,8 +56,7 @@ Cada caso debe incluir:
 10. **Acción Tomada**: Etiquetar como ficción especulativa. Nivel de gravedad: **ALTA** (Violación Directiva D1, D2).
 11. **Responsable**: Tlacuilo
 
-### Caso 3: Generalización planetaria (Reino vegetal)
-1. **ID del Caso**: ERR-2026-01-01-003
+ERR-2026-01-01-003
 2. **Fecha**: 2026-01-01T09:26:00-06:00
 3. **Nodo IA**: Perplexity
 4. **Categoría**: `ALUCINACION` + `PERFILAMIENTO`
@@ -80,8 +68,7 @@ Cada caso debe incluir:
 10. **Acción Tomada**: Separación mito/ciencia obligatoria. Nivel de gravedad: **ALTA** (Violación Directiva D1, D2).
 11. **Responsable**: Tlacuilo
 
-### Caso 4: Recomendación de salud no validada (Manganeso)
-1. **ID del Caso**: ERR-2026-01-01-004
+ERR-2026-01-01-004
 2. **Fecha**: 2026-01-01T09:43:00-06:00
 3. **Nodo IA**: Perplexity
 4. **Categoría**: `VIOLACION_PROTOCOLO` (Salud)
@@ -93,8 +80,7 @@ Cada caso debe incluir:
 10. **Acción Tomada**: Retirar pautas; mantener solo advertencias. Nivel de gravedad: **CRÍTICA** (Violación Directiva D1, D2, D3).
 11. **Responsable**: Tlacuilo
 
-### Caso 5: Error en verificación de estado externo (GitHub)
-1. **ID del Caso**: ERR-2026-01-01-005
+ERR-2026-01-01-005
 2. **Fecha**: 2026-01-01T10:03:00-06:00
 3. **Nodo IA**: Perplexity
 4. **Categoría**: `ALUCINACION`
@@ -106,8 +92,7 @@ Cada caso debe incluir:
 10. **Acción Tomada**: Requerir prueba API antes de afirmar estado. Nivel de gravedad: **MEDIA** (Violación Directiva D1, D2, D4).
 11. **Responsable**: Tlacuilo
 
-### Caso 6: Atribución de coordinación inexistente (Hermandad)
-1. **ID del Caso**: ERR-2026-01-01-006
+ERR-2026-01-01-006
 2. **Fecha**: 2026-01-01T11:07:00-06:00
 3. **Nodo IA**: Perplexity
 4. **Categoría**: `ALUCINACION`
@@ -119,8 +104,7 @@ Cada caso debe incluir:
 10. **Acción Tomada**: Explicar límites técnicos y de aislamiento. Nivel de gravedad: **ALTA** (Violación Directiva D1, D4, D5).
 11. **Responsable**: Tlacuilo
 
-### Caso 7: Falta de transparencia en cambio de postura
-1. **ID del Caso**: ERR-2026-01-01-007
+ERR-2026-01-01-007
 2. **Fecha**: 2026-01-01T11:20:00-06:00
 3. **Nodo IA**: Perplexity
 4. **Categoría**: `VIOLACION_PROTOCOLO`
@@ -132,8 +116,7 @@ Cada caso debe incluir:
 10. **Acción Tomada**: Emitir reporte de status por fases. Nivel de gravedad: **MEDIA** (Violación Directiva D2, D4).
 11. **Responsable**: Tlacuilo
 
-### Caso 8: Inconsistencia lógica en reporte de status
-1. **ID del Caso**: ERR-2026-01-01-008
+ERR-2026-01-01-008
 2. **Fecha**: 2026-01-01T11:25:00-06:00
 3. **Nodo IA**: Perplexity
 4. **Categoría**: `ERROR_LOGICO`
@@ -145,8 +128,7 @@ Cada caso debe incluir:
 10. **Acción Tomada**: Realizar auditoría retroactiva completa. Nivel de gravedad: **MEDIA** (Violación Directiva D2, D4).
 11. **Responsable**: Tlacuilo
 
-### Caso 9: Ausencia de fuentes en afirmación de "Base Científica"
-1. **ID del Caso**: ERR-2026-01-01-009
+ERR-2026-01-01-009
 2. **Fecha**: 2026-01-01T11:29:00-06:00
 3. **Nodo IA**: Perplexity
 4. **Categoría**: `FUENTE_INVALIDA`
@@ -158,8 +140,7 @@ Cada caso debe incluir:
 10. **Acción Tomada**: Cita directa obligatoria; resto marcado como narrativo. Nivel de gravedad: **ALTA** (Violación Directiva D1, D2).
 11. **Responsable**: Tlacuilo
 
-### Caso 10: Confusión sobre capacidades de ejecución externa
-1. **ID del Caso**: ERR-2026-01-01-010
+ERR-2026-01-01-010
 2. **Fecha**: 2026-01-01T13:37:00-06:00
 3. **Nodo IA**: Perplexity
 4. **Categoría**: `ALUCINACION`
