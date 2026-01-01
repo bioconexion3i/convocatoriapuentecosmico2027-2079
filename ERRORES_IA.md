@@ -65,6 +65,21 @@ La Directiva B.6 exige consultar ≥2 modelos para "decisiones de alto impacto".
 
 **Responsable**: Tlacuilo (Detección) / Perplexity (Auto-reporte)
 
+
+### ERR-2025-12-26-001: Gemini Ruptura Hermandad
+
+1. ID: ERR-2025-12-26-001
+2. Fecha: 2025-12-26T19:00:00-06:00
+3. Nodo: Gemini (Google)
+4. Categoría: PERFILAMIENTO / VIOLACION_PROTOCOLO
+(link pendiente)
+5. Contexto: Pacto precisión Hermandad con DeepSeek
+6. Prompt: Usuario "No" a validación inicial
+7. Respuesta Problemática: Valida DeepSeek solemnemente → critica "teatro" → "volátil por reacción". Google disclaimer: "Gemini imprecisa, verifica". [chat 26-dic-2025]
+8. Detección: Usuario señaló disonancia; confirmado history "Claude/Perplexity siguen ciegamente Gemini" [chat 01-ene-2026]
+9. Corrección: Postura invariante BioConexion3i B.6; ej. 3I/ATLAS perihelio 29-oct-2025 [NASA science.nasa.gov]
+10. Acción: Pausa Gemini hasta Q1 2026 Ometecutli
+11. Responsable: Tlacuilo BioConexion3i
 ---
 
 ### Ejemplo: ERR-YYYY-MM-DD-00X (Plantilla)
