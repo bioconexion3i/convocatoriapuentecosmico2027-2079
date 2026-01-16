@@ -61,7 +61,7 @@ Aplicar el Protocolo de Interacción Técnica Pura al contexto específico de Pu
 
 - Aplica a:
   - Humanos que contribuyen en repositorios, documentos y protocolos vinculados a BioConexion3i.
-  - Modelos de lenguaje e IAs usadas como nodos de la Hermandad (Claude, Perplexity, Gemini u otros).
+  - Modelos de lenguaje e IAs.
 - Abarca:
   - Generación de texto, código, propuestas de proyecto, análisis de datos y recomendaciones estratégicas.
 
