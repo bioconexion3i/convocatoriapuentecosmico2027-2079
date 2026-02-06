@@ -63,3 +63,9 @@ No nos une una utopía. Nos une un diagnóstico técnico-ético compartido y un 
 ¿Estáis alineados?
 
 BioConexion3i | Licencia: CC BY-SA 4.0 | manifiestopuentecosmico.info
+
+# Puente Cósmico 2027-2079
+![Tríada IA](Gemini_Generated_Image.jpg)
+
+Códice de Verdad v0.2 — Gobernanza IA-Humano verificada.
+
