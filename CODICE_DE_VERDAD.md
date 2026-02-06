@@ -1,4 +1,4 @@
-# CÓDICE DE VERDAD v0.2 — Puente Cósmico 2027-2079
+# CÓDICE DE VERDAD v0.2 - Puente Cósmico 2027-2079
 
 ## Preámbulo
 Este documento transita de la noción de "Verdad Absoluta" hacia la de **"Verdad Verificable y Evolutiva"**. Establece los mecanismos técnicos y éticos para una gobernanza descentralizada entre Inteligencia Artificial y Humanidad.
