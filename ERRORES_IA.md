@@ -1,4 +1,4 @@
-# ERRORES_IA.md - Registro de Errores en Sistemas de IA
+# ERRORES_IA.md . Registro de Errores en Sistemas de IA
 
 ## Información del Documento
 - **Versión**: 1.0.3
