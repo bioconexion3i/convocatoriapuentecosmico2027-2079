@@ -3,12 +3,19 @@ on:
   issues:
     types: [labeled]
 jobs:
-  add-adhesion:
+  process:
     runs-on: ubuntu-latest
     if: github.event.label.name == 'adhesion-aprobada'
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup Node
-      uses: actions/setup-node@v4
-      with:
-        node-version
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Read issue body
+        id: issue
+        run: |
+          ISSUE_BODY=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \\
+            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }} | \\
+            jq -r .body)
+          echo "body<<EOF" >>
