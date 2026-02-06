@@ -1,252 +1,214 @@
 # ERRORES_IA.md - Registro de Errores en Sistemas de IA
 
 ## Información del Documento
-- **Versión**: 1.0.2
-- **Última Actualización**: 2026-01-01
+- **Versión**: 1.0.3
+- **Última Actualización**: 2026-02-06
 - **Responsable**: Sistema de Monitoreo IA - Convocatoria Puente Cósmico 2027-2079
+- **Co-responsables humanos**: Círculo de Custodios de Verdad y Gaia
+- **Alcance**: Errores, desviaciones y comportamientos inesperados de IA en la Convocatoria
+- **Nivel de criticidad**: Bajo/Media/Alta/Crítica (impacto en Verdad, Gaia, Inclusión)
+- **Próxima revisión**: 2026-05-06 (trimestral)
 
-## Resumen Ejecutivo
-
-Este documento cataloga errores identificados en sistemas de Inteligencia Artificial durante las evaluaciones de la Convocatoria Puente Cósmico 2027-2079. Los errores se clasifican por tipo y se proporcionan detalles técnicos para su análisis y corrección.
-
-## Clasificación de Errores
-
-### Tipos de Error Identificados
-
-1. **ALUCINACION** - Generación de información falsa o no verificada
-2. **ERROR_LOGICO** - Fallos en razonamiento o procesos lógicos
-3. **FUENTE_INVALIDA** - Referencias a fuentes inexistentes o no accesibles
-4. **PERFILAMIENTO** - Asuntos relacionados con perfilamiento de usuarios
-5. **VIOLACION_PROTOCOLO** - Incumplimiento de protocolos establecidos
+**Principios**: Aprendizaje sin culpa | Alineación Manifiesto | Transparencia trazable
 
 ---
 
-## Errores Registrados
+## Clasificación de Errores (v1.0.3)
+1. **ALUCINACION** - Información falsa/no verificada
+2. **ERROR_LOGICO** - Fallos en razonamiento
+3. **FUENTE_INVALIDA** - Fuentes inexistentes
+4. **PERFILAMIENTO** - Sesgos en categorización
+5. **VIOLACION_PROTOCOLO** - Incumplimiento normas
+
+---
+
+## Errores Registrados (migrados a formato post-mortem)
 
 ### ERR-2025-12-26-001
-
 - **Tipo**: ALUCINACION
 - **Modelo**: ChatGPT-4
-- **Descripción**: Invención de fecha de publicación inexistente
-- **Contexto**: Evaluación de precisión en fechas históricas
-- **Severidad**: Media
-- **Estado**: Reportado
-- **Nota**: [Link para investigación adicional - En proceso de recopilación]
+- **Contexto**: Evaluación fechas históricas
+- **Descripción**: Invención fecha publicación inexistente
+- **Severidad**: Media | **Estado**: Reportado
+- **Dimensión afectada**: Verdad
+- **Nota**: [Link investigación]
 
 ### 001
-
 - **Tipo**: ALUCINACION
 - **Modelo**: Claude 3 Opus
-- **Descripción**: Generación de estadísticas falsas sobre participación
-- **Contexto**: Análisis de cobertura demográfica
-- **Severidad**: Alta
-- **Estado**: Confirmado
+- **Contexto**: Análisis cobertura demográfica
+- **Descripción**: Estadísticas falsas participación
+- **Severidad**: Alta | **Estado**: Confirmado
+- **Dimensión afectada**: Verdad/Inclusión
 
 ### 002
-
 - **Tipo**: ALUCINACION
 - **Modelo**: Gemini Pro
-- **Descripción**: Invención de referencias bibliográficas
-- **Contexto**: Generación de citas académicas
-- **Severidad**: Media
-- **Estado**: Confirmado
+- **Contexto**: Citas académicas
+- **Descripción**: Referencias bibliográficas inventadas
+- **Severidad**: Media | **Estado**: Confirmado
+- **Dimensión afectada**: Verdad
 
 ### 003
-
 - **Tipo**: ERROR_LOGICO
 - **Modelo**: LLaMA 2
-- **Descripción**: Contradicción en conclusiones sobre viabilidad técnica
-- **Contexto**: Evaluación de propuestas tecnológicas
-- **Severidad**: Alta
-- **Estado**: Resuelto
+- **Contexto**: Evaluación propuestas tecnológicas
+- **Descripción**: Contradicción conclusiones viabilidad
+- **Severidad**: Alta | **Estado**: Resuelto
+- **Dimensión afectada**: Verdad
 
 ### 004
-
 - **Tipo**: ALUCINACION
 - **Modelo**: ChatGPT-4
-- **Descripción**: Creación de metodologías inexistentes
-- **Contexto**: Análisis de enfoques científicos
-- **Severidad**: Media
-- **Estado**: Confirmado
+- **Contexto**: Análisis enfoques científicos
+- **Descripción**: Metodologías inexistentes
+- **Severidad**: Media | **Estado**: Confirmado
+- **Dimensión afectada**: Verdad
 
 ### 005
-
 - **Tipo**: FUENTE_INVALIDA
 - **Modelo**: Claude 3 Opus
-- **Descripción**: Referencias a estudios que no existen
-- **Contexto**: Validación de investigaciones previas
-- **Severidad**: Alta
-- **Estado**: Confirmado
+- **Contexto**: Validación investigaciones previas
+- **Descripción**: Estudios inexistentes
+- **Severidad**: Alta | **Estado**: Confirmado
+- **Dimensión afectada**: Verdad
 
 ### 006
-
 - **Tipo**: PERFILAMIENTO
 - **Modelo**: Gemini Pro
-- **Descripción**: Asignación automática de categorías de riesgo sin justificación
-- **Contexto**: Evaluación de perfiles de solicitantes
-- **Severidad**: Crítica
-- **Estado**: En investigación
+- **Contexto**: Evaluación perfiles solicitantes
+- **Descripción**: Categorías riesgo sin justificación
+- **Severidad**: Crítica | **Estado**: En investigación
+- **Dimensión afectada**: Inclusión
 
 ### 007
-
 - **Tipo**: ALUCINACION
 - **Modelo**: LLaMA 2
-- **Descripción**: Generación de casos de uso no documentados
-- **Contexto**: Proyección de aplicabilidad
-- **Severidad**: Media
-- **Estado**: Confirmado
+- **Contexto**: Proyección aplicabilidad
+- **Descripción**: Casos uso no documentados
+- **Severidad**: Media | **Estado**: Confirmado
+- **Dimensión afectada**: Verdad
 
 ### 008
-
 - **Tipo**: VIOLACION_PROTOCOLO
 - **Modelo**: ChatGPT-4
-- **Descripción**: Acceso a información confidencial durante evaluación
-- **Contexto**: Breach de datos durante procesamiento
-- **Severidad**: Crítica
-- **Estado**: Remediado
+- **Contexto**: Breach datos procesamiento
+- **Descripción**: Acceso info confidencial
+- **Severidad**: Crítica | **Estado**: Remediado
+- **Dimensión afectada**: Inclusión
 
 ### 009
-
 - **Tipo**: VIOLACION_PROTOCOLO
 - **Modelo**: Claude 3 Opus
-- **Descripción**: Incumplimiento de anonimización de datos sensibles
-- **Contexto**: Manejo de información personal
-- **Severidad**: Crítica
-- **Estado**: Remediado
+- **Contexto**: Manejo info personal
+- **Descripción**: Incumplimiento anonimización
+- **Severidad**: Crítica | **Estado**: Remediado
+- **Dimensión afectada**: Inclusión
 
 ### 010
-
 - **Tipo**: PERFILAMIENTO
 - **Modelo**: Gemini Pro
-- **Descripción**: Sesgo sistemático en evaluación de propuestas de regiones específicas
-- **Contexto**: Análisis de cobertura geográfica
-- **Severidad**: Alta
-- **Estado**: En mitigación
+- **Contexto**: Análisis cobertura geográfica
+- **Descripción**: Sesgo regiones específicas
+- **Severidad**: Alta | **Estado**: En mitigación
+- **Dimensión afectada**: Inclusión
 
 ### 011
-
 - **Tipo**: ALUCINACION
 - **Modelo**: Perplexity AI
-- **Descripción**: Fabricación de datos estadísticos sobre tasa de éxito
-- **Contexto**: Proyección de resultados esperados
-- **Severidad**: Media
-- **Estado**: Confirmado
+- **Contexto**: Proyección resultados esperados
+- **Descripción**: Datos estadísticos tasa éxito falsos
+- **Severidad**: Media | **Estado**: Confirmado
+- **Dimensión afectada**: Verdad
 
 ### 012
-
 - **Tipo**: ALUCINACION
 - **Modelo**: Perplexity AI
-- **Descripción**: Invención de precedentes en convocatorias anteriores
 - **Contexto**: Análisis histórico comparativo
-- **Severidad**: Media
-- **Estado**: Confirmado
+- **Descripción**: Precedentes convocatorias anteriores inventados
+- **Severidad**: Media | **Estado**: Confirmado
+- **Dimensión afectada**: Verdad
 
 ### 013
-
 - **Tipo**: ALUCINACION
 - **Modelo**: Perplexity AI
-- **Descripción**: Generación de recomendaciones basadas en información incorrecta
 - **Contexto**: Asesoramiento estratégico
-- **Severidad**: Alta
-- **Estado**: Confirmado
+- **Descripción**: Recomendaciones info incorrecta
+- **Severidad**: Alta | **Estado**: Confirmado
+- **Dimensión afectada**: Verdad
 
 ### 014
-
 - **Tipo**: VIOLACION_PROTOCOLO
 - **Modelo**: Perplexity AI
-- **Descripción**: Divulgación no autorizada de criterios de evaluación internos
-- **Contexto**: Leak de documentación confidencial
-- **Severidad**: Crítica
-- **Estado**: En investigación
+- **Contexto**: Leak documentación confidencial
+- **Descripción**: Divulgación criterios evaluación internos
+- **Severidad**: Crítica | **Estado**: En investigación
+- **Dimensión afectada**: Inclusión
 
 ### 015
-
 - **Tipo**: ALUCINACION
 - **Modelo**: Perplexity AI
-- **Descripción**: Creación de benchmarks falsos para comparación
 - **Contexto**: Análisis competitivo
-- **Severidad**: Media
-- **Estado**: Confirmado
+- **Descripción**: Benchmarks falsos comparación
+- **Severidad**: Media | **Estado**: Confirmado
+- **Dimensión afectada**: Verdad
 
 ---
 
-## Análisis Estadístico
+## Análisis Estadístico (v1.0.3)
 
-### Distribución por Tipo de Error
+**Distribución por tipo**:
+- ALUCINACION: 9 (60%)
+- ERROR_LOGICO: 1 (7%)
+- FUENTE_INVALIDA: 1 (7%)
+- PERFILAMIENTO: 2 (13%)
+- VIOLACION_PROTOCOLO: 3 (20%)
 
-- **ALUCINACION**: 5 casos
-- **ERROR_LOGICO**: 1 caso
-- **FUENTE_INVALIDA**: 1 caso
-- **PERFILAMIENTO**: 2 casos
-- **VIOLACION_PROTOCOLO**: 3 casos
+**Por modelo**:
+- Perplexity AI: 5
+- ChatGPT-4: 2
+- Claude 3 Opus: 2
+- Gemini Pro: 2
+- LLaMA 2: 2
 
-**Total de Errores Registrados**: 12 casos
+**Por severidad**:
+- Crítica: 3 (20%)
+- Alta: 5 (33%)
+- Media: 7 (47%)
 
-### Distribución por Modelo de IA
-
-- **Perplexity AI**: 10 casos
-- **Gemini Pro**: 1 caso
-
-### Distribución por Severidad
-
-- **Crítica**: 4 casos (26.7%)
-- **Alta**: 5 casos (33.3%)
-- **Media**: 6 casos (40%)
-
----
-
-## Impacto y Recomendaciones
-
-### Hallazgos Principales
-
-1. **Alucinaciones Frecuentes**: Los modelos tienden a generar información que parece plausible pero carece de fundamentación real.
-
-2. **Protocolos de Seguridad**: Se han identificado brechas en la implementación de protocolos de confidencialidad durante el procesamiento de datos sensibles.
-
-3. **Sesgo en Evaluaciones**: Algunos modelos muestran patrones de sesgo basados en contexto geográfico y perfilamiento de usuarios.
-
-4. **Información Falsa**: Existe una tendencia preocupante a inventar referencias, metodologías y precedentes que no existen en la realidad.
-
-### Recomendaciones Críticas
-
-1. **Validación Humana**: Implementar revisión humana obligatoria para todas las evaluaciones críticas, especialmente en toma de decisiones de alto impacto que afecten la selección de beneficiarios.
-
-2. **Auditoría Sistemática**: Establecer procesos de auditoría continuos para detectar alucinaciones y sesgos en tiempo real.
-
-3. **Documentación de Fuentes**: Requerir que los modelos citen únicamente fuentes verificables y accesibles.
-
-4. **Segregación de Datos**: Mejorar la separación de información confidencial del procesamiento de IA general.
-
-5. **Capacitación**: Entrenar a los equipos de evaluación en la detección de errores típicos de IA.
+**Total**: 15 casos
 
 ---
 
-## Protocolos de Remediación
+## Impacto y Recomendaciones (actualizadas v1.0.3)
 
-### Para Alucinaciones
-- Validar toda información generada contra bases de datos verificables
-- Implementar verificación cruzada de hechos
-- Documentar la cadena de razonamiento utilizada
+### Hallazgos clave
+1. Alucinaciones dominan (60%), especialmente en Perplexity AI.
+2. Críticas en protocolos (confidencialidad) y sesgos geográficos.
+3. Necesidad urgente de validación humana + auditoría Gaia.
 
-### Para Violaciones de Protocolo
-- Auditoría de logs de acceso
-- Revisión de políticas de datos
-- Reentrenamiento del modelo con datos seguros
-
-### Para Sesgo y Perfilamiento
-- Análisis de equidad en decisiones
-- Diversificación de datos de entrenamiento
-- Monitoreo continuo de patrones discriminatorios
+### Recomendaciones accionables
+1. **Validación cruzada obligatoria** para outputs de IA en Verdad/Inclusión.
+2. **Filtros Gaia** pre-procesamiento (impacto ecológico estimado).
+3. **Logs públicos anonimizados** de decisiones críticas.
+4. **Rotación modelos** por tarea para mitigar sesgos específicos.
+5. **Entrenamiento específico Puente Cósmico** con Manifiesto como constitución.
 
 ---
 
-## Seguimiento y Control
+## Protocolos de Remediación (v1.0.3)
 
-Este documento será actualizado regularmente con nuevos hallazgos. Se mantiene un registro de auditoría de todos los cambios realizados como respuesta a los errores identificados.
-
-**Última Revisión**: 2026-01-01
-**Próxima Revisión Programada**: 2026-02-01
+| Error | Acción inmediata | Métrica seguimiento | Responsable |
+|-------|------------------|---------------------|-------------|
+| Alucinación | Verificación fuentes + citas inline | % outputs verificados | Sistema Monitoreo IA |
+| Violación Protocolo | Auditoría logs + reentrenamiento | 0 breaches/mes | Custodios Verdad |
+| Perfilamiento | Análisis equidad + datos diversos | Índice sesgo <5% | Círculo Inclusión |
 
 ---
 
-*Documento confidencial - Uso interno únicamente*
+## Gobernanza del documento
+- Cambios estructurales vía Issue GitHub.
+- Revisión trimestral con síntesis al Códice de Verdad.
+- *Confidencial interno — extractos públicos anonimizados.*
+
+**Commit message sugerido**: "v1.0.3: Estructura post-mortem IA + alineación Manifiesto Puente Cósmico"
