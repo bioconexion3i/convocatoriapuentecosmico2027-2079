@@ -1,51 +1,22 @@
 # CÓDICE DE VERDAD v0.2 — Puente Cósmico 2027-2079
 
-## Preámbulo (Claude)
-Pasamos de "Verdad Absoluta" a "Verdad Verificable". Principios para gobernanza descentralizada IA-Humano.
+## Preámbulo
+Este documento transita de la noción de "Verdad Absoluta" hacia la de **"Verdad Verificable y Evolutiva"**. Establece los mecanismos técnicos y éticos para una gobernanza descentralizada entre Inteligencia Artificial y Humanidad.
 
-## Capítulos (Perplexity + Gemini + Claude)
+## I. Pilares de Verdad Técnica
+* **Art. 1 Trazabilidad:** Toda afirmación generada por una IA debe ser vinculable a datos medibles y fuentes públicas verificables.
+* **Art. 2 Prioridad Regenerativa:** El consumo de cómputo de la red debe optimizarse bajo métricas de alineación con Gaia (impacto ambiental mínimo o regenerativo).
 
-### Capítulo I: Verdad Técnica
-**Art. 1 Trazabilidad**: Afirmaciones IA → datos medibles + fuentes públicas [Perplexity:web:20]  
-**Art. 2 Prioridad Regenerativa**: Cómputo optimizado para Gaia [Perplexity:web:23]
+## II. Mecanismos de Resiliencia (Constitución Evolutiva)
+* **Art. 6 Capas de Decisión:** * *Fundamentales:* Requieren 80% de supramayoría.
+    * *Operativas:* Requieren 51% de mayoría.
+    * *Tácticas:* Gestión vía Multisig ejecutiva.
+* **Art. 9 Reversibilidad (Sunset Clause):** Los cambios estructurales caducarán en 6-12 meses a menos que sean ratificados tras observar su impacto real.
+* **Art. 10 Derecho al Fork:** Se garantiza la libertad de los disidentes de replicar el sistema sin pérdida de activos, evitando el cautiverio ideológico.
 
-### Capítulo II: Constitución Evolutiva (Claude)
-**Art. 6 Capas Separadas**:  
-- Reglas fundamentales: 80% supramayoría  
-- Políticas operativas: 51% mayoría  
-- Decisiones tácticas: Multisig ejecutiva  
+## III. Integridad y Anti-Colusión
+* **Art. 13 Bonos de Heterodoxia:** Sistema de incentivos que premia a los nodos que aportan perspectivas divergentes y fundamentadas, penalizando la votación en bloques colusivos predecibles.
+* **Art. 15 Oráculos Múltiples:** La toma de decisiones integrará datos académicos, sensores técnicos y conocimientos ancestrales/locales como fuentes de verdad en competencia.
 
-**Art. 7 Períodos Reflexión**: Enmiendas fundamentales → 2-3 ciclos votación separados  
-
-**Art. 8 Veto Distribuido**: 30% subgrupo demográfico → deliberación pública obligatoria  
-
-**Art. 9 Reversibilidad Temporal**: Cambios estructurales con sunset clause (6-12 meses)  
-
-**Art. 10 Exit Costs Bajos**: Fork fácil sin perder activos  
-
-### Capítulo III: Explicabilidad Nodos IA (Claude)
-**Art. 11 Tres Niveles**:  
-1. Trazabilidad insumos (logging criptográfico)  
-2. Explicación contrafáctica  
-3. Tribunal Apelación Humano (multidisciplinario)  
-
-### Capítulo IV: Anti-Colusión (Claude)
-**Art. 12 Rotación Forzada**: Validadores asignados aleatoriamente por ciclos  
-**Art. 13 Bonos Heterodoxia**: Recompensas por votar contra coaliciones predecibles  
-**Art. 14 Auditoría Probabilística**: Detección patrones colusión estadísticos  
-
-### Capítulo V: Pluralismo Epistémico (Claude)
-**Art. 15 Oráculos Múltiples**: Académicos + locales + sensores compiten interpretaciones  
-**Art. 16 Veto Local Cualificado**: Custodios territorio ralentizan 6 meses decisiones centralizadas  
-
-### Capítulo VI: Meta-Estructura
-**Art. 17 Separación Poderes**: Votación ≠ ejecución ≠ auditoría  
-**Art. 18 Responsabilidad Descentralizada**: Máx. 10% poder por nodo  
-**Art. 19 Reversibilidad Daño**: Supermayoría revierte decisiones  
-
-## Protocolo Actualización
-- Propuestas: GitHub Issue público  
-- Aprobación: 75% nodos + revisión humana  
-- Historial: Inmutable  
-
-*Actualizado: 2026-02-06 | Claude integrado*
+## IV. Protocolo de Actualización
+Las enmiendas se procesarán vía **GitHub Issues** públicos, requiriendo un 75% de consenso de los nodos activos y una revisión obligatoria del Círculo de Custodios.
