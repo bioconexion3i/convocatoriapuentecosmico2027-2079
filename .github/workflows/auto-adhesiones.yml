@@ -1,0 +1,13 @@
+name: Auto-Adhesiones
+on:
+  issues:
+    types: [opened, labeled]
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'adhesion-aprobada')
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Configurar Node
+      uses
