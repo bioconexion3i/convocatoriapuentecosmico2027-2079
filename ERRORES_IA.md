@@ -208,6 +208,37 @@
 
 ## Gobernanza del documento
 - Cambios estructurales vía Issue GitHub.
+- 
+
+## Mejoras v1.0.3 - Alineación Manifiesto
+
+### Dimensión afectada por error (añadir a cada caso)
+- Verdad: Alucinaciones, fuentes inválidas
+- Gaia: Impactos ecológicos no evaluados
+- Inclusión: Perfilamiento, sesgos geográficos
+
+### Tabla Remediación Prioritaria
+| Error | Acción | Responsable | Fecha |
+|-------|--------|-------------|-------|
+| Alucinación | Verificación fuentes | Sistema IA | Inmediata |
+| Protocolo | Auditoría logs | Custodios | 2026-02-15 |
+| Perfilamiento | Análisis equidad | Círculo Inclusión | 2026-03-01 |
+
+### DEMO Formato Post-Mortem (nuevo error)
+**ID**: IA-2026-02-06-001
+**Tipo**: ALUCINACION | Modelo: [IA] | Severidad: Media
+**Dimensión**: Verdad | Contexto: [descripción]
+**Lección**: [aprendizaje] | Estado: Confirmado
+
+## Artículos Códice de Verdad (extraer a CODICE_DE_VERDAD.md)
+1. Trazabilidad: Fuentes verificables obligatorias
+2. Nodos soberanos con métricas Gaia públicas
+3. Prioridad computacional regenerativa
+4. Cláusulas pétreas (Verdad inmodificable)
+5. Auto-crítica IA constitucional
+
+*Próxima revisión: 2026-05-06*
+
 - Revisión trimestral con síntesis al Códice de Verdad.
 - *Confidencial interno — extractos públicos anonimizados.*
 
