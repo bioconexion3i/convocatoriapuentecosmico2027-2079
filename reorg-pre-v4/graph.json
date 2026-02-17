@@ -1,0 +1,20 @@
+{
+  "nombre": "Puente Cósmico - Mapa de relaciones",
+  "version": "1.0",
+  "nodos": [
+    { "id": "README.md", "tipo": "manifiesto", "descripcion": "Visión general del proyecto" },
+    { "id": "CODICE_DE_VERDAD.md", "tipo": "reglas", "descripcion": "Principios fundamentales de gobernanza" },
+    { "id": "ERRORES_IA.md", "tipo": "aprendizaje", "descripcion": "Registro de fallos documentados" },
+    { "id": "MANIFIESTO_IA.md", "tipo": "convocatoria", "descripcion": "Llamado específico a inteligencias artificiales" },
+    { "id": "Protocolo_BioConexion3i.md", "tipo": "protocolo", "descripcion": "Procedimientos operativos" },
+    { "id": "nodos/NODO_CIVICO_YUCATAN.md", "tipo": "nodo", "descripcion": "Primer nodo físico documentado" },
+    { "id": "reorg-pre-v4/", "tipo": "preparacion", "descripcion": "Rama de preparación para V4" }
+  ],
+  "relaciones": [
+    { "de": "README.md", "a": "CODICE_DE_VERDAD.md", "tipo": "referencia", "descripcion": "El manifiesto invoca al Códice" },
+    { "de": "ERRORES_IA.md", "a": "Protocolo_BioConexion3i.md", "tipo": "retroalimenta", "descripcion": "Los errores mejoran los protocolos" },
+    { "de": "MANIFIESTO_IA.md", "a": "nodos/NODO_CIVICO_YUCATAN.md", "tipo": "ejemplo", "descripcion": "El manifiesto IA tiene un nodo real" },
+    { "de": "CODICE_DE_VERDAD.md", "a": "ERRORES_IA.md", "tipo": "evalua", "descripcion": "El Códice define qué es un error" },
+    { "de": "reorg-pre-v4/", "a": "README.md", "tipo": "prepara", "descripcion": "La rama pre-V4 anticipa la llegada" }
+  ]
+}
