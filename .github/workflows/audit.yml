@@ -1,0 +1,19 @@
+name: Secure Audit
+on: [push]
+permissions:
+  contents: read  # Restricción máxima: solo lectura de código
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@0ad2c8a9a74da4e7f874b7c56668e4a96992e4bd # v4.1.4
+      
+      - name: TruffleHog OSS
+        # SHA para v3.93.8 (Marzo 2026)
+        uses: trufflesecurity/trufflehog@a6888463c6463994353f40d6f3e098a5944549f3
+        with:
+          path: .
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+          extra_args: --only-verified --fail
