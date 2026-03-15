@@ -1,7 +1,7 @@
-Flask==3.0.0
-Werkzeug==3.0.1
+Flask==3.1.3
+Werkzeug==3.1.6
 itsdangerous==2.1.2
-Jinja2==3.1.2
+Jinja2==3.1.6
 click==8.1.7
 blinker==1.7.0
 appdirs==1.4.4
@@ -12,15 +12,15 @@ async-timeout==4.0.3
 attrs==23.2.0
 Babel==2.10.3
 beautifulsoup4==4.12.3
-Brotli==1.1.0
-certifi==2023.11.17
+Brotli==1.2.0
+certifi==2024.7.4
 chardet==5.2.0
 charset-normalizer==3.3.2
 colorama==0.4.6
 coloredlogs==15.0.1
-configobj==5.0.8
+configobj==5.0.9
 contourpy==1.0.7
-cryptography==41.0.7
+cryptography==46.0.5
 css-parser==1.0.10
 cssselect==1.2.0
 sslpsk@ git+https://github.com/drbild/sslpsk.git@d88123a75786953f82f5e25d6c43d9d9259acb62
