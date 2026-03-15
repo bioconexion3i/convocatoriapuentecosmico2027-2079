@@ -1,0 +1,12 @@
+services:
+  stardust-api:
+    build: .
+    container_name: stardust_bridge
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
