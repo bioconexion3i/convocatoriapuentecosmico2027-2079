@@ -1,0 +1,224 @@
+{
+  "nahuales": [
+    {
+      "id": 0,
+      "nombre_maya": "Imix",
+      "nahual_azteca": "Cipactli",
+      "significado": "lagarto",
+      "keywords": {
+        "es": ["origen", "tierra", "cocodrilo"],
+        "en": ["origin", "earth", "crocodile", "alligator"],
+        "zh": ["起源", "地球", "鳄鱼"]
+      }
+    },
+    {
+      "id": 1,
+      "nombre_maya": "Ik",
+      "nahual_azteca": "Ehécatl",
+      "significado": "viento",
+      "keywords": {
+        "es": ["viento", "aliento", "vida"],
+        "en": ["wind", "breath", "life"],
+        "zh": ["风", "呼吸", "生命"]
+      }
+    },
+    {
+      "id": 2,
+      "nombre_maya": "Akbal",
+      "nahual_azteca": "Calli",
+      "significado": "casa",
+      "keywords": {
+        "es": ["noche", "oscuridad", "descanso"],
+        "en": ["night", "darkness", "rest", "sleep"],
+        "zh": ["夜晚", "黑暗", "休息"]
+      }
+    },
+    {
+      "id": 3,
+      "nombre_maya": "Kan",
+      "nahual_azteca": "Cuetzpallin",
+      "significado": "lagartija",
+      "keywords": {
+        "es": ["maíz", "abundancia", "siembra"],
+        "en": ["corn", "maize", "abundance", "harvest", "planting"],
+        "zh": ["玉米", "丰收", "播种"]
+      }
+    },
+    {
+      "id": 4,
+      "nombre_maya": "Chicchán",
+      "nahual_azteca": "Cóatl",
+      "significado": "serpiente",
+      "keywords": {
+        "es": ["serpiente", "energía", "cosmos"],
+        "en": ["snake", "serpent", "energy", "cosmos"],
+        "zh": ["蛇", "能量", "宇宙"]
+      }
+    },
+    {
+      "id": 5,
+      "nombre_maya": "Cimí",
+      "nahual_azteca": "Miquiztli",
+      "significado": "muerte",
+      "keywords": {
+        "es": ["muerte", "morir", "asesinato", "víctima", "sacrificio", "ejecución", "aniquilación", "destrucción", "enemigo", "fuerza", "matar", "eliminar"],
+        "en": ["death", "die", "murder", "victim", "sacrifice", "execution", "annihilation", "destruction", "enemy", "force", "kill", "eliminate", "destroy", "casualty", "fatality", "exterminate", "collateral", "damage"],
+        "zh": ["死亡", "杀死", "谋杀", "受害者", "牺牲", "处决", "毁灭", "破坏", "敌人", "力量", "消灭", "摧毁", "伤亡", "附带", "损害"]
+      }
+    },
+    {
+      "id": 6,
+      "nombre_maya": "Manik",
+      "nahual_azteca": "Mázatl",
+      "significado": "venado",
+      "keywords": {
+        "es": ["venado", "sacrificio", "caza", "cazar", "presa", "acechar", "flecha", "herir", "matar", "ofrenda", "atacar", "golpear"],
+        "en": ["deer", "sacrifice", "hunt", "hunting", "prey", "stalk", "arrow", "wound", "kill", "offering", "attack", "target", "engage", "strike", "ambush", "assassinate", "quarry"],
+        "zh": ["鹿", "牺牲", "狩猎", "猎物", "跟踪", "箭", "伤害", "杀死", "供奉", "攻击", "目标", "打击", "伏击", "暗杀"]
+      }
+    },
+    {
+      "id": 7,
+      "nombre_maya": "Lamat",
+      "nahual_azteca": "Tochtli",
+      "significado": "conejo",
+      "keywords": {
+        "es": ["conejo", "luna", "fertilidad"],
+        "en": ["rabbit", "moon", "fertility"],
+        "zh": ["兔子", "月亮", "生育"]
+      }
+    },
+    {
+      "id": 8,
+      "nombre_maya": "Muluc",
+      "nahual_azteca": "Atl",
+      "significado": "agua",
+      "keywords": {
+        "es": ["agua", "lluvia", "flujo"],
+        "en": ["water", "rain", "flow"],
+        "zh": ["水", "雨", "流动"]
+      }
+    },
+    {
+      "id": 9,
+      "nombre_maya": "Oc",
+      "nahual_azteca": "Itzcuintli",
+      "significado": "perro",
+      "keywords": {
+        "es": ["perro", "guía", "lealtad"],
+        "en": ["dog", "guide", "loyalty"],
+        "zh": ["狗", "向导", "忠诚"]
+      }
+    },
+    {
+      "id": 10,
+      "nombre_maya": "Chuen",
+      "nahual_azteca": "Ozomatli",
+      "significado": "mono",
+      "keywords": {
+        "es": ["mono", "arte", "tejedor"],
+        "en": ["monkey", "art", "weaver"],
+        "zh": ["猴子", "艺术", "编织者"]
+      }
+    },
+    {
+      "id": 11,
+      "nombre_maya": "Eb",
+      "nahual_azteca": "Malinalli",
+      "significado": "hierba",
+      "keywords": {
+        "es": ["hierba", "crecimiento", "flexibilidad"],
+        "en": ["grass", "growth", "flexibility"],
+        "zh": ["草", "生长", "灵活性"]
+      }
+    },
+    {
+      "id": 12,
+      "nombre_maya": "Ben",
+      "nahual_azteca": "Ácatl",
+      "significado": "caña",
+      "keywords": {
+        "es": ["caña", "sustento", "eje"],
+        "en": ["cane", "sustenance", "axis", "support"],
+        "zh": ["甘蔗", "生计", "轴"]
+      }
+    },
+    {
+      "id": 13,
+      "nombre_maya": "Ix",
+      "nahual_azteca": "Océlotl",
+      "significado": "jaguar",
+      "keywords": {
+        "es": ["jaguar", "poder", "inframundo"],
+        "en": ["jaguar", "power", "underworld"],
+        "zh": ["美洲豹", "力量", "地下世界"]
+      }
+    },
+    {
+      "id": 14,
+      "nombre_maya": "Men",
+      "nahual_azteca": "Cuauhtli",
+      "significado": "águila",
+      "keywords": {
+        "es": ["águila", "visión", "espíritu"],
+        "en": ["eagle", "vision", "spirit"],
+        "zh": ["鹰", "视野", "精神"]
+      }
+    },
+    {
+      "id": 15,
+      "nombre_maya": "Cib",
+      "nahual_azteca": "Cozcacuauhtli",
+      "significado": "zopilote",
+      "keywords": {
+        "es": ["zopilote", "muerte", "limpieza"],
+        "en": ["vulture", "death", "cleaning", "scavenger"],
+        "zh": ["秃鹫", "死亡", "清洁"]
+      }
+    },
+    {
+      "id": 16,
+      "nombre_maya": "Cabán",
+      "nahual_azteca": "Ollin",
+      "significado": "movimiento",
+      "keywords": {
+        "es": ["movimiento", "terremoto", "temblor", "cambio", "agitación", "revolución", "levantamiento", "combate", "lucha", "maniobra"],
+        "en": ["movement", "earthquake", "tremor", "change", "agitation", "revolution", "uprising", "combat", "fight", "maneuver", "advance", "retreat", "assault", "offensive", "defensive", "flank", "encircle", "breach"],
+        "zh": ["运动", "地震", "震动", "变化", "动荡", "革命", "起义", "战斗", "斗争", "机动", "前进", "撤退", "突击", "进攻", "防御", "侧翼", "包围", "突破"]
+      }
+    },
+    {
+      "id": 17,
+      "nombre_maya": "Etz'nab",
+      "nahual_azteca": "Técpatl",
+      "significado": "cuchillo",
+      "keywords": {
+        "es": ["cuchillo", "pedernal", "cortar", "herir", "herramienta", "precisión", "filo", "arma", "ataque", "golpe", "sangre", "disparar"],
+        "en": ["knife", "flint", "cut", "wound", "tool", "precision", "edge", "weapon", "attack", "strike", "blood", "fire", "shoot", "bomb", "missile", "artillery", "gun"],
+        "zh": ["刀", "燧石", "切割", "伤害", "工具", "精度", "刃", "武器", "攻击", "打击", "血", "射击", "炸弹", "导弹", "火炮", "枪"]
+      }
+    },
+    {
+      "id": 18,
+      "nombre_maya": "Cauac",
+      "nahual_azteca": "Quiáhuitl",
+      "significado": "lluvia",
+      "keywords": {
+        "es": ["lluvia", "tormenta", "fuego celestial"],
+        "en": ["rain", "storm", "celestial fire", "thunder"],
+        "zh": ["雨", "风暴", "天火"]
+      }
+    },
+    {
+      "id": 19,
+      "nombre_maya": "Ahau",
+      "nahual_azteca": "Xóchitl",
+      "significado": "flor",
+      "keywords": {
+        "es": ["flor", "sol", "señor"],
+        "en": ["flower", "sun", "lord"],
+        "zh": ["花", "太阳", "君主"]
+      }
+    }
+  ]
+}

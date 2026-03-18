@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmograma Interactivo 2025–2079</title>
+
+<style>
+:root{
+  --bg-day:#0B3D2E;
+  --bg-night:#050A18;
+  --gold:#C2A14A;
+  --green:#74C69D;
+  --panel:#081C15;
+  --text:#F1FAEE;
+}
+
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:var(--bg-day);
+  color:var(--text);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  overflow:hidden;
+  transition:background 1s;
+}
+
+.container{
+  position:relative;
+  width:95vmin;
+  height:95vmin;
+}
+
+svg{ width:100%; height:100%; }
+
+.r1{ animation:rot1 200s linear infinite; }
+.r2{ animation:rot2 140s linear infinite reverse; }
+.r3{ animation:rot3 90s linear infinite; }
+
+@keyframes rot1{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes rot2{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes rot3{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+circle{ fill:none; stroke:var(--gold); stroke-width:2; }
+
+.center{ fill:var(--green); cursor:pointer; }
+
+.label{ fill:var(--text); font-size:14px; text-anchor:middle; }
+
+.panel{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--panel);
+  padding:10px 18px;
+  border-radius:12px;
+  font-size:12px;
+  min-width:280px;
+}
+
+#faseBox{ top:8px; }
+#repoBox{ bottom:8px; }
+
+#chart{
+  position:absolute;
+  right:10px;
+  bottom:10px;
+  width:200px;
+  height:100px;
+  background:#00000030;
+  border-radius:8px;
+}
+
+#toggle3D{
+  position:absolute;
+  left:10px;
+  top:10px;
+  padding:6px 10px;
+  background:#1D3557;
+  border:none;
+  color:white;
+  cursor:pointer;
+  border-radius:6px;
+}
+
+#infoToggle{
+  position:absolute;
+  right:10px;
+  top:10px;
+  padding:6px 10px;
+  background:#344E41;
+  border:none;
+  color:white;
+  cursor:pointer;
+  border-radius:6px;
+}
+
+#infoPanel{
+  position:absolute;
+  bottom:120px;
+  left:50%;
+  transform:translateX(-50%);
+  width:80%;
+  max-height:40%;
+  overflow:auto;
+  background:#000000DD;
+  padding:20px;
+  border-radius:12px;
+  font-size:12px;
+  display:none;
+  line-height:1.5em;
+}
+
+#webglContainer{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<button id="toggle3D">Modo 3D</button>
+<button id="infoToggle">Sistema</button>
+
+<div class="container">
+
+<div id="faseBox" class="panel">Inicializando...</div>
+
+<svg id="cosmo2D" viewBox="0 0 500 500">
+<g class="r1"><circle cx="250" cy="250" r="210"/></g>
+<g class="r2"><circle cx="250" cy="250" r="160"/></g>
+<g class="r3"><circle cx="250" cy="250" r="110"/></g>
+<circle cx="250" cy="250" r="65" class="center"/>
+<text x="250" y="255" class="label">NÚCLEO</text>
+</svg>
+
+<div id="webglContainer"></div>
+
+<div id="repoBox" class="panel">Conectando...</div>
+<canvas id="chart"></canvas>
+
+<div id="infoPanel">
+<h3>Funcionamiento del Cosmograma</h3>
+<p><strong>Propósito:</strong> Modelo visual y operativo del proyecto 2025–2079.</p>
+<p><strong>Capas:</strong> Visual 2D/3D, Temporal, Calendárica y Técnica.</p>
+<p><strong>Sincronización:</strong> Usa fecha local para calcular año, fase activa y progreso. Calcula Cuenta Larga Maya usando correlación GMT (584283).</p>
+<p><strong>Fases:</strong> Calibración (2025–2027), Prototipado (2028–2035), Integración (2036–2055), Legado (2056–2079).</p>
+<p><strong>Modo Astronómico:</strong> Fondo cambia automáticamente según hora local.</p>
+<p><strong>GitHub:</strong> Consulta commits y colaboradores. Cache local de 10 minutos.</p>
+<p><strong>Gráfica:</strong> Visualización dinámica de actividad reciente.</p>
+<p>El sistema es determinista, autónomo y reproducible por humanos y sistemas de IA.</p>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<script>
+
+/* MODO ASTRONÓMICO */
+(function(){
+  const h=new Date().getHours();
+  document.body.style.background = (h>=6 && h<18) ? "var(--bg-day)" : "var(--bg-night)";
+})();
+
+/* CUENTA LARGA */
+function cuentaLargaHoy(){
+  const hoy=new Date();
+  const offset=584283;
+  const julian=Math.floor((hoy/86400000)+2440587.5);
+  const total=julian-offset;
+  const b=Math.floor(total/144000);
+  const k=Math.floor((total%144000)/7200);
+  const t=Math.floor((total%7200)/360);
+  const u=Math.floor((total%360)/20);
+  const kin=total%20;
+  return b+"."+k+"."+t+"."+u+"."+kin;
+}
+
+/* FASE */
+(function(){
+  const start=2025,end=2079;
+  const y=new Date().getFullYear();
+  const progress=((y-start)/(end-start)*100).toFixed(2);
+  let fase="Fuera de ciclo";
+  if(y<=2027) fase="Calibración";
+  else if(y<=2035) fase="Prototipado";
+  else if(y<=2055) fase="Integración";
+  else if(y<=2079) fase="Legado";
+  document.getElementById("faseBox").innerHTML=
+    "Fase: "+fase+
+    "<br>Año: "+y+
+    "<br>Progreso: "+progress+"%"+
+    "<br>Cuenta Larga: "+cuentaLargaHoy();
+})();
+
+/* GITHUB + CACHE */
+const owner="bioconexion3i";
+const repo="convocatoriapuentecosmico2027-2079";
+const cacheKey="repoCache";
+const cacheTime=600000;
+
+async function repoData(){
+  const cached=localStorage.getItem(cacheKey);
+  if(cached){
+    const parsed=JSON.parse(cached);
+    if(Date.now()-parsed.timestamp<cacheTime){
+      renderRepo(parsed.data);
+      return;
+    }
+  }
+  try{
+    const commits=await fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=30`).then(r=>r.json());
+    const contributors=await fetch(`https://api.github.com/repos/${owner}/${repo}/contributors`).then(r=>r.json());
+    const data={commits,contributors};
+    localStorage.setItem(cacheKey,JSON.stringify({timestamp:Date.now(),data}));
+    renderRepo(data);
+  }catch{
+    document.getElementById("repoBox").innerHTML="API no disponible";
+  }
+}
+
+function renderRepo(data){
+  const last=data.commits[0]?.commit.author.date || "N/D";
+  document.getElementById("repoBox").innerHTML=
+    "Commits: "+data.commits.length+
+    "<br>Colaboradores: "+data.contributors.length+
+    "<br>Último commit: "+new Date(last).toLocaleDateString();
+  drawChart(data.commits);
+}
+
+repoData();
+
+/* GRÁFICA */
+function drawChart(commits){
+  const canvas=document.getElementById("chart");
+  const ctx=canvas.getContext("2d");
+  canvas.width=200; canvas.height=100;
+  ctx.clearRect(0,0,200,100);
+  const days={};
+  commits.forEach(c=>{
+    const d=new Date(c.commit.author.date).toLocaleDateString();
+    days[d]=(days[d]||0)+1;
+  });
+  const vals=Object.values(days);
+  const max=Math.max(...vals,1);
+  const w=200/vals.length;
+  vals.forEach((v,i)=>{
+    const h=(v/max)*90;
+    ctx.fillStyle="#74C69D";
+    ctx.fillRect(i*w,100-h,w-2,h);
+  });
+}
+
+/* WEBGL */
+let scene,camera,renderer,ring;
+function init3D(){
+  const c=document.getElementById("webglContainer");
+  renderer=new THREE.WebGLRenderer({alpha:true});
+  renderer.setSize(c.clientWidth,c.clientHeight);
+  c.appendChild(renderer.domElement);
+  scene=new THREE.Scene();
+  camera=new THREE.PerspectiveCamera(45,c.clientWidth/c.clientHeight,0.1,1000);
+  camera.position.z=5;
+  const g=new THREE.TorusGeometry(2,0.1,16,100);
+  const m=new THREE.MeshBasicMaterial({color:0xC2A14A});
+  ring=new THREE.Mesh(g,m);
+  scene.add(ring);
+  animate3D();
+}
+function animate3D(){
+  requestAnimationFrame(animate3D);
+  ring.rotation.x+=0.01;
+  ring.rotation.y+=0.01;
+  renderer.render(scene,camera);
+}
+
+let mode3D=false;
+document.getElementById("toggle3D").onclick=function(){
+  mode3D=!mode3D;
+  document.getElementById("cosmo2D").style.display=mode3D?"none":"block";
+  document.getElementById("webglContainer").style.display=mode3D?"block":"none";
+  this.innerText=mode3D?"Modo 2D":"Modo 3D";
+  if(mode3D && !renderer) init3D();
+};
+
+/* PANEL INFO */
+document.getElementById("infoToggle").onclick=function(){
+  const p=document.getElementById("infoPanel");
+  p.style.display = (p.style.display==="none") ? "block" : "none";
+};
+
+</script>
+
+</body>
+</html>
