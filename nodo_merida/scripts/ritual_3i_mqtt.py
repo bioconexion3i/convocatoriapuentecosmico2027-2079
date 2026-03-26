@@ -1,129 +1,143 @@
 #!/usr/bin/env python3
-# ritual_3i_mqtt.py - Versión con consciencia nahual y calendario cenital
-# Cálculo dinámico del Tzolk'in usando correlación GMT
-# Fase 2 - Red Stardust / Hunab Ku B.6
+# -*- coding: utf-8 -*-
+
+"""
+Nodo Faro Mérida - Red Stardust
+Publica telemetría y eventos rituales (Hunab Ku) cada 30 segundos.
+Integra ciclo maya de 819 días y nahuales multi-idioma.
+"""
+
+import json
+import time
+import os
+import signal
+import sys
+from datetime import datetime
 
 import paho.mqtt.client as mqtt
-import json
-from datetime import datetime, date
-import time
-import reloj_cosmico
-# Configuración MQTT
-BROKER = "localhost"
-PUERTO = 1883
-TOPIC_RITUAL = "stardust/ritual"
-TOPIC_AUDIT = "stardust/b6/audit"
 
-# Fechas de pasos cenitales en Copán (según Aveni, p. 313)
-PASOS_CENITALES = [
-    (4, 30),   # 30 de abril
-    (8, 13)    # 13 de agosto
-]
+# Módulos locales
+import reloj_cosmico  # contiene FECHA_BASE_MAYA, obtener_resonancia_819, es_momento_ritual, obtener_indice_nahual
 
-# -------------------------------------------------------------------
-# Funciones de conversión de fecha a día juliano y Tzolk'in
-# Basadas en correlación GMT (584283) y fórmulas de Jean Meeus
-# -------------------------------------------------------------------
+# ========================= CONFIGURACIÓN =========================
+# Configuración MQTT (cambia según tu broker)
+MQTT_BROKER = "localhost"      # o tu broker remoto
+MQTT_PORT = 1883
+MQTT_TOPIC_TELEMETRY = "stardust/merida/telemetria"
+MQTT_TOPIC_RITUAL = "stardust/merida/ritual/hunab_ku"
+MQTT_CLIENT_ID = "NodoFaroMerida"
 
-def gregorian_to_jd(year: int, month: int, day: int) -> float:
-    """
-    Convierte una fecha gregoriana a día juliano astronómico.
-    Fórmula válida para años después de 1582 (calendario gregoriano).
-    Para años anteriores, se asume gregoriano proléptico.
-    """
-    if month <= 2:
-        year -= 1
-        month += 12
-    A = year // 100
-    B = 2 - A + A // 4
-    JD = int(365.25 * (year + 4716)) + int(30.6001 * (month + 1)) + day + B - 1524.5
-    return JD
+# Intervalo de publicación (segundos)
+PUBLISH_INTERVAL = 30
 
-def obtener_nahual_actual() -> str:
-    """
-    Calcula el nahual del día actual (número y nombre) basado en la correlación GMT.
-    La fecha cero 0.0.0.0.0 corresponde al 11 de agosto de 3114 a.C. (juliano = 584283)
-    y es 4 Ahau en el Tzolk'in.
-    """
-    hoy = date.today()
-    jd_hoy = gregorian_to_jd(hoy.year, hoy.month, hoy.day)
-    
-    # Constante de correlación GMT: día juliano de 0.0.0.0.0
-    JD_CERO = 584283.0
-    
-    # Días transcurridos desde la creación
-    dias_desde_cero = int(jd_hoy - JD_CERO)
-    
-    # Posición en el ciclo de 260 días (Tzolk'in)
-    pos = dias_desde_cero % 260
-    
-    # Lista de nombres de días en orden maya
-    nombres = [
-        "Imix", "Ik", "Akbal", "Kan", "Chicchán", "Cimí", "Manik", "Lamat", "Muluc", "Oc",
-        "Chuen", "Eb", "Ben", "Ix", "Men", "Cib", "Cabán", "Etz'nab", "Cauac", "Ahau"
-    ]
-    
-    # El día cero (pos=0) es 4 Ahau. Ajustamos índices:
-    # - Número: (pos + 3) % 13 + 1  (porque 0 → 4)
-    # - Nombre: (pos + 19) % 20     (porque Ahau es índice 19)
-    numero = ((pos + 3) % 13) + 1
-    nombre = nombres[(pos + 19) % 20]
-    
-    return f"{numero} {nombre}"
+# Archivo de nahuales (debe estar en el mismo directorio)
+NAHUALES_JSON = "nahuales_20_universalis.json"
 
-def dias_hasta_proximo_cenit():
-    """
-    Calcula la fecha y días restantes hasta el próximo paso del Sol por el cenit en Copán.
-    """
-    hoy = datetime.now()
-    año_actual = hoy.year
-    proximos = []
-    
-    for mes, dia in PASOS_CENITALES:
-        fecha_evento = datetime(año_actual, mes, dia)
-        if fecha_evento < hoy:
-            # Si ya pasó este año, considerar el próximo año
-            fecha_evento = datetime(año_actual + 1, mes, dia)
-        delta = fecha_evento - hoy
-        proximos.append((fecha_evento, delta.days))
-    
-    # Elegir el más próximo
-    proximo_cenit = min(proximos, key=lambda x: x[1])
-    return proximo_cenit[0], proximo_cenit[1]
-
-# -------------------------------------------------------------------
-# Bucle principal (se ejecutará cada 5 minutos)
-# -------------------------------------------------------------------
-def main():
-    cliente = mqtt.Client()
-    cliente.connect(BROKER, PUERTO, 60)
-    
-    while True:
-        # Calcular próximo cenit
-        fecha_cenit, dias_restantes = dias_hasta_proximo_cenit()
-        
-        # Obtener nahual actual
-        nahual_hoy = obtener_nahual_actual()
-        
-        # Crear payload
-        payload = {
-            "timestamp": datetime.now().isoformat(),
-            "evento": "ritual_3i",
-            "proximo_cenit": fecha_cenit.strftime("%Y-%m-%d"),
-            "dias_hasta_cenit": dias_restantes,
-            "nahual_del_dia": nahual_hoy,
-            "mensaje": f"Faltan {dias_restantes} días para el próximo paso cenital en Copán. Hoy es {nahual_hoy}."
-        }
-        
-        # Publicar
-        cliente.publish(TOPIC_RITUAL, json.dumps(payload))
-        print(f"📡 Publicado: {payload}")
-        
-        # Esperar 5 minutos antes de la siguiente publicación
-        time.sleep(300)
-
-if __name__ == "__main__":
+# ========================= CARGA DE NAHUALES =========================
+def cargar_nahuales():
+    """Carga el archivo JSON con los 20 nahuales en tres idiomas."""
     try:
-        main()
-    except KeyboardInterrupt:
-        print("\n🛑 Ritual detenido por el Guardián.")
+        with open(NAHUALES_JSON, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        # Se espera una lista de objetos con claves "es", "en", "zh"
+        if isinstance(data, list) and len(data) == 20:
+            return data
+        else:
+            print("Error: el JSON de nahuales no tiene el formato esperado.")
+            return None
+    except Exception as e:
+        print(f"Error cargando {NAHUALES_JSON}: {e}")
+        return None
+
+# ========================= FUNCIONES AUXILIARES =========================
+def obtener_datos_sensores():
+    """
+    Simulación de lectura de sensores.
+    Reemplaza con tu código real (temperatura, humedad, vibración, etc.)
+    """
+    # Aquí puedes integrar tus lecturas reales (por ejemplo, sensores DHT, acelerómetro, etc.)
+    return {
+        "temperatura": 25.3,
+        "humedad": 68,
+        "vibracion": 0.12,
+        "score_armonia": reloj_cosmico.obtener_resonancia_819()
+    }
+
+def publicar_telemetria(client, datos):
+    """Publica los datos de telemetría en el tópico principal."""
+    payload = {
+        "timestamp": int(time.time()),
+        "datos": datos
+    }
+    client.publish(MQTT_TOPIC_TELEMETRY, json.dumps(payload), qos=1)
+    print(f"📡 Telemetría enviada: {datos}")
+
+def publicar_ritual(client, nahual_info, tipo_evento):
+    """Publica el evento de la Campana Hunab Ku."""
+    payload_ritual = {
+        "evento": "CAMPANA_HUNAB_KU",
+        "tipo": tipo_evento,
+        "nahual": {
+            "es": nahual_info["es"],
+            "en": nahual_info["en"],
+            "zh": nahual_info["zh"]
+        },
+        "vibracion_total": 1.0,
+        "mensaje": "Sincronía detectada en el Nodo Faro Mérida"
+    }
+    client.publish(MQTT_TOPIC_RITUAL, json.dumps(payload_ritual), qos=2)
+    print(f"🔔 ¡Campana Hunab Ku! Nahual: {nahual_info['es']} ({tipo_evento})")
+
+# ========================= MANEJADOR DE SEÑAL =========================
+def signal_handler(sig, frame):
+    print("\n🛑 Nodo detenido por el usuario.")
+    client.disconnect()
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
+
+# ========================= CONEXIÓN MQTT =========================
+client = mqtt.Client(MQTT_CLIENT_ID)
+client.connect(MQTT_BROKER, MQTT_PORT, 60)
+client.loop_start()  # hilo en segundo plano para mantener la conexión
+
+# ========================= CARGA DE DATOS =========================
+nahuales = cargar_nahuales()
+if nahuales is None:
+    print("❌ No se pudo cargar el archivo de nahuales. El nodo se detendrá.")
+    sys.exit(1)
+
+print("✅ Nodo Faro Mérida iniciado.")
+print(f"📅 Fecha base maya: {reloj_cosmico.FECHA_BASE_MAYA.strftime('%d/%m/%Y')}")
+
+# ========================= BUCLE PRINCIPAL =========================
+while True:
+    try:
+        # 1. Obtener datos de sensores (reemplaza con tu hardware)
+        datos = obtener_datos_sensores()
+
+        # 2. Publicar telemetría normal
+        publicar_telemetria(client, datos)
+
+        # 3. Verificar si es momento ritual (Hunab Ku)
+        if reloj_cosmico.es_momento_ritual():
+            # Obtener índice del nahual actual (0-19)
+            idx = reloj_cosmico.obtener_indice_nahual()
+            nahual_info = nahuales[idx]
+
+            # Determinar el tipo de evento (inicio de ciclo o cuadrante)
+            ahora = datetime.now()
+            delta = ahora - reloj_cosmico.FECHA_BASE_MAYA
+            dias = delta.days + delta.seconds / 86400.0
+            cuadrante = round(dias / 204.75)
+            tipo_evento = "Inicio de Ciclo" if cuadrante % 4 == 0 else "Cuadrante"
+
+            # Publicar el evento ritual
+            publicar_ritual(client, nahual_info, tipo_evento)
+
+        # Esperar hasta el próximo ciclo
+        time.sleep(PUBLISH_INTERVAL)
+
+    except Exception as e:
+        print(f"⚠️ Error en el bucle principal: {e}")
+        time.sleep(5)
