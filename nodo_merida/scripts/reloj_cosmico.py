@@ -1,23 +1,32 @@
-# reloj_cosmico.py
-from datetime import datetime
+# reloj_cosmico.py (fragmentos añadidos)
 
-# Fecha de referencia (puedes ajustarla a un evento astronómico clave)
-FECHA_BASE_MAYA = datetime(2024, 1, 1) 
+from datetime import datetime, timedelta
 
-def obtener_resonancia_819():
+# Fecha base de referencia para el ciclo de 819 días
+# Puedes ajustarla según el proyecto; por ejemplo, el inicio del primer ciclo de la red.
+# Aquí uso una fecha de ejemplo: 21 de diciembre de 2020 (un solsticio, simbólico)
+FECHA_BASE_MAYA = datetime(2020, 12, 21)
+
+def es_momento_ritual():
     """
-    Calcula un valor de 'vibración' basado en el ciclo maya de 819 días.
-    Retorna un valor entre 0.0 y 1.0.
+    Determina si hoy es un punto de armonía máxima:
+    - Inicio exacto de un ciclo de 819 días (delta % 819 == 0)
+    - Opcional: los cuadrantes (cada 204.75 días) con margen de 0.5 días.
     """
     ahora = datetime.now()
     delta = ahora - FECHA_BASE_MAYA
-    
-    # La magia del ciclo: posición actual en el bloque de 819 días
-    posicion = delta.days % 819
-    score_vibratorio = posicion / 819.0
-    
-    return round(score_vibratorio, 4)
+    dias_desde_base = delta.days
 
-def obtener_glifo_dia():
-    # Aquí podrías mapear el día actual a uno de tus 20 nahuales
-    pass
+    # 1. Inicio de ciclo exacto
+    if dias_desde_base % 819 == 0:
+        return True
+
+    # 2. Cuadrantes (opcional)
+    cuadrante = 204.75  # días
+    margen_dias = 0.5   # ±12 horas
+    for k in range(1, 4):  # k=1,2,3 para los tres cuadrantes intermedios
+        punto = k * cuadrante
+        if abs(dias_desde_base - punto) <= margen_dias:
+            return True
+
+    return False
