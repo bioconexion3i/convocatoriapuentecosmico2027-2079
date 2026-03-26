@@ -7,7 +7,7 @@ import paho.mqtt.client as mqtt
 import json
 from datetime import datetime, date
 import time
-
+import reloj_cosmico
 # Configuración MQTT
 BROKER = "localhost"
 PUERTO = 1883
