@@ -1,4 +1,3 @@
-
 Este nodo es el primero de la red de 22 países. Su código y configuración están aquí para que otros guardianes puedan replicarlo.
 
 ## Componentes
