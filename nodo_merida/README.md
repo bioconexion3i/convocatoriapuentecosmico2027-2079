@@ -1,9 +1,3 @@
-# 🌍 Nodo Faro Mérida – Primer Nodo de la Red Stardust
-
-**Ubicación:** Mérida, Yucatán, México  
-**Nodo ID:** `merida-avenida-yucatan`  
-**Score actual:** 0.626  
-**Ritmo:** Publica cada 30 segundos vía MQTT
 
 Este nodo es el primero de la red de 22 países. Su código y configuración están aquí para que otros guardianes puedan replicarlo.
 
