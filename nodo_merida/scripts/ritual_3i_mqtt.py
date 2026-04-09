@@ -1,101 +1,126 @@
 #!/usr/bin/env python3
-# reloj_cosmico.py - Ciclos mayas, resonancia 819 días y nahual actual
+# ritual_3i_mqtt.py - Publica telemetría y eventos rituales
 
-from datetime import datetime, timedelta
+import paho.mqtt.client as mqtt
 import json
-import os
+import time
+import sys
+import signal
+from datetime import datetime
+import reloj_cosmico
 
-# Fecha base de referencia para el ciclo de 819 días
-# Ajustada al 21 de diciembre de 2012 (13.0.0.0.0) según el proyecto
-FECHA_BASE_MAYA = datetime(2012, 12, 21)
+# ========================= CONFIGURACIÓN =========================
+MQTT_BROKER = "192.168.100.35"
+MQTT_PORT = 1883
+MQTT_CLIENT_ID = "ritual_3i_publisher"
+PUBLISH_INTERVAL = 30
 
-# Ruta al archivo de nahuales (asumiendo que está en el mismo directorio)
-NAHUALES_JSON = os.path.join(os.path.dirname(__file__), "nahuales_20_universalis.json")
+# Archivo de nahuales (debe estar en el mismo directorio)
+NAHUALES_JSON = "nahuales_20_universalis.json"
 
-# Cargar nahuales una sola vez al inicio
-try:
-    with open(NAHUALES_JSON, "r", encoding="utf-8") as f:
-        data = json.load(f)
-    if isinstance(data, dict) and "nahuales" in data:
-        NAHUALES = data["nahuales"]
-    else:
-        NAHUALES = []
-        print("Advertencia: No se pudo cargar la lista de nahuales.")
-except Exception as e:
-    NAHUALES = []
-    print(f"Error cargando nahuales: {e}")
+# ========================= CARGA DE NAHUALES =========================
+def cargar_nahuales():
+    try:
+        with open(NAHUALES_JSON, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        if isinstance(data, dict) and "nahuales" in data:
+            nahuales_lista = data["nahuales"]
+            formato_esperado = []
+            for n in nahuales_lista:
+                formato_esperado.append({
+                    "es": n["keywords"]["es"],
+                    "en": n["keywords"]["en"],
+                    "zh": n["keywords"]["zh"]
+                })
+            return formato_esperado
+        else:
+            print("Error: el JSON de nahuales no tiene el formato esperado.")
+            return None
+    except Exception as e:
+        print(f"Error cargando {NAHUALES_JSON}: {e}")
+        return None
 
-def obtener_resonancia_819():
+# ========================= FUNCIONES AUXILIARES =========================
+def obtener_datos_sensores():
     """
-    Calcula la resonancia del ciclo de 819 días.
-    Retorna un valor flotante entre 0 y 1 que representa la fase actual del ciclo.
-    0 = inicio del ciclo, 1 = final (justo antes del siguiente inicio).
+    Simulación de lectura de sensores.
+    Reemplaza con tu código real.
     """
+    return {
+        "temperatura": 25.3,
+        "humedad": 68,
+        "vibracion": 0.12,
+        "score_armonia": reloj_cosmico.obtener_resonancia_819()
+    }
+
+def publicar_telemetria(client, datos):
+    """Publica los datos de telemetría en el tópico principal."""
+    payload = {
+        "timestamp": int(time.time()),
+        "datos": datos
+    }
+    client.publish("stardust/ritual_3i/telemetria", json.dumps(payload))
+    print(f"📡 Telemetría publicada: {payload}")
+
+def publicar_ritual(client, nahual_info, tipo_evento):
+    """Publica un evento ritual (Campana de Hunab Ku)."""
     ahora = datetime.now()
-    delta = ahora - FECHA_BASE_MAYA
-    dias_desde_base = delta.days + delta.seconds / 86400.0  # incluir fracción de día
-    ciclo = 819.0
-    fase = (dias_desde_base % ciclo) / ciclo
-    return fase  # valor entre 0 y 1
-
-def es_momento_ritual(margen_horas=12):
-    """
-    Determina si hoy es un punto de armonía máxima:
-    - Inicio exacto de un ciclo de 819 días (fase 0)
-    - Cuadrantes (cada 204.75 días) con margen.
-    Retorna True si está dentro del margen.
-    """
-    fase = obtener_resonancia_819()
-    # Inicio de ciclo
-    if fase < 1e-6 or abs(fase - 1.0) < 1e-6:
-        return True
-    # Cuadrantes: 0.25, 0.5, 0.75
-    cuadrantes = [0.25, 0.5, 0.75]
-    margen = margen_horas / 24.0 / 819.0  # convertir horas a fracción del ciclo
-    for q in cuadrantes:
-        if abs(fase - q) <= margen:
-            return True
-    return False
-
-def obtener_nahual_actual():
-    """
-    Calcula el nahual del día según el Tzolkin (260 días).
-    Retorna un diccionario con el nombre maya, azteca, significado y keywords.
-    Si no se pudo cargar la lista, retorna un nahual por defecto.
-    """
-    # Días desde una fecha base conocida (4 Ajaw). Por simplicidad, usamos el 21/12/2012 como 4 Ajaw.
-    # En Tzolkin, el ciclo es de 260 días. Cada día tiene un número (1-13) y un nahual (20).
-    # Vamos a calcular el índice del nahual (0-19).
-    fecha_base = datetime(2012, 12, 21)  # 13.0.0.0.0, 4 Ajaw
-    delta = datetime.now() - fecha_base
-    dias = delta.days
-    indice_nahual = dias % 20
-    if NAHUALES and 0 <= indice_nahual < len(NAHUALES):
-        return NAHUALES[indice_nahual]
-    else:
-        # Nahual por defecto si falla la carga
-        return {
-            "id": indice_nahual,
-            "nombre_maya": "Desconocido",
-            "nahual_azteca": "",
-            "significado": "",
-            "keywords": {"es": [], "en": [], "zh": []}
+    payload = {
+        "timestamp": ahora.isoformat(),
+        "evento": "Hunab_Ku",
+        "tipo": tipo_evento,
+        "nahual": {
+            "es": nahual_info["es"][0] if isinstance(nahual_info["es"], list) else nahual_info["es"],
+            "en": nahual_info["en"][0] if isinstance(nahual_info["en"], list) else nahual_info["en"],
+            "zh": nahual_info["zh"][0] if isinstance(nahual_info["zh"], list) else nahual_info["zh"]
         }
+    }
+    client.publish("stardust/ritual_3i/evento", json.dumps(payload))
+    print(f"🔔 Evento ritual publicado: {tipo_evento}")
 
-def obtener_indice_nahual():
-    """
-    Retorna el índice (0-19) del nahual actual según el Tzolkin.
-    Basado en el mismo cálculo que obtener_nahual_actual().
-    """
-    fecha_base = datetime(2012, 12, 21)
-    delta = datetime.now() - fecha_base
-    dias = delta.days
-    return dias % 20
+# ========================= MANEJADOR DE SEÑAL =========================
+def signal_handler(sig, frame):
+    print("\n🛑 Nodo detenido por el usuario.")
+    client.disconnect()
+    sys.exit(0)
 
-# Si se ejecuta directamente, muestra una prueba
+signal.signal(signal.SIGINT, signal_handler)
+
+# ========================= EJECUCIÓN PRINCIPAL =========================
 if __name__ == "__main__":
-    print(f"Resonancia 819: {obtener_resonancia_819():.4f}")
-    print(f"Es momento ritual: {es_momento_ritual()}")
-    nahual = obtener_nahual_actual()
-    print(f"Nahual actual: {nahual['nombre_maya']} ({nahual['significado']})")
-    print(f"Índice del nahual: {obtener_indice_nahual()}")
+    # Inicializar cliente MQTT
+    client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1, client_id=MQTT_CLIENT_ID)
+    client.connect(MQTT_BROKER, MQTT_PORT, 60)
+    client.loop_start()
+
+    # Cargar nahuales
+    nahuales = cargar_nahuales()
+    if nahuales is None:
+        print("❌ No se pudo cargar el archivo de nahuales. El nodo se detendrá.")
+        sys.exit(1)
+
+    print("✅ Nodo Faro Mérida iniciado.")
+    print(f"📅 Fecha base maya: {reloj_cosmico.FECHA_BASE_MAYA.strftime('%d/%m/%Y')}")
+
+    # Bucle principal
+    try:
+        while True:
+            datos = obtener_datos_sensores()
+            publicar_telemetria(client, datos)
+
+            if reloj_cosmico.es_momento_ritual():
+                idx = reloj_cosmico.obtener_indice_nahual()
+                if nahuales and 0 <= idx < len(nahuales):
+                    nahual_info = nahuales[idx]
+                    ahora = datetime.now()
+                    delta = ahora - reloj_cosmico.FECHA_BASE_MAYA
+                    dias = delta.days + delta.seconds / 86400.0
+                    cuadrante = round(dias / 204.75)
+                    tipo_evento = "Inicio de Ciclo" if cuadrante % 4 == 0 else "Cuadrante"
+                    publicar_ritual(client, nahual_info, tipo_evento)
+
+            time.sleep(PUBLISH_INTERVAL)
+    except KeyboardInterrupt:
+        print("\n🛑 Nodo detenido por el usuario.")
+        client.disconnect()
+        sys.exit(0)
