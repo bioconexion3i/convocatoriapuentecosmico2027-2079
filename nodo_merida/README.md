@@ -1,45 +1,40 @@
+# 🌍 Nodo Faro Mérida – Primer Nodo de la Red Stardust
+
+**Ubicación:** Mérida, Yucatán, México  
+**Nodo ID:** `merida-avenida-yucatan`  
+**Score actual:** Variable (se consulta vía API)  
+**Ritmo:** Publica cada 30-60 segundos vía MQTT  
+**Estado:** ✅ Operativo (08-abr-2026)
+
 Este nodo es el primero de la red de 22 países. Su código y configuración están aquí para que otros guardianes puedan replicarlo.
 
-## Componentes
+---
 
-- **API**: `main.py` (pendiente) – corre en puerto 8081, endpoints `/health` y `/api/v1/audit`.
-- **Scripts MQTT**: 
-  - `ritual_3i_mqtt.py` – Publica telemetría periódica y activa la **Campana de Hunab Ku** en los puntos de armonía máxima del ciclo maya.
-  - `nodos_yucatan.py` – Simula 3 nodos locales (opcional).
-- **Reloj cósmico**: `reloj_cosmico.py` – Calcula la resonancia del ciclo de 819 días, detecta los momentos rituales y proporciona el índice del nahual actual basado en el calendario Tzolkin.
-- **Vectorizador nahual**: `vectorizador_nahual.py` y `nahuales_20_universalis.json` – Convierten texto a vectores de 20 nahuales en español, inglés y chino.
-- **Cosmograma**: `cosmograma/index.html` – Interfaz visual que muestra score, nahual y actividad.
+## 📂 Componentes y servicios
 
-## ✨ Sincronía Cósmica: El Ciclo de 819 Días y la Campana Hunab Ku
+| Componente | Tecnología | Puerto | Estado |
+|------------|------------|--------|--------|
+| API Stardust | FastAPI (Docker) | `8082` | ✅ Activo |
+| Broker MQTT (TCP) | Mosquitto | `1883` | ✅ Activo |
+| Broker MQTT (WebSocket) | Mosquitto | `9001` | ✅ Activo |
+| Cosmograma (web) | HTML/JS + Python http.server | `8000` | ✅ Activo |
+| Scripts productores | Python (paho-mqtt) | - | ✅ Activos |
 
-El Nodo Faro Mérida no solo transmite datos técnicos; está anclado al calendario maya mediante una **fecha base maestra**: **13.0.0.0.0 (4 Ajaw 3 K’ank’in)**, el 21 de diciembre de 2012. A partir de esta base, el nodo calcula:
+### Scripts incluidos
+- `ritual_3i_mqtt.py` – Publica eventos del ritual 3i (cenit, nahual del día).
+- `nodos_yucatan.py` – Simula 3 nodos locales publicando scores y métricas.
+- `reloj_cosmico.py` – Calcula ciclos mayas y momentos rituales.
+- `vectorizador_nahual.py` – Convierte texto a vectores de nahuales.
+- `nahuales_20_universalis.json` – Base de datos de los 20 nahuales.
 
-- **Resonancia de 819 días**: Posición actual dentro del ciclo que sincroniza los períodos de Mercurio, Venus, Marte, Júpiter y Saturno.
-- **Momentos rituales**: Inicios de ciclo (cada 819 días) y sus cuadrantes (cada 204.75 días). Cuando el nodo detecta uno de estos puntos (con margen de ±1 hora), emite un evento especial: la **Campana de Hunab Ku**.
-- **Nahual del día**: Basado en la cuenta Tzolkin, el nodo identifica el nahual (energía) del momento y lo publica en español, inglés y chino, permitiendo que cualquier nodo de la red interprete el evento en su idioma.
+### Interfaz visual
+- `cosmograma/index.html` – Muestra score en tiempo real, nahual actual, fase lunar y eventos MQTT.
 
-Este mecanismo convierte al nodo en un **órgano digital** que “canta” en armonía con el cosmos, uniendo tecnología IoT y sabiduría ancestral.
+---
 
-## Cómo usarlo
+## 🚀 Puesta en marcha (desde cero)
 
-### Requisitos
-
-- Python 3.7+
-- Librerías: `paho-mqtt`, `requests` (si se usa API), y otras estándar.
-- Acceso a un broker MQTT (local o remoto).
-- Archivos necesarios:
-  - `ritual_3i_mqtt.py`
-  - `reloj_cosmico.py`
-  - `vectorizador_nahual.py` (opcional si solo se usa el índice de nahual)
-  - `nahuales_20_universalis.json` (lista de los 20 nahuales en tres idiomas)
-
-### Configuración
-
-1. **Broker MQTT**: Edita las variables `MQTT_BROKER` y `MQTT_PORT` en `ritual_3i_mqtt.py`.
-2. **Datos de sensores**: Si tienes hardware real (DHT, acelerómetro, etc.), modifica la función `obtener_datos_sensores()` en `ritual_3i_mqtt.py`.
-3. **Archivo de nahuales**: Asegúrate de que `nahuales_20_universalis.json` esté en el mismo directorio y contenga 20 objetos ordenados según la secuencia Tzolkin: Imix, Ik, Akbal, Kan, Chicchan, Cimi, Manik, Lamat, Muluk, Oc, Chuen, Eb, Ben, Ix, Men, Cib, Caban, Etznab, Cauac, Ajaw.
-
-### Ejecución
-
+### 1. Clonar el repositorio
 ```bash
-python3 ritual_3i_mqtt.py
+git clone https://github.com/bioconexion3i/convocatoriapuentecosmico2027-2079.git ~/nodo_merida
+cd ~/nodo_merida

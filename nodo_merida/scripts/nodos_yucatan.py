@@ -5,7 +5,7 @@ import time
 import random
 from datetime import datetime
 
-client = mqtt.Client()
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1)
 client.connect("localhost", 1883, 60)
 
 nodos = {
