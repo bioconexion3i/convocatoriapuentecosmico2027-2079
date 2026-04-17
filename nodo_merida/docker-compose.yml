@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  # El corazón de la comunicación: Broker MQTT
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: stardust_broker
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+
+  # El cerebro astronómico: Script de Telemetría
+  faro_publisher:
+    build: .
+    container_name: faro_merida_engine
+    depends_on:
+      - mosquitto
+    environment:
+      - MQTT_BROKER=mosquitto
+      - LATITUD=20.9676
+      - LONGITUD=-89.6237
+      - NODO_ID=merida-avenida-yucatan
+    restart: always
