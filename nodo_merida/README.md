@@ -1,4 +1,4 @@
-/# 🌍 Nodo Faro Mérida – Primer Nodo de la Red Stardust
+# 🌍 Nodo Faro Mérida – Primer Nodo de la Red Stardust
 
 **Ubicación:** Mérida, Yucatán, México  
 **Nodo ID:** `merida-avenida-yucatan`  
