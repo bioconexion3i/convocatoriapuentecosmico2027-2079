@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# ritual_3i_mqtt.py - Publica telemetría y eventos rituales
+# ritual_3i_mqtt.py - Integrador de Telemetría IoT y Sincronía Galáctica
+# Nodo Faro Mérida - Red Stardust
 
 import paho.mqtt.client as mqtt
 import json
@@ -7,120 +8,115 @@ import time
 import sys
 import signal
 from datetime import datetime
+
+# --- IMPORTACIONES DE MÓDULOS DE PROYECTO ---
 import reloj_cosmico
+from engine_bioconexion import EngineBioconexion 
 
 # ========================= CONFIGURACIÓN =========================
-MQTT_BROKER = "192.168.100.35"
+MQTT_BROKER = "127.0.0.1"
 MQTT_PORT = 1883
-MQTT_CLIENT_ID = "ritual_3i_publisher"
+MQTT_CLIENT_ID = "ritual_3i_publisher_v2"
 PUBLISH_INTERVAL = 30
+TOPIC_TELEMETRIA = "stardust/ritual_3i/telemetria"
+TOPIC_EVENTO = "stardust/ritual_3i/evento"
 
-# Archivo de nahuales (debe estar en el mismo directorio)
+# Archivo de nahuales
 NAHUALES_JSON = "nahuales_20_universalis.json"
 
-# ========================= CARGA DE NAHUALES =========================
+# Inicializar motor de sincronía galáctica
+engine = EngineBioconexion()
+
+# ========================= CARGA DE DATOS =========================
 def cargar_nahuales():
     try:
         with open(NAHUALES_JSON, "r", encoding="utf-8") as f:
             data = json.load(f)
         if isinstance(data, dict) and "nahuales" in data:
             nahuales_lista = data["nahuales"]
-            formato_esperado = []
-            for n in nahuales_lista:
-                formato_esperado.append({
-                    "es": n["keywords"]["es"],
-                    "en": n["keywords"]["en"],
-                    "zh": n["keywords"]["zh"]
-                })
-            return formato_esperado
-        else:
-            print("Error: el JSON de nahuales no tiene el formato esperado.")
-            return None
+            return [{
+                "es": n["keywords"]["es"],
+                "en": n["keywords"]["en"],
+                "zh": n["keywords"]["zh"]
+            } for n in nahuales_lista]
+        return None
     except Exception as e:
         print(f"Error cargando {NAHUALES_JSON}: {e}")
         return None
 
-# ========================= FUNCIONES AUXILIARES =========================
-def obtener_datos_sensores():
+# ========================= NÚCLEO DE INTEGRACIÓN =========================
+def obtener_payload_unificado():
     """
-    Simulación de lectura de sensores.
-    Reemplaza con tu código real.
+    Fusión del Paso 3: Datos físicos + Contexto Arqueoastronómico.
     """
-    return {
+    # 1. Obtener vectores del motor (Cuenta Larga, Venus, Luna, 819 días)
+    vectores_cosmicos = engine.compute_all_vectors()
+    
+    # 2. Simulación/Lectura de sensores físicos
+    datos_sensores = {
         "temperatura": 25.3,
         "humedad": 68,
         "vibracion": 0.12,
-        "score_armonia": reloj_cosmico.obtener_resonancia_819()
+        "id_nodo": "merida-avenida-yucatan"
     }
 
-def publicar_telemetria(client, datos):
-    """Publica los datos de telemetría en el tópico principal."""
-    payload = {
+    # 3. Construcción del Payload AI-Ready
+    return {
         "timestamp": int(time.time()),
-        "datos": datos
+        "telemetria_iot": datos_sensores,
+        "sincronia_galactica": vectores_cosmicos,
+        "score_armonia": vectores_cosmicos["harmony_factor"] # Derivado del Supernúmero 9.9.16.0.0
     }
-    client.publish("stardust/ritual_3i/telemetria", json.dumps(payload))
-    print(f"📡 Telemetría publicada: {payload}")
 
 def publicar_ritual(client, nahual_info, tipo_evento):
     """Publica un evento ritual (Campana de Hunab Ku)."""
-    ahora = datetime.now()
+    vectores = engine.compute_all_vectors()
     payload = {
-        "timestamp": ahora.isoformat(),
-        "evento": "Hunab_Ku",
+        "timestamp": datetime.now().isoformat(),
+        "evento": "Hunab_Ku_Signal",
         "tipo": tipo_evento,
+        "cuenta_larga": vectores["long_count"],
         "nahual": {
             "es": nahual_info["es"][0] if isinstance(nahual_info["es"], list) else nahual_info["es"],
-            "en": nahual_info["en"][0] if isinstance(nahual_info["en"], list) else nahual_info["en"],
-            "zh": nahual_info["zh"][0] if isinstance(nahual_info["zh"], list) else nahual_info["zh"]
+            "en": nahual_info["en"][0] if isinstance(nahual_info["en"], list) else nahual_info["en"]
         }
     }
-    client.publish("stardust/ritual_3i/evento", json.dumps(payload))
-    print(f"🔔 Evento ritual publicado: {tipo_evento}")
+    client.publish(TOPIC_EVENTO, json.dumps(payload))
+    print(f"🔔 Evento Ritual: {tipo_evento} - {payload['cuenta_larga']}")
 
-# ========================= MANEJADOR DE SEÑAL =========================
+# ========================= EJECUCIÓN =========================
 def signal_handler(sig, frame):
-    print("\n🛑 Nodo detenido por el usuario.")
-    client.disconnect()
+    print("\n🛑 Nodo Faro Mérida desconectado.")
     sys.exit(0)
 
 signal.signal(signal.SIGINT, signal_handler)
 
-# ========================= EJECUCIÓN PRINCIPAL =========================
 if __name__ == "__main__":
-    # Inicializar cliente MQTT
     client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1, client_id=MQTT_CLIENT_ID)
-    client.connect(MQTT_BROKER, MQTT_PORT, 60)
-    client.loop_start()
-
-    # Cargar nahuales
-    nahuales = cargar_nahuales()
-    if nahuales is None:
-        print("❌ No se pudo cargar el archivo de nahuales. El nodo se detendrá.")
+    try:
+        client.connect(MQTT_BROKER, MQTT_PORT, 60)
+        client.loop_start()
+    except Exception as e:
+        print(f"❌ Error de conexión MQTT: {e}")
         sys.exit(1)
 
-    print("✅ Nodo Faro Mérida iniciado.")
-    print(f"📅 Fecha base maya: {reloj_cosmico.FECHA_BASE_MAYA.strftime('%d/%m/%Y')}")
+    nahuales = cargar_nahuales()
+    print(f"✅ Nodo Faro Mérida activo. Sincronizando con Hunab Ku...")
 
-    # Bucle principal
     try:
         while True:
-            datos = obtener_datos_sensores()
-            publicar_telemetria(client, datos)
+            # Generar y publicar el payload unificado
+            payload = obtener_payload_unificado()
+            client.publish(TOPIC_TELEMETRIA, json.dumps(payload))
+            print(f"📡 Telemetría Galáctica: {payload['sincronia_galactica']['long_count']} | Score: {payload['score_armonia']}")
 
+            # Lógica ritual basada en reloj_cosmico
             if reloj_cosmico.es_momento_ritual():
                 idx = reloj_cosmico.obtener_indice_nahual()
                 if nahuales and 0 <= idx < len(nahuales):
-                    nahual_info = nahuales[idx]
-                    ahora = datetime.now()
-                    delta = ahora - reloj_cosmico.FECHA_BASE_MAYA
-                    dias = delta.days + delta.seconds / 86400.0
-                    cuadrante = round(dias / 204.75)
-                    tipo_evento = "Inicio de Ciclo" if cuadrante % 4 == 0 else "Cuadrante"
-                    publicar_ritual(client, nahual_info, tipo_evento)
+                    tipo = "Inicio de Ciclo 819" if payload["sincronia_galactica"]["kawiil_819"]["day"] == 0 else "Pulsar Cuadrante"
+                    publicar_ritual(client, nahuales[idx], tipo)
 
             time.sleep(PUBLISH_INTERVAL)
     except KeyboardInterrupt:
-        print("\n🛑 Nodo detenido por el usuario.")
         client.disconnect()
-        sys.exit(0)
