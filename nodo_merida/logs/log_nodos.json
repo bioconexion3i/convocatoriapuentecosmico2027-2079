@@ -1,0 +1,12 @@
+{
+  "id": "MER-2026-05-01",
+  "nodo": "Mérida",
+  "coordenadas": [20.9674, -89.6237],
+  "timestamp_utc": "2026-05-01T06:00:00Z",
+  "metadata": {
+    "kin": 128,
+    "ciclo_819": 0.2478,
+    "evento": "Chakana Raymi",
+    "protocolo": "Puente Cósmico"
+  }
+}
