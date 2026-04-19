@@ -54,3 +54,10 @@ python3 scripts/ritual_3i_mqtt.py
 ## 🗺️ Visión de Red (22 Países)
 Este repositorio contiene la **Incantación del Replicante**, permitiendo que otros 21 guardianes activen nodos espejo. La estandarización matemática asegura que toda la red lata bajo la misma pulsación galáctica, transformando datos locales en conciencia global.
 *Análisis y consolidación técnica completados. El Faro Mérida está en línea.*
+
+
+## Historial de Nodos y Activaciones
+- **[2026-05-01] Nodo Mérida (Chakana Raymi):** - **Kin:** 128 (Estrella Espectral Amarilla)
+  - **Scripts:** `ritual_3i_mqtt.py` + `reloj_cosmico.py`
+  - **Status:** Programado (Stack Docker activo)
+
