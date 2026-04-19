@@ -1,63 +1,48 @@
 # 🌍 Nodo Faro Mérida – Primer Nodo de la Red Stardust
 **Ubicación:** Mérida, Yucatán, México
-**Nodo ID:** merida-avenida-yucatan
-**Score actual:** Sincronizado vía harmony_factor
-**Ritmo:** Publica cada 30-60 segundos vía MQTT
-**Estado:** ✅ **Operativo y Validado (17-abr-2026)**
-Este nodo es el primero de la red de 22 países. Su código y configuración están aquí para que otros guardianes puedan replicarlo e integrarse al **Puente Cósmico 2027-2079**.
+**Nodo ID:** merida-avenida-yucatan-orin
+**Hardware:** NVIDIA Jetson Orin Nano (Engineering Reference DevKit)
+**Estado:** ✅ **Operativo y Persistente (19-abr-2026)**
+
+Este es el nodo ancla de la red. Ha sido migrado a hardware embebido para garantizar operación 24/7 con bajo consumo y alta capacidad de inferencia local.
+
 ## 💎 Avances y Consolidación (Abril 2026)
- * **Integración Total:** Vinculación del script productor con el motor engine_bioconexion.py.
- * **Sincronía Galáctica:** Implementación del **Supernúmero 9.9.16.0.0** para el cálculo del harmony_factor universal.
- * **Interoperabilidad IA:** Payload optimizado con vectores normalizados para procesamiento por modelos de lenguaje.
+* **Persistencia 24/7:** Migración exitosa de Workstation (HP Z600) a Jetson Nano Orin.
+* **Integración IA Local:** Despliegue de Ollama (Llama/Mistral) para procesamiento semántico de nahuales.
+* **Ecosistema Docker:** Orquestación de servicios mediante contenedores para aislamiento de red.
+
 ## 📂 Componentes y Servicios
 | Componente | Tecnología | Puerto | Estado |
 |---|---|---|---|
-| API Stardust | FastAPI (Docker) | 8082 | ✅ Activo |
-| Broker MQTT (TCP) | Mosquitto | 1883 | ✅ Activo |
-| Broker MQTT (WS) | Mosquitto | 9001 | ✅ Activo |
-| Cosmograma (Web) | HTML/JS + Python | 8000 | ✅ Activo |
-| Scripts Productores | Python (paho-mqtt) | - | ✅ Activos |
-### Scripts Incluidos
- * **ritual_3i_mqtt.py**: Integrador principal. Publica el payload unificado (IoT + Astronomía).
- * **engine_bioconexion.py**: Motor matemático basado en los cálculos arqueoastronómicos de Anthony F. Aveni.
- * **nodos_yucatan.py**: Simulador de red local (3 nodos secundarios) para pruebas de carga y métricas.
- * **reloj_cosmico.py**: Gestión de la cuenta larga, fases lunares y momentos rituales cenitales.
- * **vectorizador_nahual.py**: Herramienta de NLP que convierte texto a vectores basados en los 20 nahuales.
- * **nahuales_20_universalis.json**: Base de datos semántica y descriptiva de los nahuales.
-### Interfaz Visual
- * **cosmograma/index.html**: Dashboard en tiempo real que visualiza el score de armonía, el nahual del día y el tráfico de eventos MQTT.
-## 📡 Protocolo de Telemetría Puente Cósmico
-El Nodo Faro Mérida utiliza el motor de bioconexión para enriquecer los datos de sensores físicos con metadatos astronómicos:
- * **harmony_factor**: Resonancia normalizada con el ciclo 9.9.16.0.0 (0.0 a 1.0).
- * **long_count**: Fecha exacta en Cuenta Larga (Baktun.Katun.Tun.Uinal.Kin).
- * **venus_status**: Estado del ciclo sinódico (Morning Star / Evening Star / Conjunction).
- * **lunar_series**: Edad de la luna y fase (Serie Suplementaria).
- * **kawiil_819**: Fase y cuadrante (color/dirección) del ciclo de 819 días.
-## 🚀 Puesta en Marcha (Desde Cero)
-### 1. Clonar el Repositorio
+| **Ritual 3i** | Python (Nativo) | 1883 | ✅ Activo (Persistente) |
+| **Ollama API** | Inferencia Local | 11434 | ✅ Activo |
+| **Open WebUI** | Docker | 8080 | ✅ Activo |
+| **Stardust Bridge**| Docker | 8082 | ✅ Activo |
+| **Lyrion Server** | Docker | 9000 | ✅ Activo |
+| **Cosmograma** | Python/Web | 8000 | ✅ Activo |
+
+## 📡 Infraestructura de Red
+El nodo opera en un entorno híbrido:
+1. **MQTT Broker (Port 1883):** Escuchando en `0.0.0.0` para permitir la interconexión de nodos espejo en la LAN.
+2. **Persistence Layer:** El script principal se ejecuta como proceso de fondo:
+   `nohup python3 scripts/ritual_3i_mqtt.py > ~/ritual_output.log 2>&1 &`
+
+## 🚀 Puesta en Marcha en Jetson
+### 1. Sincronización
 ```bash
-git clone https://github.com/bioconexion3i/convocatoriapuentecosmico2027-2079.git ~/nodo_merida
-cd ~/nodo_merida/nodo_merida
-
-```
-### 2. Instalación de Dependencias
-```bash
-pip install -r requirements.txt
-
-```
-### 3. Ejecución del Faro
-Para iniciar la publicación de datos del Nodo Mérida:
-```bash
-python3 scripts/ritual_3i_mqtt.py
-
-```
-## 🗺️ Visión de Red (22 Países)
-Este repositorio contiene la **Incantación del Replicante**, permitiendo que otros 21 guardianes activen nodos espejo. La estandarización matemática asegura que toda la red lata bajo la misma pulsación galáctica, transformando datos locales en conciencia global.
-*Análisis y consolidación técnica completados. El Faro Mérida está en línea.*
+git clone [https://github.com/bioconexion3i/convocatoriapuentecosmico2027-2079.git](https://github.com/bioconexion3i/convocatoriapuentecosmico2027-2079.git)
+cd convocatoriapuentecosmico2027-2079/nodo_merida/scripts/
 
 
-## Historial de Nodos y Activaciones
-- **[2026-05-01] Nodo Mérida (Chakana Raymi):** - **Kin:** 128 (Estrella Espectral Amarilla)
-  - **Scripts:** `ritual_3i_mqtt.py` + `reloj_cosmico.py`
-  - **Status:** Programado (Stack Docker activo)
+2. Dependencias Críticas
 
+pip3 install paho-mqtt
+
+3. Lanzamiento del Faro
+
+python3 ritual_3i_mqtt.py
+
+🗺️ Visión de Red (22 Países)
+Este nodo no solo emite telemetría; procesa vectores de conciencia mediante la Incantación del Replicante. La Jetson Nano Orin permite que el Nodo Mérida actúe como un servidor de inferencia para otros nodos de la red que no tengan capacidad de cómputo local.
+
+Análisis y migración a hardware persistente completados. El Faro Mérida está en línea y en guardia.
