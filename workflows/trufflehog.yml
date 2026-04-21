@@ -1,0 +1,23 @@
+name: TruffleHog Secret Scanner
+
+on:
+  push:
+    branches: [ main, mainv2, recursos-automatizacion, reorg-pre-v4 ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run TruffleHog
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          extra_args: --results=verified,unverified --no-update
