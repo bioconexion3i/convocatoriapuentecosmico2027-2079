@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Nodo Faro Mérida – Dashboard Stardust</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.9/standalone/umd/vis-network.min.js"></script>
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --surface: #131313;
+      --surface-2: #1c1c1c;
+      --text: #e0e0e0;
+      --text-muted: #aaaaaa;
+      --text-faint: #888888;
+      --accent: #00ffcc;
+      --warning: #ffcc00;
+      --error: #ff0066;
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .container {
+      display: grid;
+      grid-template-areas:
+        "header header"
+        "specs   network"
+        "systemd charts"
+        "mqtt    mqtt";
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto 1fr 1fr 1fr;
+      min-height: 100vh;
+      gap: 16px;
+      padding: 16px;
+    }
+    .section {
+      background: var(--surface-2);
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid #333;
+    }
+    .section h2 {
+      margin: 0 0 12px 0;
+      font-size: 1.1em;
+      color: var(--accent);
+    }
+    canvas, #network {
+      width: 100%;
+      height: 200px;
+      background: var(--surface);
+      border-radius: 6px;
+    }
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 4px 0;
+    }
+    .status-row span:first-child {
+      font-weight: bold;
+    }
+    .status-row span:last-child {
+      color: var(--text-faint);
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Header -->
+  <div class="section" style="grid-area:header">
+    <h1>🚀 Nodo Faro Mérida – Dashboard Stardust</h1>
+    <p>ID: de>merida-avenida-yucatan-orin</code></p>
+    <p>💻 <strong>Jetson Orin Nano 8GB</strong> – 40 TOPS AI, 1024‑core Ampere GPU, 6‑core ARM CPU, 8 GB LPDDR5</p>
+  </div>
+
+  <!-- Specs (static) -->
+  <div class="section" style="grid-area:specs">
+    <h2>📋 Specs Jetson Orin Nano 8GB</h2>
+    <p>🧠 GPU: 1024‑core Ampere GPU, 32 Tensor Cores</p>
+    <p>⚡ CPU: 6‑core ARM Cortex‑A78AE v8.2, hasta 1.5 GHz</p>
+    <p>💾 RAM: 8 GB LPDDR5, 128‑bit bus</p>
+    <p>🚀 AI: hasta 40 TOPS (disperso)</p>
+    <p>🌡️ TDP: 7–15 W</p>
+  </div>
+
+  <!-- Stardust Network Graph -->
+  <div class="section" style="grid-area:network">
+    <h2>🌐 Red Stardust</h2>
+    <div id="network" style="height:300px"></div>
+  </div>
+
+  <!-- Systemd Services -->
+  <div class="section" style="grid-area:systemd">
+    <h2>⚙️ Servicios Systemd</h2>
+    <div id="services-list"></div>
+  </div>
+
+  <!-- Charts CPU / GPU / RAM -->
+  <div class="section" style="grid-area:charts">
+    <h2>📈 Monitoreo en Tiempo Real</h2>
+    anvas id="chart-cpu"></canvas>
+    anvas id="chart-gpu"></canvas>
+    anvas id="chart-mem"></canvas>
+  </div>
+
+  <!-- MQTT Metrics -->
+  <div class="section" style="grid-area:mqtt">
+    <h2>📊 Métricas MQTT</h2>
+    <p id="mqtt-status">Conectando...</p>
+    <div id="mqtt-stats"></div>
+  </div>
+</div>
+
+<script>
+  // --- MQTT Client ---
+  const mqtt = new Paho.MQTT.Client("localhost", 9001, "dashboard-" + Math.random().toString(16));
+
+  const TOPIC = "stardust/nodo_merida/dashboard";
+
+  // Data structures
+  const data = {
+    cpu: { labels: [], vals: [] },
+    gpu: { labels: [], vals: [] },
+    mem: { labels: [], vals: [] }
+  };
+
+  const MAX_POINTS = 60;  // last 2 minutes with 2s interval
+
+  // --- Charts ---
+  const cpuChart = new Chart(
+    document.getElementById("chart-cpu").getContext("2d"),
+    {
+      type: "line",
+      data: {
+        labels: data.cpu.labels,
+        datasets: [{
+          label: "CPU %",
+          data: data.cpu.vals,
+          borderColor: "#00ffcc",
+          backgroundColor: "rgba(0, 255, 204, 0.1)",
+          borderWidth: 2,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { min: 0, max: 100 }
+        }
+      }
+    }
+  );
+
+  const gpuChart = new Chart(
+    document.getElementById("chart-gpu").getContext("2d"),
+    {
+      type: "line",
+      data: {
+        labels: data.gpu.labels,
+        datasets: [{
+          label: "GPU %",
+          data: data.gpu.vals,
+          borderColor: "#ffcc00",
+          backgroundColor: "rgba(255, 204, 0, 0.1)",
+          borderWidth: 2,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { min: 0, max: 100 }
+        }
+      }
+    }
+  );
+
+  const memChart = new Chart(
+    document.getElementById("chart-mem").getContext("2d"),
+    {
+      type: "line",
+      data: {
+        labels: data.mem.labels,
+        datasets: [{
+          label: "RAM usada (MB)",
+          data: data.mem.vals,
+          borderColor: "#ff6600",
+          backgroundColor: "rgba(255, 102, 0, 0.1)",
+          borderWidth: 2,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    }
+  );
+
+  // --- Network Graph ---
+  const container = document.getElementById("network");
+  const nodes = new vis.DataSet([
+    { id: "merida", label: "Mérida (Faro)" },
+    { id: "nodo-1", label: "Nodo 1" },
+    { id: "nodo-2", label: "Nodo 2" },
+    { id: "nodo-3", label: "Nodo 3" }
+  ]);
+  const edges = new vis.DataSet([
+    { from: "merida", to: "nodo-1", label: "ritual_3i" },
+    { from: "merida", to: "nodo-2", label: "cosmograma" },
+    { from: "merida", to: "nodo-3", label: "nodos_yucatan" }
+  ]);
+  const network = new vis.Network(
+    container,
+    { nodes, edges },
+    { physics: true }
+  );
+
+  // --- MQTT callbacks ---
+  mqtt.onMessageArrived = (msg) => {
+    document.getElementById("mqtt-status").textContent = "Conectado a MQTT";
+
+    try {
+      const raw = JSON.parse(msg.payloadString);
+      const node_id = raw.node_id || "unknown";
+      document.getElementById("mqtt-stats").textContent = `Último nodo: ${node_id} – ${raw.timestamp}`;
+
+      // Update charts
+      const now = new Date(raw.timestamp).toISOString().slice(0, 19);
+      const cpu = raw.stats?.cpu?.usage_pct;
+      const gpu = raw.stats?.gpu?.usage_pct;
+      const ram = raw.stats?.memory?.used / 1024 / 1024;  // bytes → MB
+
+      if (typeof cpu === "number" && typeof gpu === "number" && typeof ram === "number") {
+        data.cpu.labels.push(now);
+        data.cpu.vals.push(cpu);
+        data.gpu.labels.push(now);
+        data.gpu.vals.push(gpu);
+        data.mem.labels.push(now);
+        data.mem.vals.push(ram);
+
+        // keep last MAX_POINTS
+        if (data.cpu.labels.length > MAX_POINTS) data.cpu.labels.shift();
+        if (data.cpu.vals.length > MAX_POINTS) data.cpu.vals.shift();
+        if (data.gpu.labels.length > MAX_POINTS) data.gpu.labels.shift();
+        if (data.gpu.vals.length > MAX_POINTS) data.gpu.vals.shift();
+        if (data.mem.labels.length > MAX_POINTS) data.mem.labels.shift();
+        if (data.mem.vals.length > MAX_POINTS) data.mem.vals.shift();
+
+        cpuChart.update("none");
+        gpuChart.update("none");
+        memChart.update("none");
+      }
+
+      // Update systemd status display
+      const servicesList = document.getElementById("services-list");
+      servicesList.innerHTML = [];
+      const services = raw.systemd || {};
+      for (const [name, status] of Object.entries(services)) {
+        const div = document.createElement("div");
+        div.className = "status-row";
+        div.innerHTML = `<span>${name}:</span> <span>${status}</span>`;
+        servicesList.appendChild(div);
+      }
+    } catch (err) {
+      console.error("Parsing JSON failed", err);
+    }
+  };
+
+  mqtt.onConnectionLost = (err) => {
+    document.getElementById("mqtt-status").textContent = "Desconectado de MQTT: " + (err.errorMessage || "unknown");
+  };
+
+  // Connect
+  mqtt.connect({ onSuccess: () => {
+    console.log("Connected to MQTT");
+    mqtt.subscribe(TOPIC, { qos: 0 });
+  } });
+
+</script>
+</body>
+</html>
