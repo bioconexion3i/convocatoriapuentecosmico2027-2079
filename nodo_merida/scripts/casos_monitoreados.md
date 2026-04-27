@@ -328,3 +328,25 @@
 **Estado**: ABIERTO
 **Responsable**: Gaia Dev Assistant
 ---
+#### MON-2026-04-27-XXX: Anomalía de humedad: 93.11%
+
+**Fecha**: 2026-04-27
+**Tipo de Alerta**: Roja
+**Disparador**: Lectura fuera de rango (10-90%)
+**Contexto**: Humedad registrada: 93.11%
+**Respuesta**: Notificación automática de telemetría
+**Resolución**: Pendiente de revisión
+**Estado**: ABIERTO
+**Responsable**: Gaia Dev Assistant
+---
+#### MON-2026-04-27-XXX: Anomalía de humedad: 9.23%
+
+**Fecha**: 2026-04-27
+**Tipo de Alerta**: Roja
+**Disparador**: Lectura fuera de rango (10-90%)
+**Contexto**: Humedad registrada: 9.23%
+**Respuesta**: Notificación automática de telemetría
+**Resolución**: Pendiente de revisión
+**Estado**: ABIERTO
+**Responsable**: Gaia Dev Assistant
+---
