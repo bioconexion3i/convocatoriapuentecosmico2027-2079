@@ -11,20 +11,21 @@ Este es el nodo ancla de la red. Ha sido migrado a hardware embebido para garant
 * **Integración IA Local:** Despliegue de Ollama (Llama/Mistral) para procesamiento semántico de nahuales.
 * **Ecosistema Docker:** Orquestación de servicios mediante contenedores para aislamiento de red.
 
-## 📂 Componentes y Servicios
-| Componente | Tecnología | Puerto | Estado |
-|---|---|---|---|
-| **Ritual 3i** | Python (Nativo) | 1883 | ✅ Activo (Persistente) |
-| **Ollama API** | Inferencia Local | 11434 | ✅ Activo |
-| **Open WebUI** | Docker | 8080 | ✅ Activo |
-| **Stardust Bridge**| Docker | 8082 | ✅ Activo |
-| **Lyrion Server** | Docker | 9000 | ✅ Activo |
-| **Cosmograma** | Python/Web | 8000 | ✅ Activo |
+| Componente         | Tecnología       | Puerto | Estado          |
+|--------------------|------------------|--------|-----------------|
+| **Mosquitto (MQTT Broker)** | Servicio nativo | 1883   | ✅ Activo       |
+| **Ritual 3i (Cliente)** | Python (paho-mqtt) | (conexión local) | ✅ Activo (Persistente) |
+| **Ollama API**     | Inferencia Local | 11434  | ✅ Activo       |
+| **Open WebUI**     | Docker           | 8080   | ✅ Activo       |
+| **Stardust Bridge**| Docker           | 8082   | ✅ Activo       |
+| **Lyrion Server**  | Docker           | 9000   | ✅ Activo       |
+| **Cosmograma**     | Python/Web       | 8000   | ✅ Activo       |
 
 ## 📡 Infraestructura de Red
 El nodo opera en un entorno híbrido:
-1. **MQTT Broker (Port 1883):** Escuchando en `0.0.0.0` para permitir la interconexión de nodos espejo en la LAN.
-2. **Persistence Layer:** El script principal se ejecuta como proceso de fondo:
+1. **MQTT Broker (Mosquitto, port 1883):** Escuchando en `0.0.0.0` para permitir la interconexión de nodos espejo en la LAN.
+2. **Cliente del ritual:** El script `ritual_3i_mqtt.py` se conecta al broker local (`localhost:1883`) utilizando la librería `paho-mqtt`.
+3. **Persistencia:** El script se ejecuta como proceso de fondo:
    `nohup python3 scripts/ritual_3i_mqtt.py > ~/ritual_output.log 2>&1 &`
 
 ## 🚀 Puesta en Marcha en Jetson
