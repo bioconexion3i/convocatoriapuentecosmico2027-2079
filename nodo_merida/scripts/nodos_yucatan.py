@@ -3,6 +3,8 @@ import paho.mqtt.client as mqtt
 import json
 import time
 import random
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning, module="paho.mqtt.client")
 from datetime import datetime
 
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1)
@@ -22,5 +24,6 @@ while True:
             "score": round(score, 3),
             "node": topic.replace("/", "_")
         }
+        print(f"📡 Publicando: {payload}")
         client.publish(f"stardust/{topic}", json.dumps(payload))
     time.sleep(60)
