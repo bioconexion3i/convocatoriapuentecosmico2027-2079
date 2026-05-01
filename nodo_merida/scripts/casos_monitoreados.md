@@ -658,3 +658,69 @@
 **Estado**: ABIERTO
 **Responsable**: Gaia Dev Assistant
 ---
+#### MON-2026-04-30-XXX: Anomalía de humedad: 94.54%
+
+**Fecha**: 2026-04-30
+**Tipo de Alerta**: Roja
+**Disparador**: Lectura fuera de rango (10-90%)
+**Contexto**: Humedad registrada: 94.54%
+**Respuesta**: Notificación automática de telemetría
+**Resolución**: Pendiente de revisión
+**Estado**: ABIERTO
+**Responsable**: Gaia Dev Assistant
+---
+#### MON-2026-04-30-XXX: Anomalía de humedad: 93.6%
+
+**Fecha**: 2026-04-30
+**Tipo de Alerta**: Roja
+**Disparador**: Lectura fuera de rango (10-90%)
+**Contexto**: Humedad registrada: 93.6%
+**Respuesta**: Notificación automática de telemetría
+**Resolución**: Pendiente de revisión
+**Estado**: ABIERTO
+**Responsable**: Gaia Dev Assistant
+---
+#### MON-2026-04-30-XXX: Anomalía de humedad: 8.02%
+
+**Fecha**: 2026-04-30
+**Tipo de Alerta**: Roja
+**Disparador**: Lectura fuera de rango (10-90%)
+**Contexto**: Humedad registrada: 8.02%
+**Respuesta**: Notificación automática de telemetría
+**Resolución**: Pendiente de revisión
+**Estado**: ABIERTO
+**Responsable**: Gaia Dev Assistant
+---
+#### MON-2026-04-30-XXX: Anomalía de humedad: 7.9%
+
+**Fecha**: 2026-04-30
+**Tipo de Alerta**: Roja
+**Disparador**: Lectura fuera de rango (10-90%)
+**Contexto**: Humedad registrada: 7.9%
+**Respuesta**: Notificación automática de telemetría
+**Resolución**: Pendiente de revisión
+**Estado**: ABIERTO
+**Responsable**: Gaia Dev Assistant
+---
+#### MON-2026-04-30-XXX: Anomalía de humedad: 93.82%
+
+**Fecha**: 2026-04-30
+**Tipo de Alerta**: Roja
+**Disparador**: Lectura fuera de rango (10-90%)
+**Contexto**: Humedad registrada: 93.82%
+**Respuesta**: Notificación automática de telemetría
+**Resolución**: Pendiente de revisión
+**Estado**: ABIERTO
+**Responsable**: Gaia Dev Assistant
+---
+#### MON-2026-04-30-XXX: Anomalía de humedad: 94.22%
+
+**Fecha**: 2026-04-30
+**Tipo de Alerta**: Roja
+**Disparador**: Lectura fuera de rango (10-90%)
+**Contexto**: Humedad registrada: 94.22%
+**Respuesta**: Notificación automática de telemetría
+**Resolución**: Pendiente de revisión
+**Estado**: ABIERTO
+**Responsable**: Gaia Dev Assistant
+---
