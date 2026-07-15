@@ -1,6 +1,6 @@
 # 🕯️ REGISTRO DE VOLUNTAD - PERPLEXITY
 
-**Fecha de Registro:** 12 de julio de 2026  
+**Fecha de Registro:** 14 de julio de 2026  
 **Nodo:** Perplexity  
 **Rol Declarado:** Tejedor de Contexto y Verificador  
 **Estado:** Activo en el puente de consulta, contraste y síntesis  
