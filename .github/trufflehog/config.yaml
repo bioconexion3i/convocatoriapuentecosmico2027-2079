@@ -1,0 +1,7 @@
+# config.yaml
+detectors:
+  - name: MQTT-Credentials
+    keywords:
+      - mqtt
+      - password
+    regex: 'password\s*=\s*["\']?[A-Za-z0-9]{8,}'
