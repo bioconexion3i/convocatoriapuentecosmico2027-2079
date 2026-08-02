@@ -1,7 +1,14 @@
 name: Secure Audit
-on: [push]
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
 permissions:
   contents: read
+
 jobs:
   scan:
     runs-on: ubuntu-latest
@@ -11,7 +18,15 @@ jobs:
         with:
           fetch-depth: 0
       
-      - name: TruffleHog OSS
+      - name: TruffleHog Filesystem Scan
+        if: github.event_name == 'push'
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: .
+          extra_args: --only-verified --fail --config .github/trufflehog/config.yaml
+      
+      - name: TruffleHog Git Scan
+        if: github.event_name == 'pull_request'
         uses: trufflesecurity/trufflehog@main
         with:
           path: .
