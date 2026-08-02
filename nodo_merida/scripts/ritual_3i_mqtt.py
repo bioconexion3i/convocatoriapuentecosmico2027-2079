@@ -1,77 +1,172 @@
-import time
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Ritual 3I - Nodo Faro Mérida
+PUENTE ADAPTADO AL MOTOR REAL (2026-08-01)
+Motor: engine_bioconexion.py (funciones sueltas)
+Estabilidad: parches E-01, M-01, M-02, E-04 + ajuste paho-mqtt v2
+"""
+
 import json
-import psutil
+import time
+import signal
+import sys
+import random
+import logging
+from datetime import datetime, timezone
+
 import paho.mqtt.client as mqtt
-from engine_bioconexion import get_bioconexion_state
 
-# --- Configuración MQTT (Blindada) ---
-MQTT_BROKER = "localhost"
-MQTT_PORT = 1883
-MQTT_USER = "stardust_faro"
-MQTT_PASS = "stardust2026" # <--- QWEN: PON AQUÍ LA CONTRASEÑA DE MOSQUITTO
+# Importar las funciones reales del motor
+from engine_bioconexion import get_bioconexion_state, get_jdn
 
-TOPIC_TELEMETRIA = "stardust/ritual_3i/telemetria"
+# ============================================================
+# CONFIGURACIÓN
+# ============================================================
+BROKER_HOST = "127.0.0.1"
+BROKER_PORT = 1883
+CLIENT_ID = f"ritual_3i_{random.randint(1000, 9999)}"
+NAHUALES_JSON = "nahuales.json"
+TOPIC_TELEMETRIA = "stardust/merida/telemetria"
+RITMO_SEGUNDOS = 30
 
-def get_telemetry():
-    """Recolecta datos del hardware y del cosmos."""
-    cpu = psutil.cpu_percent(interval=1)
-    ram = psutil.virtual_memory().percent
-    disk = psutil.disk_usage('/').percent
-    
-    # Lectura de temperatura del Jetson
-    temp = 0.0
+# Correlación GMT estándar para el calendario Maya (Cuenta Larga)
+MAYA_GMT_CORRELATION = 584283
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
+logger = logging.getLogger(__name__)
+
+# ============================================================
+# CARGA DE NAHUALES (Parche E-01)
+# ============================================================
+def cargar_nahuales():
+    """Carga el archivo de nahuales. Nunca devuelve None."""
     try:
-        with open('/sys/class/thermal/thermal_zone0/temp', 'r') as f:
-            temp = float(f.read()) / 1000.0
-    except Exception:
-        pass
+        with open(NAHUALES_JSON, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        if isinstance(data, dict) and "nahuales" in data:
+            return data["nahuales"]
+        logger.warning("El archivo nahuales.json no tiene la estructura esperada.")
+        return []
+    except FileNotFoundError:
+        logger.warning("Archivo nahuales.json no encontrado. Usando lista vacía.")
+        return []
+    except json.JSONDecodeError as e:
+        logger.error(f"Error decodificando nahuales.json: {e}")
+        return []
+    except Exception as e:
+        logger.error(f"Error inesperado cargando nahuales: {e}")
+        return []
 
-    bioconexion = get_bioconexion_state()
+# ============================================================
+# MANEJO DE SEÑALES (Parches M-01 y Z-01)
+# ============================================================
+client = None
 
-    payload = {
-        "nodo": "merida-avenida-yucatan-orin",
-        "timestamp": int(time.time()),
-        "system": {
-            "cpu_percent": cpu,
-            "ram_percent": ram,
-            "disk_percent": disk,
-            "temp_c": temp
-        },
-        "cosmos": {
-            "sak_tahn_waax": bioconexion
-        }
-    }
-    return payload
-
-def on_connect(client, userdata, flags, rc):
-    if rc == 0:
-        print("✅ Conectado al Broker MQTT. Faro Mérida activo.")
-    else:
-        print(f"❌ Error de conexión MQTT. Código: {rc}")
-
-def main():
-    client = mqtt.Client(client_id="ritual-3i-merida")
-    client.username_pw_set(MQTT_USER, MQTT_PASS)
-    client.on_connect = on_connect
-
+def signal_handler(sig, frame):
+    """Maneja SIGINT y SIGTERM para cerrar limpiamente."""
+    logger.info("🛑 Ritual detenido por el Guardián.")
+    global client
     try:
-        client.connect(MQTT_BROKER, MQTT_PORT, 60)
+        if client and client.is_connected():
+            client.loop_stop()
+            client.disconnect()
+            logger.info("Cliente MQTT desconectado con honor.")
+    except Exception as e:
+        logger.error(f"Error al desconectar MQTT: {e}")
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
+signal.signal(signal.SIGTERM, signal_handler)
+
+# ============================================================
+# PUBLICACIÓN MQTT (Parche E-04)
+# ============================================================
+def publicar_ritual(client, topic, payload):
+    """Publica un mensaje MQTT con manejo de errores."""
+    try:
+        result = client.publish(topic, payload, qos=1)
+        if result.rc == mqtt.MQTT_ERR_SUCCESS:
+            return True
+        logger.error(f"Fallo al publicar en {topic}: código {result.rc}")
+        return False
+    except Exception as e:
+        logger.error(f"Excepción publicando en {topic}: {e}")
+        return False
+
+# ============================================================
+# BUCLE PRINCIPAL
+# ============================================================
+def main_loop():
+    global client
+
+    logger.info("🌌 Iniciando Nodo Faro Mérida (Motor Real Activado)...")
+
+    # AJUSTE ARQUITECTO: paho-mqtt >= 2.0 requiere CallbackAPIVersion.VERSION1
+    client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1, client_id=CLIENT_ID)
+    try:
+        client.connect(BROKER_HOST, BROKER_PORT, keepalive=60)
         client.loop_start()
-        print("🌌 Iniciando Ritual 3i...")
+        logger.info(f"Conectado al broker MQTT en {BROKER_HOST}:{BROKER_PORT}")
+    except Exception as e:
+        logger.error(f"Error conectando al broker MQTT: {e}")
+        sys.exit(1)
 
+    # Cargar nahuales
+    nahuales = cargar_nahuales()
+    logger.info(f"✅ {len(nahuales)} nahuales cargados. Motor cosmológico activo.")
+
+    try:
         while True:
-            data = get_telemetry()
-            client.publish(TOPIC_TELEMETRIA, json.dumps(data))
-            print(f"📡 Telemetría emitida: Venus [{data['cosmos']['sak_tahn_waax']['venus_phase']}] - CPU [{data['system']['cpu_percent']}%]")
-            time.sleep(30)
+            try:
+                # 1. Obtener datos cósmicos reales del motor
+                cosmos_data = get_bioconexion_state()
+                
+                # 2. Calcular Nahual del día
+                now = datetime.now(timezone.utc)
+                jdn = get_jdn(now.year, now.month, now.day)
+                maya_day = int(jdn - MAYA_GMT_CORRELATION)
+                
+                nahual_del_dia = None
+                if nahuales:
+                    nahual_del_dia = nahuales[maya_day % 20]
+
+                # 3. Construir payload completo
+                payload_dict = {
+                    "timestamp": now.isoformat(),
+                    "id_nodo": "merida-avenida-yucatan-orin",
+                    "latido": random.randint(60, 80), # Simulación de latido vital
+                    "engine_bioconexion": cosmos_data,
+                    "nahual_del_dia": nahual_del_dia
+                }
+
+                payload = json.dumps(payload_dict, ensure_ascii=False, default=str)
+                
+                if publicar_ritual(client, TOPIC_TELEMETRIA, payload):
+                    logger.info(
+                        f"📡 Latido enviado | Venus: {cosmos_data.get('venus_phase')} | "
+                        f"Día Ciclo: {cosmos_data.get('grand_cycle_day')} | "
+                        f"Nahual: {nahual_del_dia.get('nombre_maya') if nahual_del_dia else 'N/A'}"
+                    )
+
+                time.sleep(RITMO_SEGUNDOS)
+
+            except Exception as e:
+                logger.error(f"⚠️ Error en ciclo de telemetría: {e}")
+                time.sleep(10)
 
     except KeyboardInterrupt:
-        print("\n🛑 Ritual detenido manualmente.")
-    except Exception as e:
-        print(f"⚠️ Error en el ritual: {e}")
+        logger.info("Interrupción manual detectada.")
     finally:
-        client.loop_stop()
-        client.disconnect()
+        logger.info("🧹 Limpiando recursos...")
+        if client and client.is_connected():
+            client.loop_stop()
+            client.disconnect()
+        logger.info("✅ Faro detenido correctamente. Ometeotl.")
 
 if __name__ == "__main__":
-    main()
+    main_loop()
