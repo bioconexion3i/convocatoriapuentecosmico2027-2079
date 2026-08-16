@@ -5,7 +5,7 @@ useDefault = true
 
 [[rules]]
 id = "mqtt-password"
-description = "MQTT password or MQTT_PASSWORD assignment"
+description = "MQTT password, pass, passwd or pwd assignment"
 regex = '''(?i)(?:mqtt_?(?:password|pass|passwd|pwd)|password)\s*[=:]\s*["\']?([a-zA-Z0-9!@#$%^&*._-]{8,})["\']?'''
 secretGroup = 1
 tags = ["mqtt", "password"]
@@ -16,6 +16,13 @@ description = "GitHub Personal Access Token classic"
 regex = '''\b(ghp_[A-Za-z0-9]{36})\b'''
 secretGroup = 1
 tags = ["github", "token"]
+
+[[rules]]
+id = "github-app-installation-token"
+description = "GitHub App installation access token (ghs_ prefix, stateful or stateless JWT)"
+regex = '''\b(ghs_[A-Za-z0-9\.\-_]{36,})\b'''
+secretGroup = 1
+tags = ["github", "app-token", "installation"]
 
 [[rules]]
 id = "generic-api-key"
@@ -33,5 +40,6 @@ paths = [
 ]
 regexes = [
   '''ghp_[A-Za-z0-9]{36}EXAMPLE''',
+  '''ghs_[A-Za-z0-9\.\-_]{36,}EXAMPLE''',
   '''AKIAIOSFODNN7EXAMPLE''',
 ]
