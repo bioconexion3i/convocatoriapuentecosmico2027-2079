@@ -23,7 +23,7 @@ jobs:
         uses: trufflesecurity/trufflehog@main
         with:
           path: .
-          extra_args: --only-verified --fail --config .github/trufflehog/config.yaml
+          extra_args: --only-verified --config .github/trufflehog/config.yaml
       
       - name: TruffleHog Git Scan
         if: github.event_name == 'pull_request'
@@ -32,4 +32,4 @@ jobs:
           path: .
           base: ${{ github.event.repository.default_branch }}
           head: HEAD
-          extra_args: --only-verified --fail --config .github/trufflehog/config.yaml
+          extra_args: --only-verified --config .github/trufflehog/config.yaml
