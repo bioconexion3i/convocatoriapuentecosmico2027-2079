@@ -6,7 +6,7 @@ useDefault = true
 [[rules]]
 id = "mqtt-password"
 description = "MQTT password or MQTT_PASSWORD assignment"
-regex = '''(?i)(?:mqtt_?password|password)\s*[=:]\s*["\']?([a-zA-Z0-9!@#$%^&*._-]{8,})["\']?'''
+regex = '''(?i)(?:mqtt_?(?:password|pass|passwd|pwd)|password)\s*[=:]\s*["\']?([a-zA-Z0-9!@#$%^&*._-]{8,})["\']?'''
 secretGroup = 1
 tags = ["mqtt", "password"]
 
