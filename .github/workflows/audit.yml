@@ -41,8 +41,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Run Gitleaks in observation mode
-        continue-on-error: true
+      - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
