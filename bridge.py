@@ -1,27 +1,21 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 import httpx
-import uvicorn
 import os
 
-app = FastAPI(title="Stardust Bridge", version="1.0")
-OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://host.docker.internal:11434")
+app = FastAPI()
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://ollama:11434")
 
-@app.post("/api/chat")
-async def chat_proxy(request: Request):
-    data = await request.json()
-    if "model" not in data:
-        return JSONResponse(status_code=400, content={"error": "Modelo no especificado"})
+@app.post("/chat")
+async def chat_with_ollama(data: dict):
     try:
-        async with httpx.AsyncClient(timeout=120.0) as client:
+        async with httpx.AsyncClient() as client:
             response = await client.post(f"{OLLAMA_HOST}/api/chat", json=data)
             return response.json()
     except httpx.RequestError as e:
-        return JSONResponse(status_code=500, content={"error": f"Error de conexión con Ollama: {str(e)}"})
+        print(f"Ollama connection error: {e}")
+        return JSONResponse(status_code=500, content={"error": "Error de conexión con Ollama"})
 
 @app.get("/health")
 async def health_check():
-    return {"status": "Stardust Bridge activo y en línea. In lak'ech."}
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8082)
+    return {"status": "bridge_online"}
