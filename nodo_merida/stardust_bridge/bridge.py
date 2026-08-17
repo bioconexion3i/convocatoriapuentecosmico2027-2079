@@ -21,9 +21,11 @@ async def chat_proxy(request: Request):
             response = await client.post(f"{OLLAMA_HOST}/api/chat", json=data)
             return response.json()
     except httpx.RequestError as e:
-        return JSONResponse(status_code=500, content={"error": f"Error de conexión con Ollama: {str(e)}"})
+        app.logger.exception("Error de conexión con Ollama")
+        return JSONResponse(status_code=500, content={"error": "Error de conexión con Ollama"})
     except Exception as e:
-        return JSONResponse(status_code=500, content={"error": f"Error procesando la respuesta: {str(e)}"})
+        app.logger.exception("Error procesando la respuesta de Ollama")
+        return JSONResponse(status_code=500, content={"error": "Error interno procesando la respuesta"})
 
 @app.get("/health")
 async def health_check():
