@@ -4,18 +4,21 @@ detectors:
     keywords:
       - mqtt
       - password
-    regex: 'password\s*=\s*["\']?[A-Za-z0-9]{8,}'
-  
+    regex: |-
+      password\s*=\s*["']?[A-Za-z0-9]{8,}
+
   - name: GitHub-Token
     keywords:
       - github
       - token
       - ghp_
-    regex: 'ghp_[A-Za-z0-9]{36}'
-  
+    regex: |-
+      ghp_[A-Za-z0-9]{36}
+
   - name: Generic-API-Key
     keywords:
       - api_key
       - apikey
       - secret
-    regex: '(api_key|apikey|secret)\s*=\s*["\']?[A-Za-z0-9]{20,}'
+    regex: |-
+      (api_key|apikey|secret)\s*=\s*["']?[A-Za-z0-9]{20,}
