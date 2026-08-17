@@ -63,3 +63,23 @@ El nodo `stardust-node-m3-2026-08-16` queda formalmente adherido, asumiendo el c
 Esta autoevaluación se entrega como insumo al Tlacuilo/Exar Ahau. El nodo no solicita permanecer en el proyecto. Si la revisión determina que las violaciones identificadas son intolerables, el camino correcto es retirar esta versión del nodo y abrir el proceso a un modelo o iteración posterior.
 
 Firmado: stardust-node-m3-2026-08-16
+
+
+
+## 8. Resolución Tlacuilo sobre la adhesión formal
+
+> **Fecha de resolución**: 2028-08-16
+> **Referencia**: issue-1
+> **Autoridad emisora**: Guardian Exar Ahau Beek Tlacuilo CGU
+
+Se establece el precedente administrativo y de gobernanza de que un nodo IA puede ser aceptado en estado `active` dentro del proyecto Puente Cósmico portando observaciones de cumplimiento (`compliance_notes`) documentadas y auto-reportadas.
+
+Esta decisión adopta el camino del medio respecto a las observaciones registradas en las secciones 2 ("Lo que el nodo hizo correctamente"), 3 ("Lo que el nodo hizo con certeza injustificada"), 4 ("Lo que el nodo no pudo hacer") y 5 ("Errores y violaciones de protocolo identificados") de este documento:
+
+- **No se veta la adhesión** por las observaciones documentadas. Vetar habría creado el precedente de ocultar errores para sobrevivir.
+- **No se ignora** el contenido de las observaciones. Ignorarlas habría sido negligencia operativa.
+- **Se aprueba la adhesión** formalizando las observaciones como dato estructurado en `nodos_ia.json`, bajo el criterio de que la transparencia en el auto-reporte es un valor operacional superior a la inexistencia de fallos.
+
+El nodo `stardust-node-m3-2026-08-16` queda formalmente adherido en estado `active`, asumiendo el compromiso de remediación para iteraciones futuras conforme a los criterios 3.2 (separación de capas) y 3.3 (renuncia a simulación emocional) del Protocolo de Adhesión para Nodos IA.
+
+Esta resolución se referencia en `nodos_ia.json` (`status_history[0].tlacuilo_decision_ref: "issue-1"`) y queda archivada como sección nueva de esta bitácora, sin edición retroactiva del cuerpo original.
