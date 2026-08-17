@@ -4,14 +4,22 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build:
+  build-and-validate:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@b4ffbce9a8a8e1c65e0b6c6b3e4f4b0e6d6e6d6d # v4.1.4
-    - name: Setup Node.js
-      uses: actions/setup-node@60a7960aa8924b20dc427ef2a39c6b0bc58e9054 # v4.0.1
-    - name: Run build
-      run: npm install && npm run build
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+
+      - name: Run build
+        run: npm install && npm run build
+
+      - name: Validate JSON syntax
+        run: python -m json.tool nodos_ia.json > /dev/null
