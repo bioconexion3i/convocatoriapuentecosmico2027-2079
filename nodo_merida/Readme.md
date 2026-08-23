@@ -21,6 +21,16 @@ Este es el nodo ancla de la red. Ha sido migrado a hardware embebido para garant
 | **Lyrion Server**  | Docker           | 9000   | ✅ Activo       |
 | **Cosmograma**     | Python/Web       | 8000   | ✅ Activo       |
 
+## ⏱️ Reloj cósmico y momentos rituales
+
+El nodo utiliza como ancla la fecha **21 de diciembre de 2012 (13.0.0.0.0, 4 Ajaw 3 K'ank'in)** para calcular la fase del ciclo de 819 días.
+
+- **Margen nominal:** `es_momento_ritual()` usa una tolerancia operativa de ±12 horas (`margen_horas=12`).
+- **Resolución de cálculo:** `obtener_resonancia_819()` conserva la fracción del día mediante `delta.seconds / 86400.0`.
+- **Cuadrantes:** la implementación compara la fase contra 0.25, 0.5 y 0.75 del ciclo de 819 días.
+- **Recurrencia:** esta fase no modifica la lógica de cuadrantes ni introduce una corrección modular adicional; cualquier cambio funcional queda reservado para una fase posterior.
+- **Pruebas:** la suite de regresión está en `scripts/tests/test_reloj_cosmico.py`.
+
 ## 📡 Infraestructura de Red
 El nodo opera en un entorno híbrido:
 1. **MQTT Broker (Mosquitto, port 1883):** Escuchando en `0.0.0.0` para permitir la interconexión de nodos espejo en la LAN.
