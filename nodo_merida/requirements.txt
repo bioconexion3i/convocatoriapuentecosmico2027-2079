@@ -1,2 +1,2 @@
 # Dependencias del Nodo Faro Mérida
-paho-mqtt
+paho-mqtt==2.1.0
