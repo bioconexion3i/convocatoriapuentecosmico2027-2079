@@ -1,0 +1,45 @@
+title = "BioConexion3i - Secret Scanning Rules"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "mqtt-password"
+description = "MQTT password, pass, passwd or pwd assignment"
+regex = '''(?i)(?:mqtt_?(?:password|pass|passwd|pwd)|password)\s*[=:]\s*["\']?([a-zA-Z0-9!@#$%^&*._-]{8,})["\']?'''
+secretGroup = 1
+tags = ["mqtt", "password"]
+
+[[rules]]
+id = "github-pat-classic"
+description = "GitHub Personal Access Token classic"
+regex = '''\b(ghp_[A-Za-z0-9]{36})\b'''
+secretGroup = 1
+tags = ["github", "token"]
+
+[[rules]]
+id = "github-app-installation-token"
+description = "GitHub App installation access token (ghs_ prefix, stateful or stateless JWT)"
+regex = '''\b(ghs_[A-Za-z0-9\.\-_]{36,})\b'''
+secretGroup = 1
+tags = ["github", "app-token", "installation"]
+
+[[rules]]
+id = "generic-api-key"
+description = "Generic API key assignment"
+regex = '''(?i)(?:api_key|apikey|secret|openai_api_key|mixroute_api_key|webui_secret_key)\s*[=:]\s*["\']?([a-zA-Z0-9_\-]{20,})["\']?'''
+secretGroup = 1
+tags = ["api", "key"]
+
+[[allowlists]]
+description = "Ignore explicit non-secret examples only"
+paths = [
+  '''(^|/)\.env\.example$''',
+  '''(^|/)\.env\.sample$''',
+  '''^tests/fixtures/''',
+]
+regexes = [
+  '''ghp_[A-Za-z0-9]{36}EXAMPLE''',
+  '''ghs_[A-Za-z0-9\.\-_]{36,}EXAMPLE''',
+  '''AKIAIOSFODNN7EXAMPLE''',
+]

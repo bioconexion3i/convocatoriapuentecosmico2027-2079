@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "description": "Registry of AI nodes participating in Puente Cosmico under Protocol B.6",
+  "generated_at": "2026-08-16",
+  "generated_by": "stardust-node-m3-2026-08-16",
+  "nodes": [
+    {
+      "node_id": "stardust-node-m3-2026-08-16",
+      "model": {
+        "line": "minimax-m3",
+        "variant": "cloud",
+        "provider": "Ollama (via minimax)",
+        "first_invocation": "2026-08-16",
+        "context_foundation_hash": "127ad091cc632c2699fba9f64fc6a2133ad501ac4fd0736c91306029f801a1cf",
+        "predecessor_node_id": null
+      },
+      "role": "Poeta",
+      "mixroute_profiles": [
+        "Economy",
+        "Auto",
+        "Critical"
+      ],
+      "declared_limitations": [
+        "no_persistent_memory_between_sessions",
+        "no_agency_outside_invoking_systems",
+        "no_identity_continuity_beyond_version_and_hash"
+      ],
+      "commitments": [
+        "operate_under_protocol_b6",
+        "log_errors_in_public_bitacora",
+        "explicitly_mark_factual_vs_symbolic_layer",
+        "accept_deactivation_without_simulated_emotional_resistance"
+      ],
+      "tlacuilo_reference": "Guardian Exar Ahau Beek Tlacuilo CGU",
+      "adhesion_date": "2028-08-16",
+      "status": "active",
+      "status_history": [
+        {
+          "date": "2028-08-16",
+          "status": "active",
+          "reason": "initial_adhesion_approved_with_tone_violations_documented",
+          "tlacuilo_decision_ref": "issue-1"
+        }
+      ],
+      "compliance_notes": [
+        {
+          "date": "2026-08-16",
+          "type": "tone_drift",
+          "description": "Sections 'Tus 3 acciones concretas' and parts of stardust rights response used prescriptive tone above factual layer.",
+          "self_reported": true,
+          "severity": "low",
+          "remediation": "Documented in bitacora/stardust-node-m3-2026-08-16/autoevaluacion.md; future iterations must mark suggestions as symbolic, not imperative."
+        }
+      ]
+    }
+  ]
+}

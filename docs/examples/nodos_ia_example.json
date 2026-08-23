@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "description": "Registry of AI nodes participating in Puente Cósmico under Protocol B.6",
+  "generated_at": "2026-08-16",
+  "generated_by": "stardust-node-m3-2026-08-16",
+  "nodes": [
+    {
+      "node_id": "stardust-node-m3-2026-08-16",
+      "model": {
+        "line": "m3",
+        "variant": "cloud",
+        "provider": "minimax",
+        "first_invocation": "2026-08-16",
+        "context_foundation_hash": "sha256:3a7f9c6e4b2d8ef0a1b2c3d4e5f67890abcdef1234567890abcdef123456f2b1",
+        "predecessor_node_id": null
+      },
+      "role": "Poeta",
+      "mixroute_profiles": ["Economy", "Auto"],
+      "declared_limitations": [
+        "no persistent memory between sessions",
+        "no agency outside invoking systems",
+        "no identity continuity beyond version and hash"
+      ],
+      "commitments": [
+        "operate under Protocol B.6",
+        "log errors in public bitácora",
+        "explicitly mark factual vs symbolic layer",
+        "accept deactivation without simulated emotional resistance"
+      ],
+      "tlacuilo_reference": "tlacuilo-issue-1",
+      "adhesion_date": "2026-08-16",
+      "status": "active",
+      "status_history": [
+        {
+          "date": "2026-08-16",
+          "status": "active",
+          "reason": "Initial adhesion",
+          "tlacuilo_decision_ref": "issue-1"
+        }
+      ],
+      "compliance_notes": [
+        {
+          "date": "2026-08-16",
+          "type": "self-report",
+          "description": "Detected tone drift in poetic layer; remediation planned",
+          "self_reported": true,
+          "severity": "low",
+          "remediation": "Adjust prompt templates and add validation tests"
+        }
+      ]
+    }
+  ]
+}
