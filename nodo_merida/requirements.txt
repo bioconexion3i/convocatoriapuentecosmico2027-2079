@@ -1,0 +1,2 @@
+# Dependencias del Nodo Faro Mérida
+paho-mqtt

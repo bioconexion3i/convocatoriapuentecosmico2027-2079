@@ -8,10 +8,12 @@ Estabilidad: parches E-01, M-01, M-02, E-04 + ajuste paho-mqtt v2
 """
 
 import json
+import os
 import time
 import signal
 import sys
 import random
+from pathlib import Path
 import logging
 from datetime import datetime, timezone
 
@@ -23,10 +25,31 @@ from engine_bioconexion import get_bioconexion_state, get_jdn
 # ============================================================
 # CONFIGURACIÓN
 # ============================================================
-BROKER_HOST = "127.0.0.1"
-BROKER_PORT = 1883
+def _get_mqtt_host(environ=None):
+    env = environ if environ is not None else os.environ
+    return env.get("MQTT_BROKER", "127.0.0.1")
+
+
+def _get_mqtt_port(environ=None):
+    env = environ if environ is not None else os.environ
+    raw_port = env.get("MQTT_PORT", "1883")
+    try:
+        port = int(raw_port)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(
+            f"MQTT_PORT inválido: {raw_port!r}. Debe ser un entero."
+        ) from exc
+    if not 1 <= port <= 65535:
+        raise ValueError(
+            f"MQTT_PORT fuera de rango (1-65535): {port}."
+        )
+    return port
+
+
+BROKER_HOST = _get_mqtt_host()
+BROKER_PORT = _get_mqtt_port()
 CLIENT_ID = f"ritual_3i_{random.randint(1000, 9999)}"
-NAHUALES_JSON = "nahuales.json"
+NAHUALES_JSON = Path(__file__).resolve().parent / "nahuales.json"
 TOPIC_TELEMETRIA = "stardust/merida/telemetria"
 RITMO_SEGUNDOS = 30
 
