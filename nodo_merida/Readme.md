@@ -252,8 +252,13 @@ configuración válida para ejecutar `scripts/ritual_3i_mqtt.py`.
 - `requirements.txt`: dependencias fijadas.
 - `scripts/ritual_3i_mqtt.py`: publicador MQTT.
 - `scripts/engine_bioconexion.py`: motor de estado.
-- `scripts/nahuales.json`: archivo canónico usado por el publicador.
+- `scripts/nahuales.json`: archivo canónico cargado por
+  `ritual_3i_mqtt.py`; contiene 20 nahuales.
+- `scripts/nahuales_20_universalis.json`: archivo alternativo de 20 nahuales;
+  no es utilizado actualmente por el publicador y requiere una decisión de
+  mantenimiento separada.
 - `scripts/tests/`: pruebas automatizadas.
+
 
 ## Seguimientos
 
