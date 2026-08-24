@@ -88,6 +88,10 @@ extra_hosts:
   - "host.docker.internal:host-gateway"
 ```
 
+En esta Jetson, `host.docker.internal` se resuelve mediante `extra_hosts` a la
+pasarela de la red bridge de Docker, actualmente `172.17.0.1`. Por eso el
+contenedor utiliza `host.docker.internal:1884`, mientras que las pruebas
+locales del host utilizan `127.0.0.1:1883`.
 El listener de Docker está restringido a la interfaz `172.17.0.1`.
 
 ### Seguridad actual
@@ -236,6 +240,10 @@ una cola persistente para las publicaciones que el proceso Python genere
 mientras el broker está desconectado. Las publicaciones emitidas durante esa
 caída pueden perderse, especialmente si el proceso o el contenedor se reinicia
 antes de reconectar.
+El rollback requiere que el archivo
+`/etc/systemd/system/ritual-stardust.service` exista y conserve una
+configuración válida para ejecutar `scripts/ritual_3i_mqtt.py`.
+
 
 ## Archivos principales
 
