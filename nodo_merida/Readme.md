@@ -22,6 +22,48 @@ faro_publisher
 
 El broker no se ejecuta dentro de este Compose. Esto evita duplicar el servicio Mosquitto y mantiene un único broker para el host y los nodos locales.
 
+## Modo operativo
+
+El modo operativo oficial del Nodo Faro Mérida es Docker Compose mediante el
+servicio `faro_publisher`.
+
+El servicio systemd histórico `ritual-stardust.service` ejecutaba el mismo
+publicador directamente en el host. Fue deshabilitado para evitar dos
+instancias publicando simultáneamente en
+`stardust/merida/telemetria`.
+
+No deben ejecutarse ambos modos a la vez, porque producirían telemetría
+duplicada y dificultarían el diagnóstico.
+
+Comprobar el modo activo:
+
+```bash
+docker compose -f nodo_merida/docker-compose.yml ps
+docker compose -f nodo_merida/docker-compose.yml logs -f faro_publisher
+systemctl is-active ritual-stardust.service
+```
+
+El estado esperado del servicio histórico es:
+
+```text
+inactive
+```
+
+El servicio systemd se conserva deshabilitado como mecanismo de rollback
+temporal. Si fuera necesario utilizarlo, primero debe detenerse Docker:
+
+```bash
+docker compose -f nodo_merida/docker-compose.yml down
+sudo systemctl enable --now ritual-stardust.service
+```
+
+Para volver al modo Docker:
+
+```bash
+sudo systemctl disable --now ritual-stardust.service
+docker compose -f nodo_merida/docker-compose.yml up -d
+```
+
 ## Broker MQTT
 
 ### Listener del host
@@ -64,6 +106,11 @@ Esto debe considerarse una configuración operativa local, no una postura final 
 - validación de permisos de publicación y suscripción.
 
 Nunca deben guardarse contraseñas, tokens ni archivos de credenciales en Git.
+
+Los listeners están ligados a `127.0.0.1` y `172.17.0.1`, no a todas las
+interfaces de red. Aun así, permiten conexiones anónimas desde los procesos
+locales y la red bridge de Docker. Antes de exponer el nodo fuera de este
+entorno deben configurarse autenticación, ACL y firewall.
 
 ## Tópico
 
@@ -183,6 +230,12 @@ La validación operacional realizada confirmó:
 El publicador reutiliza el mismo cliente MQTT y aplica reintentos con espera progresiva cuando detecta que el broker no está conectado.
 
 La recuperación del proceso fue validada operacionalmente. Sin embargo, las publicaciones generadas durante una caída no tienen todavía una cola persistente. Por eso QoS 1 no debe interpretarse como garantía de entrega de eventos creados mientras el broker está fuera de servicio.
+
+La persistencia de Mosquitto está habilitada en el host, pero esto no crea
+una cola persistente para las publicaciones que el proceso Python genere
+mientras el broker está desconectado. Las publicaciones emitidas durante esa
+caída pueden perderse, especialmente si el proceso o el contenedor se reinicia
+antes de reconectar.
 
 ## Archivos principales
 
