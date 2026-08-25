@@ -50,7 +50,7 @@ NAHUALES_JSON = Path(__file__).resolve().parent / "nahuales_20_universalis.json"
 
 # Credenciales MQTT (desde variables de entorno)
 MQTT_USER = os.getenv("MQTT_USER", "")
-MQTT_PASSWORD = os.getenv("MQTT_PASSWORD", "")
+MQTT_PASSWORD = os.getenv("MQTT_PASSWORD", "")  # gitleaks:allow
 TOPIC_TELEMETRIA = "stardust/merida/telemetria"
 RITMO_SEGUNDOS = 30
 MAYA_GMT_CORRELATION = 584283
@@ -132,7 +132,7 @@ def crear_cliente():
         client_id=CLIENT_ID,
     )
     # Inyectar credenciales si existen
-    if MQTT_USER and MQTT_PASSWORD:
+    if MQTT_USER and MQTT_PASSWORD:  # gitleaks:allow
         client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
     return client
 
