@@ -45,3 +45,45 @@ def get_bioconexion_state():
     now = datetime.datetime.utcnow()
     jdn = get_jdn(now.year, now.month, now.day)
     return _calc_sak_tahn_waax(jdn)
+
+# ============================================================
+# MODO DRESDEN (Códice de Dresde - Tradición Canónica)
+# ============================================================
+SEGMENTOS_DRESDEN = [
+    ("Estrella de la Mañana", 236),
+    ("Invisible (Conjunción Superior)", 90),
+    ("Estrella de la Tarde", 250),
+    ("Invisible (Conjunción Inferior)", 8),
+]
+CICLO_VENUS_DRESDEN = 584
+RECORRIDO_TABLA = 37960
+
+RECETA_CORRECCION_DRESDEN = [
+    (57, 8), (61, 4), (61, 4), (61, 4), (61, 4)
+]
+
+def calcular_fase_venus_dresden(dias_desde_ancla: int):
+    """Calcula la fase ritual de Venus según el Códice de Dresde."""
+    revoluciones_completas = dias_desde_ancla // CICLO_VENUS_DRESDEN
+    dia_en_ciclo = dias_desde_ancla % CICLO_VENUS_DRESDEN
+    dias_corregidos = 0
+    
+    for rev_tope, dias_ajuste in RECETA_CORRECCION_DRESDEN:
+        if revoluciones_completas >= rev_tope:
+            dias_corregidos += dias_ajuste
+            revoluciones_completas -= rev_tope
+        else:
+            break
+            
+    dia_ajustado = (dia_en_ciclo - dias_corregidos) % CICLO_VENUS_DRESDEN
+    if dia_ajustado < 0:
+        dia_ajustado += CICLO_VENUS_DRESDEN
+        
+    dias_acumulados = 0
+    for nombre, duracion in SEGMENTOS_DRESDEN:
+        if dia_ajustado < dias_acumulados + duracion:
+            dias_restantes = (dias_acumulados + duracion) - dia_ajustado
+            return nombre, dias_restantes, dias_corregidos
+        dias_acumulados += duracion
+        
+    return "Desconocido", 0, 0

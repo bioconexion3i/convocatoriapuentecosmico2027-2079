@@ -33,7 +33,7 @@ def test_invalid_port_range():
 
 
 def test_json_path_is_absolute():
-    expected = Path(ritual_3i_mqtt.__file__).resolve().parent / "nahuales.json"
+    expected = Path(ritual_3i_mqtt.__file__).resolve().parent / "nahuales_20_universalis.json"
     assert isinstance(ritual_3i_mqtt.NAHUALES_JSON, Path)
     assert ritual_3i_mqtt.NAHUALES_JSON == expected
     assert ritual_3i_mqtt.NAHUALES_JSON.is_absolute()

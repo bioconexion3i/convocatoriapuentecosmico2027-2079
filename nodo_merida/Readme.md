@@ -90,34 +90,29 @@ extra_hosts:
 
 El listener de Docker está restringido a la interfaz `172.17.0.1`.
 
-### Seguridad actual
-
-La configuración actual del listener permite conexiones anónimas dentro del entorno Docker local:
-
+### Seguridad actual (endurecida 2026-08-24)
+El broker exige autenticación en todos los listeners:
 ```text
-allow_anonymous true
-```
+allow_anonymous false
+password_file /etc/mosquitto/passwd
+acl_file /etc/mosquitto/acl.conf
+listener 1884 172.17.0.1
 
-Esto debe considerarse una configuración operativa local, no una postura final de producción. El endurecimiento pendiente incluye:
+Configuración ubicada en /etc/mosquitto/conf.d/nodo-faro.conf.
 
-- usuario MQTT dedicado;
-- credenciales fuera del repositorio;
-- ACL limitada por tópico;
-- validación de permisos de publicación y suscripción.
+El publicador se autentica con username_pw_set() usando MQTT_USER/MQTT_PASSWORD
+desde el entorno (.env, ignorado por Git). Nunca guardar contraseñas, tokens ni
+archivos de credenciales en el repositorio.
 
-Nunca deben guardarse contraseñas, tokens ni archivos de credenciales en Git.
-
-Los listeners están ligados a `127.0.0.1` y `172.17.0.1`, no a todas las
-interfaces de red. Aun así, permiten conexiones anónimas desde los procesos
-locales y la red bridge de Docker. Antes de exponer el nodo fuera de este
-entorno deben configurarse autenticación, ACL y firewall.
+Los listeners están ligados a 127.0.0.1 y 172.17.0.1. Antes de exponer el nodo
+fuera de este entorno: firewall y revisión periódica de la ACL.
 
 ## Tópico
 
 El publicador envía telemetría a:
 
 ```text
-stardust/merida/telemetria
+tardust/merida/telemetria
 ```
 
 El payload incluye:
@@ -244,14 +239,13 @@ antes de reconectar.
 - `requirements.txt`: dependencias fijadas.
 - `scripts/ritual_3i_mqtt.py`: publicador MQTT.
 - `scripts/engine_bioconexion.py`: motor de estado.
-- `scripts/nahuales.json`: archivo canónico usado por el publicador.
+- `scripts/nahuales_20_universalis.json`: archivo canónico usado por el publicador.
 - `scripts/tests/`: pruebas automatizadas.
 
 ## Seguimientos
 
-- sustituir acceso anónimo por autenticación y ACL;
 - añadir una cola persistente si se requiere entrega durante caídas;
 - mejorar los logs explícitos de desconexión y reconexión;
 - automatizar una prueba de integración Docker/MQTT;
 - evaluar un Last Will para el estado del nodo;
-- mantener este README sincronizado con la configuración real de la Jetson.
+- mantener este README sincronizado con la configuración real d la Jetson.

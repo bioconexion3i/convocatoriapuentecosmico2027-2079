@@ -5,6 +5,8 @@ services:
     environment:
       - MQTT_BROKER=host.docker.internal
       - MQTT_PORT=1884
+      - MQTT_USER=${MQTT_USER}
+      - MQTT_PASSWORD=${MQTT_PASSWORD}
       - LATITUD=20.9676
       - LONGITUD=-89.6237
       - NODO_ID=merida-avenida-yucatan-orin
