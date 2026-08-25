@@ -3,3 +3,5 @@ nodo_merida/data/
 nodo_merida/logs/
 
 .venv/
+nodo_merida/.env
+pr_diff.txt

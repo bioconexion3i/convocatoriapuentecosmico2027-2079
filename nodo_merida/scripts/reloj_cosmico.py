@@ -69,7 +69,7 @@ def obtener_nahual_actual():
     fecha_base = datetime(2012, 12, 21)  # 13.0.0.0.0, 4 Ajaw
     delta = datetime.now() - fecha_base
     dias = delta.days
-    indice_nahual = dias % 20
+    indice_nahual = (dias + 19) % 20
     if NAHUALES and 0 <= indice_nahual < len(NAHUALES):
         return NAHUALES[indice_nahual]
     else:

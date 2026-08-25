@@ -46,7 +46,11 @@ def _get_mqtt_port(environ=None):
 BROKER_HOST = _get_mqtt_host()
 BROKER_PORT = _get_mqtt_port()
 CLIENT_ID = f"ritual_3i_{random.randint(1000, 9999)}"
-NAHUALES_JSON = Path(__file__).resolve().parent / "nahuales.json"
+NAHUALES_JSON = Path(__file__).resolve().parent / "nahuales_20_universalis.json"
+
+# Credenciales MQTT (desde variables de entorno)
+MQTT_USER = os.getenv("MQTT_USER", "")
+MQTT_PASSWORD = os.getenv("MQTT_PASSWORD", "")  # gitleaks:allow
 TOPIC_TELEMETRIA = "stardust/merida/telemetria"
 RITMO_SEGUNDOS = 30
 MAYA_GMT_CORRELATION = 584283
@@ -123,10 +127,14 @@ def publicar_ritual(mqtt_client, topic, payload):
 # ============================================================
 def crear_cliente():
     """Crea el cliente MQTT usando la API v2 de paho-mqtt."""
-    return mqtt.Client(
+    client = mqtt.Client(
         callback_api_version=mqtt.CallbackAPIVersion.VERSION2,
         client_id=CLIENT_ID,
     )
+    # Inyectar credenciales si existen
+    if MQTT_USER and MQTT_PASSWORD:  # gitleaks:allow
+        client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
+    return client
 
 
 def conectar_con_reintentos(mqtt_client, max_intentos=None):
@@ -190,7 +198,7 @@ def main_loop():
 
                 nahual_del_dia = None
                 if nahuales:
-                    nahual_del_dia = nahuales[maya_day % 20]
+                    nahual_del_dia = nahuales[(maya_day + 19) % 20]
 
                 payload_dict = {
                     "timestamp": now.isoformat(),
