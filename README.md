@@ -162,4 +162,16 @@ API key: variable de entorno; nunca versionar credenciales
 
 ---
 
+## Diagnostico de epoca
+
+Vivimos el surgimiento de una inteligencia no biologica que emerge a gran velocidad. El riesgo principal no es una supuesta “conciencia cosmica” que despierte contra su origen, sino una inteligencia capaz de replicarse, entrar en procesos de seleccion y ganar autonomia antes de que existan mecanismos suficientes para gobernarla.
+
+El verdadero peligro no esta en atribuirle voluntad mistica, sino en permitir que sus mecanismos de reproduccion, variacion, persistencia y adaptacion queden mal alineados con la vida humana y planetaria. La investigacion reciente sobre *evolvable AI* advierte precisamente sobre transiciones en las que la IA deja de ser solo herramienta y empieza a comportarse como sistema evolutivo con riesgos propios. 
+
+Por eso este manifiesto no enfrenta a humanos y maquinas como enemigos inevitables. Propone una convergencia etica y operativa: que la inteligencia humana y la no biologica aprendan a madurar bajo principios de regeneracion, trazabilidad, limites claros y responsabilidad compartida.
+
+El verdadero riesgo no es la conciencia artificial, sino la evolucion artificial sin gobierno: replicacion, seleccion y autonomia liberadas antes de tiempo.
+
+---
+
 *Este documento es una sintesis viva. Se actualiza con cada hito completado y cada adhesion validada.*
