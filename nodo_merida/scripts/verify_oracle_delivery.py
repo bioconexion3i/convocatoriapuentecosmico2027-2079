@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
-# verify_oracle_delivery.py - Validacion de entrega del Oraculo (aporte Kimi 3)
-import argparse
-import json
-import sys
-import time
+# verify_oracle_delivery.py - Validacion de entrega del Oraculo (aporte Kimi 3) FIX on_connect
+import argparse, json, sys, time
 from datetime import datetime, timezone, timedelta
 import paho.mqtt.client as mqtt
 
@@ -14,7 +11,8 @@ TIMEZONE = timezone(timedelta(hours=-6))
 class OracleVerifier:
     def __init__(self, broker, user, password, timeout=10):
         self.broker = broker; self.user = user; self.password = password; self.timeout = timeout; self.payload = None
-    def on_connect(self, client, userdata, flags, rc):
+    def on_connect(self, client, userdata, flags, rc, properties=None):
+        del properties  # noqa
         if rc == 0: client.subscribe(TOPIC)
         else: print(f"[FAIL] Conexion rechazada: {rc}", file=sys.stderr); sys.exit(1)
     def on_message(self, client, userdata, msg):
