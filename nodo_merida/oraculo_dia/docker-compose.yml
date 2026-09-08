@@ -1,0 +1,20 @@
+services:
+  oraculo:
+    build:
+      context: ..
+      dockerfile: oraculo_dia/Dockerfile
+    container_name: oraculo-del-dia
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      TZ: America/Merida
+      ORACLE_HOUR: "6"
+      MQTT_BROKER: host.docker.internal
+      MQTT_PORT: "1884"
+      NODO_ID: merida-avenida-yucatan-orin
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./salida:/data
