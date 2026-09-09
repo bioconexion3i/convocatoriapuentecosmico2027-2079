@@ -5,3 +5,21 @@ nodo_merida/logs/
 .venv/
 nodo_merida/.env
 pr_diff.txt
+
+# Secretos, backups y datos operativos locales
+.env
+.env.*
+*.env
+*.bak
+*.bak.*
+*.log
+__pycache__/
+*.pyc
+
+# Cachés y salidas de ejecución
+nodo_merida/dashboard/cache/
+nodo_merida/oraculo_dia/salida/
+
+# Backups sin extensión estándar
+*.bak[0-9]*
+pr_body.md
