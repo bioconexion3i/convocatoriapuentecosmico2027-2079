@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
 <title>Cosmograma Interactivo 2025–2079</title>
 
 <style>
@@ -15,6 +15,8 @@
   --text:#F1FAEE;
 }
 
+*{ box-sizing:border-box; }
+
 body{
   margin:0;
   font-family:Arial, Helvetica, sans-serif;
@@ -26,12 +28,15 @@ body{
   height:100vh;
   overflow:hidden;
   transition:background 1s;
+  padding:10px;
 }
 
 .container{
   position:relative;
   width:95vmin;
   height:95vmin;
+  max-width:700px;
+  max-height:700px;
 }
 
 svg{ width:100%; height:100%; }
@@ -45,9 +50,7 @@ svg{ width:100%; height:100%; }
 @keyframes rot3{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
 circle{ fill:none; stroke:var(--gold); stroke-width:2; }
-
 .center{ fill:var(--green); cursor:pointer; }
-
 .label{ fill:var(--text); font-size:14px; text-anchor:middle; }
 
 .panel{
@@ -55,10 +58,12 @@ circle{ fill:none; stroke:var(--gold); stroke-width:2; }
   left:50%;
   transform:translateX(-50%);
   background:var(--panel);
-  padding:10px 18px;
+  padding:8px 12px;
   border-radius:12px;
   font-size:12px;
-  min-width:280px;
+  min-width:200px;
+  text-align:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.5);
 }
 
 #faseBox{ top:8px; }
@@ -67,11 +72,37 @@ circle{ fill:none; stroke:var(--gold); stroke-width:2; }
 #chart{
   position:absolute;
   right:10px;
-  bottom:10px;
-  width:200px;
-  height:100px;
+  bottom:60px;
+  width:160px;
+  height:80px;
   background:#00000030;
   border-radius:8px;
+}
+
+#mqttData{
+  position:absolute;
+  left:10px;
+  top:60px;
+  background:var(--panel);
+  padding:8px 12px;
+  border-radius:12px;
+  font-size:11px;
+  max-width:180px;
+  line-height:1.4;
+  box-shadow:0 4px 12px rgba(0,0,0,0.5);
+}
+
+#nodosYucatan{
+  position:absolute;
+  left:10px;
+  top:200px;
+  background:var(--panel);
+  padding:8px 12px;
+  border-radius:12px;
+  font-size:11px;
+  max-width:180px;
+  line-height:1.6;
+  box-shadow:0 4px 12px rgba(0,0,0,0.5);
 }
 
 #toggle3D{
@@ -84,6 +115,7 @@ circle{ fill:none; stroke:var(--gold); stroke-width:2; }
   color:white;
   cursor:pointer;
   border-radius:6px;
+  font-size:12px;
 }
 
 #infoToggle{
@@ -96,22 +128,24 @@ circle{ fill:none; stroke:var(--gold); stroke-width:2; }
   color:white;
   cursor:pointer;
   border-radius:6px;
+  font-size:12px;
 }
 
 #infoPanel{
   position:absolute;
-  bottom:120px;
+  bottom:100px;
   left:50%;
   transform:translateX(-50%);
-  width:80%;
+  width:85%;
   max-height:40%;
   overflow:auto;
   background:#000000DD;
-  padding:20px;
+  padding:16px;
   border-radius:12px;
   font-size:12px;
   display:none;
   line-height:1.5em;
+  box-shadow:0 4px 20px rgba(0,0,0,0.8);
 }
 
 #webglContainer{
@@ -119,6 +153,23 @@ circle{ fill:none; stroke:var(--gold); stroke-width:2; }
   width:100%;
   height:100%;
   display:none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .panel{ font-size:10px; padding:6px 10px; min-width:140px; }
+  #mqttData{ font-size:10px; max-width:130px; padding:6px 8px; top:50px; }
+  #nodosYucatan{ font-size:10px; max-width:130px; padding:6px 8px; top:170px; }
+  #chart{ width:120px; height:60px; bottom:50px; right:5px; }
+  #infoPanel{ font-size:10px; padding:12px; bottom:80px; width:90%; }
+  #toggle3D, #infoToggle{ font-size:10px; padding:4px 8px; }
+  .label{ font-size:10px; }
+}
+
+@media (max-width: 400px) {
+  .panel{ font-size:8px; padding:4px 6px; min-width:100px; }
+  #mqttData{ font-size:8px; max-width:100px; padding:4px 6px; top:40px; }
+  #nodosYucatan{ font-size:8px; max-width:100px; padding:4px 6px; top:140px; }
 }
 </style>
 </head>
@@ -145,6 +196,15 @@ circle{ fill:none; stroke:var(--gold); stroke-width:2; }
 <div id="repoBox" class="panel">Conectando...</div>
 <canvas id="chart"></canvas>
 
+<div id="mqttData">Esperando datos MQTT...</div>
+
+<div id="nodosYucatan">
+  <strong>🌿 Nodos Yucatán</strong><br>
+  <span id="sisal-score">--</span> Sisal<br>
+  <span id="tekanto-score">--</span> Tekanto<br>
+  <span id="celestun-score">--</span> Celestún
+</div>
+
 <div id="infoPanel">
 <h3>Funcionamiento del Cosmograma</h3>
 <p><strong>Propósito:</strong> Modelo visual y operativo del proyecto 2025–2079.</p>
@@ -154,22 +214,28 @@ circle{ fill:none; stroke:var(--gold); stroke-width:2; }
 <p><strong>Modo Astronómico:</strong> Fondo cambia automáticamente según hora local.</p>
 <p><strong>GitHub:</strong> Consulta commits y colaboradores. Cache local de 10 minutos.</p>
 <p><strong>Gráfica:</strong> Visualización dinámica de actividad reciente.</p>
+<p><strong>MQTT:</strong> Muestra telemetría en tiempo real del Ritual 3i (armonía, cuenta larga, luna, Venus) y de los nodos Yucatán (scores de salud ecológica).</p>
 <p>El sistema es determinista, autónomo y reproducible por humanos y sistemas de IA.</p>
 </div>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="paho-mqtt.min.js"></script>
 
 <script>
 
-/* MODO ASTRONÓMICO */
+/**************************
+ * MODO ASTRONÓMICO
+ **************************/
 (function(){
   const h=new Date().getHours();
   document.body.style.background = (h>=6 && h<18) ? "var(--bg-day)" : "var(--bg-night)";
 })();
 
-/* CUENTA LARGA */
+/**************************
+ * CUENTA LARGA
+ **************************/
 function cuentaLargaHoy(){
   const hoy=new Date();
   const offset=584283;
@@ -183,8 +249,10 @@ function cuentaLargaHoy(){
   return b+"."+k+"."+t+"."+u+"."+kin;
 }
 
-/* FASE */
-(function(){
+/**************************
+ * ACTUALIZAR FASE Y PANEL
+ **************************/
+function actualizarFase(){
   const start=2025,end=2079;
   const y=new Date().getFullYear();
   const progress=((y-start)/(end-start)*100).toFixed(2);
@@ -198,9 +266,13 @@ function cuentaLargaHoy(){
     "<br>Año: "+y+
     "<br>Progreso: "+progress+"%"+
     "<br>Cuenta Larga: "+cuentaLargaHoy();
-})();
+}
+actualizarFase();
+setInterval(actualizarFase, 30000);
 
-/* GITHUB + CACHE */
+/**************************
+ * GITHUB + CACHE
+ **************************/
 const owner="bioconexion3i";
 const repo="convocatoriapuentecosmico2027-2079";
 const cacheKey="repoCache";
@@ -236,8 +308,11 @@ function renderRepo(data){
 }
 
 repoData();
+setInterval(repoData, 600000);
 
-/* GRÁFICA */
+/**************************
+ * GRÁFICA
+ **************************/
 function drawChart(commits){
   const canvas=document.getElementById("chart");
   const ctx=canvas.getContext("2d");
@@ -258,7 +333,72 @@ function drawChart(commits){
   });
 }
 
-/* WEBGL */
+/**************************
+ * MQTT - TELEMETRÍA EN TIEMPO REAL
+ **************************/
+const mqttHost = "192.168.100.34";
+const mqttPort = 9001;
+const clientId = "cosmograma_" + Math.random().toString(16).substr(2,8);
+
+const mqttClient = new Paho.MQTT.Client(mqttHost, mqttPort, clientId);
+
+// Conectar y suscribirse a todos los tópicos
+mqttClient.connect({
+  onSuccess: onConnect,
+  onFailure: onFail
+});
+
+function onConnect(){
+  // Suscribirse al Ritual 3i
+  mqttClient.subscribe("stardust/ritual_3i/telemetria");
+  // Suscribirse a los nodos Yucatán
+  mqttClient.subscribe("stardust/sisal/manglares");
+  mqttClient.subscribe("stardust/tekanto/verde");
+  mqttClient.subscribe("stardust/celestun/flamencos");
+
+  document.getElementById("mqttData").innerHTML = "📡 Conectado, esperando datos...";
+}
+
+function onFail(err){
+  document.getElementById("mqttData").innerHTML = "❌ MQTT no disponible";
+  console.warn("MQTT connection failed:", err);
+}
+
+mqttClient.onMessageArrived = function(message){
+  try{
+    const data = JSON.parse(message.payloadString);
+    const topic = message.destinationName;
+
+    // 1. Actualizar panel del Ritual 3i
+    if (topic === "stardust/ritual_3i/telemetria") {
+      const harmony = data.score_armonia || data.sincronia_galactica?.harmony_factor || "N/D";
+      const longCount = data.sincronia_galactica?.long_count || "N/D";
+      const lunar = data.sincronia_galactica?.lunar_series?.phase || "N/D";
+      const venus = data.sincronia_galactica?.venus_event?.status || "N/D";
+      document.getElementById("mqttData").innerHTML = `
+        🧘 Armonía: ${harmony}<br>
+        ⏳ Cuenta Larga: ${longCount}<br>
+        🌙 Luna: ${lunar}<br>
+        ♀️ Venus: ${venus}
+      `;
+    }
+
+    // 2. Actualizar nodos Yucatán
+    if (topic === "stardust/sisal/manglares") {
+      document.getElementById("sisal-score").innerText = data.score || "N/D";
+    } else if (topic === "stardust/tekanto/verde") {
+      document.getElementById("tekanto-score").innerText = data.score || "N/D";
+    } else if (topic === "stardust/celestun/flamencos") {
+      document.getElementById("celestun-score").innerText = data.score || "N/D";
+    }
+  }catch(e){
+    // Si el payload no es JSON, ignorar
+  }
+};
+
+/**************************
+ * WEBGL 3D
+ **************************/
 let scene,camera,renderer,ring;
 function init3D(){
   const c=document.getElementById("webglContainer");
@@ -290,7 +430,9 @@ document.getElementById("toggle3D").onclick=function(){
   if(mode3D && !renderer) init3D();
 };
 
-/* PANEL INFO */
+/**************************
+ * PANEL INFO
+ **************************/
 document.getElementById("infoToggle").onclick=function(){
   const p=document.getElementById("infoPanel");
   p.style.display = (p.style.display==="none") ? "block" : "none";
