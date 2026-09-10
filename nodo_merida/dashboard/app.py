@@ -5,11 +5,13 @@ import os
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from flask import Flask, render_template_string
+from flask import Flask, render_template_string, jsonify
+from flask_cors import CORS
 from datetime import datetime, timedelta
 import subprocess
 
 app = Flask(__name__)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 CSV_PATH = "/home/bio/convocatoriapuentecosmico2027-2079/nodo_merida/data/yucatan_scores.csv"
 
@@ -155,6 +157,42 @@ def index():
                                   ultimo_evento=ultimo_evento,
                                   servicios_activos=servicios_activos,
                                   ultimos_registros=ultimos_registros)
+
+
+@app.get("/api/oraculo/hoy")
+def oraculo_hoy():
+    """Entrega el oráculo local del día; MQTT es una caché secundaria."""
+    import json
+    from datetime import datetime
+    from pathlib import Path
+    from zoneinfo import ZoneInfo
+
+    hoy = datetime.now(ZoneInfo("America/Merida")).date().isoformat()
+    base = Path(__file__).resolve().parents[1]
+    cache_file = Path(__file__).parent / "cache" / "oraculo_hoy.json"
+    salida_file = base / "oraculo_dia" / "salida" / f"{hoy}.json"
+
+    def cargar_json(path):
+        try:
+            with open(path, "r", encoding="utf-8") as archivo:
+                return json.load(archivo)
+        except (OSError, json.JSONDecodeError):
+            return None
+
+    cache = cargar_json(cache_file)
+    if cache and cache.get("fecha") == hoy:
+        cache["_source"] = "mqtt_cache"
+        return cache
+
+    salida = cargar_json(salida_file)
+    if salida and salida.get("fecha") == hoy:
+        salida["_source"] = "daily_file"
+        return salida
+
+    return {
+        "error": "Oráculo no disponible para la fecha actual",
+        "fecha": hoy,
+    }, 404
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=False)
