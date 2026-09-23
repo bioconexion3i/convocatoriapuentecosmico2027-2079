@@ -1,0 +1,47 @@
+# Credenciales y secretos — NUNCA al repo
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+password*
+secret*
+*credentials*
+
+# Respaldos locales
+*.bak
+*.bak.*
+*.mixed.*
+*~
+*.swp
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# Docker
+docker-compose.override.yml
+
+# Logs
+*.log
+logs/*.log
+
+# Salidas generadas localmente
+oraculo_dia/salida/*.json
+oraculo_dia/salida/*.md
+!oraculo_dia/salida/.gitkeep
+
+# Estado local de Open WebUI / bridge
+*.db
+*.db-shm
+*.db-wal
+maya_oracle_last_date.txt
+
+# Audio pesado (usar Git LFS si se quiere versionar)
+cosmograma/*.mp3
+cosmograma/*.ogg
+cosmograma/*.wav

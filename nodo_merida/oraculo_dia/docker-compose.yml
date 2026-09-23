@@ -14,7 +14,7 @@ services:
       MQTT_PORT: "1884"
       NODO_ID: merida-avenida-yucatan-orin
     env_file:
-      - path: .env
+      - path: ../.env
         required: false
     volumes:
       - ./salida:/data

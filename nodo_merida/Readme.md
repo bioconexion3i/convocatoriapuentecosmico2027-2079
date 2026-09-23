@@ -22,6 +22,12 @@ faro_publisher
 
 El broker no se ejecuta dentro de este Compose. Esto evita duplicar el servicio Mosquitto y mantiene un único broker para el host y los nodos locales.
 
+Además del publicador, el nodo tiene otros tres servicios contenedorizados:
+
+- `oraculo-del-dia` — genera el oráculo diario a las 06:00 America/Merida y lo publica en `stardust/merida/evento`.
+- `stardust_bridge` — puente HTTP que expone oráculo y telemetría bajo un solo host.
+- `open-webui` — interfaz de chat que consume el bridge como Tool.
+
 ## Modo operativo
 
 El modo operativo oficial del Nodo Faro Mérida es Docker Compose mediante el
@@ -91,28 +97,43 @@ extra_hosts:
 El listener de Docker está restringido a la interfaz `172.17.0.1`.
 
 ### Seguridad actual (endurecida 2026-08-24)
+
 El broker exige autenticación en todos los listeners:
+
 ```text
 allow_anonymous false
 password_file /etc/mosquitto/passwd
 acl_file /etc/mosquitto/acl.conf
 listener 1884 172.17.0.1
+```
 
-Configuración ubicada en /etc/mosquitto/conf.d/nodo-faro.conf.
+Configuración ubicada en `/etc/mosquitto/conf.d/nodo-faro.conf`.
 
-El publicador se autentica con username_pw_set() usando MQTT_USER/MQTT_PASSWORD
-desde el entorno (.env, ignorado por Git). Nunca guardar contraseñas, tokens ni
+El publicador se autentica con `username_pw_set()` usando `MQTT_USER`/`MQTT_PASSWORD`
+desde el entorno (`.env`, ignorado por Git). Nunca guardar contraseñas, tokens ni
 archivos de credenciales en el repositorio.
 
-Los listeners están ligados a 127.0.0.1 y 172.17.0.1. Antes de exponer el nodo
+Los listeners están ligados a `127.0.0.1` y `172.17.0.1`. Antes de exponer el nodo
 fuera de este entorno: firewall y revisión periódica de la ACL.
+
+### Roles MQTT
+
+La ACL separa publicación y lectura:
+
+| Usuario | Permiso | Uso |
+|---|---|---|
+| `merida_pub` | `write stardust/merida/#` | `faro_publisher`, `oraculo-del-dia` |
+| `exar_lector` | `read stardust/#` | `stardust_bridge`, herramientas de lectura |
+
+Las credenciales viven en `.env` (publicador) y `.env.lector` (lector),
+ambos ignorados por Git. Rotar la contraseña de `exar_lector` periódicamente.
 
 ## Tópico
 
 El publicador envía telemetría a:
 
 ```text
-tardust/merida/telemetria
+stardust/merida/telemetria
 ```
 
 El payload incluye:
@@ -122,6 +143,14 @@ El payload incluye:
 - latido;
 - estado de `engine_bioconexion`;
 - nahual del día.
+
+El servicio `oraculo-del-dia` publica además en:
+
+```text
+stardust/merida/evento
+```
+
+con el JSON del oráculo diario (`tipo: oraculo_diario`).
 
 ## Dependencias
 
@@ -173,6 +202,7 @@ Desde la Jetson:
 mosquitto_sub \
   -h 172.17.0.1 \
   -p 1884 \
+  -u "$MQTT_USER" -P "$MQTT_PASSWORD" \
   -t 'stardust/merida/#' \
   -v
 ```
@@ -181,6 +211,12 @@ Una publicación correcta aparece en:
 
 ```text
 stardust/merida/telemetria
+```
+
+Y el evento diario del oráculo en:
+
+```text
+stardust/merida/evento
 ```
 
 ## Validación
@@ -232,6 +268,90 @@ mientras el broker está desconectado. Las publicaciones emitidas durante esa
 caída pueden perderse, especialmente si el proceso o el contenedor se reinicia
 antes de reconectar.
 
+## Puente HTTP — Stardust Bridge (2026-09-23)
+
+El nodo expone un puente HTTP que unifica oráculo y telemetría bajo un solo
+host, para que interfaces como Open WebUI puedan consultarlos sin conocer
+MQTT ni las rutas internas del broker.
+
+### Servicio
+
+Corre en `stardust_bridge/` como contenedor Docker independiente.
+
+| Endpoint | Devuelve |
+|---|---|
+| `GET /health` | Estado del bridge (MQTT conectado, último mensaje) |
+| `GET /oraculo/hoy` | JSON del oráculo del día (leído del archivo local) |
+| `GET /oraculo/{fecha}` | JSON del oráculo de una fecha (`YYYY-MM-DD`) |
+| `GET /telemetria/latest` | Último payload MQTT de `stardust/merida/telemetria` |
+| `POST /api/chat` | Proxy a Ollama (`host.docker.internal:11434`) |
+
+Escucha en `0.0.0.0:8082` para ser alcanzable desde otros contenedores
+(Open WebUI, futuros Workers). No debe exponerse fuera de la LAN sin
+autenticación adicional.
+
+### Diagrama del estado actual
+
+```text
+faro_publisher (ritual_3i_mqtt.py)
+        │
+        ├──> Mosquitto host :1884
+        │       ├── stardust/merida/telemetria (cada 30s)
+        │       └── stardust/merida/evento     (diario 06:00)
+        │
+oraculo-del-dia (oraculo_del_dia.py)
+        │
+        └──> Mosquitto host :1884 → stardust/merida/evento
+                │
+                └──> archivos en oraculo_dia/salida/YYYY-MM-DD.json
+
+stardust_bridge
+        ├── MQTT (exar_lector) → último payload de telemetría
+        ├── lectura directa     → oraculo_dia/salida/*.json
+        └── HTTP :8082          → Open WebUI / Workers / cualquier cliente
+```
+
+### Corrección del oráculo (2026-09-23)
+
+El servicio `oraculo-del-dia` llevaba desde su despliegue sin publicar en
+MQTT: su `docker-compose.yml` declaraba `env_file: .env`, pero el archivo
+vive en el directorio padre. Corregido a `env_file: ../.env`. Desde entonces
+publica correctamente en `stardust/merida/evento`.
+
+Los archivos JSON diarios nunca se perdieron — siempre se generaron en
+`oraculo_dia/salida/`. El endpoint `/oraculo/{fecha}` los expone para
+recuperar cualquier día del historial.
+
+### Tool de Open WebUI — Maya Oracle Faro Mérida v2.0
+
+En `Workspace → Tools` de Open WebUI. Consulta el bridge extendido y expone
+tres funciones al modelo:
+
+- `get_maya_oracle()` → oráculo del día.
+- `get_faro_telemetry()` → latido, Venus, nahual del día.
+- `get_mantra_if_first_time_today()` → mantra solo la primera vez del día
+  (persistido en `/app/backend/data/maya_oracle_last_date.txt`).
+
+Verificado en chat: el modelo cruza telemetría y oráculo y produce una
+síntesis coherente del día. Ejemplo validado el 2026-09-23 con `gemma4:cloud`.
+
+### Verificación rápida
+
+```bash
+curl -s http://127.0.0.1:8082/health | jq
+curl -s http://127.0.0.1:8082/oraculo/hoy | jq '.kin, .don'
+curl -s http://127.0.0.1:8082/telemetria/latest | jq '.recibido, .payload.latido'
+```
+
+### Rotación de credenciales
+
+```bash
+sudo mosquitto_passwd /etc/mosquitto/passwd exar_lector
+sudo systemctl reload mosquitto
+nano .env.lector
+docker compose -f stardust_bridge/docker-compose.yml up -d --force-recreate
+```
+
 ## Archivos principales
 
 - `Dockerfile`: imagen del publicador.
@@ -241,6 +361,12 @@ antes de reconectar.
 - `scripts/engine_bioconexion.py`: motor de estado.
 - `scripts/nahuales_20_universalis.json`: archivo canónico usado por el publicador.
 - `scripts/tests/`: pruebas automatizadas.
+- `oraculo_dia/`: servicio contenedorizado que genera el oráculo diario en `salida/`.
+- `stardust_bridge/`: puente HTTP que unifica oráculo y telemetría (FastAPI + MQTT).
+- `scripts/oraculo_del_dia.py`: generador del oráculo diario.
+- `scripts/logger_mqtt.py`: logger MQTT a CSV (usado para análisis externo).
+- `scripts/vectorizador_pipeline.py`: vectorización de textos hacia 20D nahual.
+- `scripts/verify_oracle_delivery.py`: validación de entrega del oráculo por MQTT.
 
 ## Seguimientos
 
@@ -248,4 +374,8 @@ antes de reconectar.
 - mejorar los logs explícitos de desconexión y reconexión;
 - automatizar una prueba de integración Docker/MQTT;
 - evaluar un Last Will para el estado del nodo;
-- mantener este README sincronizado con la configuración real d la Jetson.
+- evaluar la exposición del bridge fuera de la LAN (Cloudflare Tunnel o similar)
+  con autenticación previa;
+- considerar un backfill del historial 09-09 al 22-09 si se requiere
+  completar el canal MQTT (los archivos en `oraculo_dia/salida/` están a salvo);
+- mantener este README sincronizado con la configuración real de la Jetson.
