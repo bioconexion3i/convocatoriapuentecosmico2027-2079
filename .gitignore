@@ -1,25 +1,42 @@
-__pycache__/
-nodo_merida/data/
-nodo_merida/logs/
+# Audio/video pesado
+*.mp3
+*.mp4
+*.wav
+*.ogg
 
-.venv/
-nodo_merida/.env
-pr_diff.txt
-
-# Secretos, backups y datos operativos locales
+# Credenciales y backups
 .env
 .env.*
-*.env
-*.bak
 *.bak.*
-*.log
 __pycache__/
-*.pyc
 
-# Cachés y salidas de ejecución
-nodo_merida/dashboard/cache/
-nodo_merida/oraculo_dia/salida/
+# Salidas locales
+*.db
+*.db-shm
+*.db-wal
 
-# Backups sin extensión estándar
-*.bak[0-9]*
+# Audio/video pesado
+*.mp3
+*.mp4
+*.wav
+*.ogg
+
+# Entornos virtuales
+.venv/
+venv/
+
+# Caches
+cache/
+.cache/
+__pycache__/
+
+# Backups adicionales
+*.bak
+*.bak[0-9]
+*.bak[0-9][0-9]
+*~
+*.swp
+
+# Archivos de PR temporales
 pr_body.md
+pr_diff.txt
